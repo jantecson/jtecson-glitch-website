@@ -139,6 +139,41 @@
     .footer-links a { color: #888; font-size: 1.1rem; transition: color 0.15s; }
     .footer-links a:hover { color: var(--white); }
     .footer-credit { font-size: 0.72rem; color: #555; width: 100%; }
+
+     /* ────────────────────────────
+       SCROLL-TO-TOP BUTTON
+    ──────────────────────────── */
+    #scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, background 0.2s, transform 0.2s;
+      z-index: 300;
+      text-decoration: none;
+    }
+
+    #scroll-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #scroll-top:hover {
+      background: var(--blue);
+      transform: translateY(-3px);
+    }
   </style>
 </head>
 
