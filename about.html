@@ -55,7 +55,7 @@
     .nav-links a:hover { opacity: 0.4; }
 
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--black); }
-    .nav-mobile { display: none; flex-direction: column; background: var(--white); border-bottom: 1px solid var(--light); padding: 1.2rem 2rem; gap: 1.1rem; position: sticky; top: 57px; z-index: 1[...]
+    .nav-mobile { display: none; flex-direction: column; background: var(--white); border-bottom: 1px solid var(--light); padding: 1.2rem 2rem; gap: 1.1rem; position: sticky; top: 57px; z-index: 199; }
     .nav-mobile.open { display: flex; }
     .nav-mobile a { font-size: 0.88rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; text-decoration: none; color: var(--black); }
 
@@ -132,45 +132,13 @@
       .container { padding: 3rem 1.5rem; }
     }
 
-    /* ── Footer ── */
+    /* ── Footer (Synced with Index) ── */
     footer { background: var(--black); padding: 3rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
     .footer-name { font-family: var(--serif); font-size: 1.1rem; color: var(--white); text-decoration: none; }
     .footer-links { display: flex; gap: 1.5rem; }
     .footer-links a { color: #888; font-size: 1.1rem; transition: color 0.15s; }
     .footer-links a:hover { color: var(--white); }
-
-    /* ── SCROLL-TO-TOP BUTTON (Synced with Index) ── */
-    #scroll-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 44px;
-      height: 44px;
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      border-radius: 50%;
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s, background 0.2s, transform 0.2s;
-      z-index: 300;
-      text-decoration: none;
-    }
-
-    #scroll-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    #scroll-top:hover {
-      background: var(--blue);
-      transform: translateY(-3px);
-    }
+    .footer-credit { font-size: 0.72rem; color: #555; width: 100%; }
   </style>
 </head>
 
@@ -198,16 +166,15 @@
       <div class="about-text">
         <h1>About Janelle</h1>
         <p>
-          I'm currently a <b>UI/UX Designer</b> at Capital One. I am part of their Design Development Program (DDP) where I am in my first rotation team with Capital One Auto. 
-        </p>
-        <p>
+          I'm current a <b>UI/UX Designer</b> at Capital One. I am part of their Design Development Program (DDP) where I am in my first rotation team with Capital One Auto. 
+          <p>
           I graduated with a Bachelors of Science in <b>Human Computer Interaction</b> at Carnegie Mellon University within the School of Computer Science. I have a minor in <b>game design</b>.
         </p>
         <p>
           Outside of work, I drum and manage my indie rock band Ejector Crab and I am a mentor at Curious Cardinals.
         </p>
         <p>
-          In university, I worked as a TA and Grader for multiple HCI classes, usually catered towards Masters students. I spent my summers teaching for Girls Who Code and conducting independent [...]
+          In university, I worked as a TA and Grader for multiple HCI classes, usually catered towards Masters students. I spent my summers teaching for Girls Who Code and conducting independent research through Carnegie Mellon.
         </p>
       </div>
       
@@ -287,12 +254,11 @@
   <a href="#top" id="scroll-top" aria-label="Back to top">↑</a>
 
   <script>
-    /* nav toggle */
     function toggleNav() {
       document.getElementById('navMobile').classList.toggle('open');
     }
 
-    /* scroll-to-top visibility */
+    /* scroll to top visibility */
     const scrollBtn = document.getElementById('scroll-top');
     window.addEventListener('scroll', () => {
       scrollBtn.classList.toggle('visible', window.scrollY > 400);
