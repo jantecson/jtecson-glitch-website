@@ -517,9 +517,9 @@
     <div class="hero-right">
       <div class="carousel">
         <div class="carousel-item active">
-          <img src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/janelletecson-gif.gif?v=1717730206743" alt="Janelle Tecson" />
+          <img src="assets/images/janelletecson-gif.gif" alt="cartoon of Janelle with a Mudkip pokemon" />
         </div>
-        <div class="carousel-item">
+        <!-- <div class="carousel-item">
           <img src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/ecospin-coverpage.jpg?v=1717779696187" alt="EcoSpin" />
         </div>
         <div class="carousel-item">
@@ -533,16 +533,16 @@
         </div>
         <div class="carousel-item">
           <img src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/barkada_dance.jpg?v=1725993516596" alt="Barkada" />
-        </div>
+        </div> -->
       </div>
-      <div class="carousel-dots">
+      <!-- <div class="carousel-dots">
         <button class="dot active" data-slide="0" aria-label="Slide 1"></button>
         <button class="dot" data-slide="1" aria-label="Slide 2"></button>
         <button class="dot" data-slide="2" aria-label="Slide 3"></button>
         <button class="dot" data-slide="3" aria-label="Slide 4"></button>
         <button class="dot" data-slide="4" aria-label="Slide 5"></button>
         <button class="dot" data-slide="5" aria-label="Slide 6"></button>
-      </div>
+      </div> -->
     </div>
   </header>
 
@@ -655,23 +655,23 @@
     }
 
     /* carousel */
-    document.addEventListener('DOMContentLoaded', function () {
-      let current = 0;
-      const slides = document.querySelectorAll('.hero-right .carousel-item');
-      const dots   = document.querySelectorAll('.hero-right .dot');
+    // document.addEventListener('DOMContentLoaded', function () {
+    //   let current = 0;
+    //   const slides = document.querySelectorAll('.hero-right .carousel-item');
+    //   const dots   = document.querySelectorAll('.hero-right .dot');
 
-      function show(i) {
-        slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
-        dots.forEach((d, idx)   => d.classList.toggle('active', idx === i));
-      }
+    //   function show(i) {
+    //     slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    //     dots.forEach((d, idx)   => d.classList.toggle('active', idx === i));
+    //   }
 
-      dots.forEach(d => d.addEventListener('click', () => {
-        current = parseInt(d.getAttribute('data-slide'));
-        show(current);
-      }));
+    //   dots.forEach(d => d.addEventListener('click', () => {
+    //     current = parseInt(d.getAttribute('data-slide'));
+    //     show(current);
+    //   }));
 
-      setInterval(() => { current = (current + 1) % slides.length; show(current); }, 3000);
-    });
+    //   setInterval(() => { current = (current + 1) % slides.length; show(current); }, 3000);
+    // });
 
     /* scroll-to-top visibility */
     const scrollBtn = document.getElementById('scroll-top');
