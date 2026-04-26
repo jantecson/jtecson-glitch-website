@@ -55,7 +55,7 @@
     .nav-links a:hover { opacity: 0.4; }
 
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--black); }
-    .nav-mobile { display: none; flex-direction: column; background: var(--white); border-bottom: 1px solid var(--light); padding: 1.2rem 2rem; gap: 1.1rem; position: sticky; top: 57px; z-index: 199; }
+    .nav-mobile { display: none; flex-direction: column; background: var(--white); border-bottom: 1px solid var(--light); padding: 1.2rem 2rem; gap: 1.1rem; position: sticky; top: 57px; z-index: 1[...]
     .nav-mobile.open { display: flex; }
     .nav-mobile a { font-size: 0.88rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; text-decoration: none; color: var(--black); }
 
@@ -207,7 +207,7 @@
           Outside of work, I drum and manage my indie rock band Ejector Crab and I am a mentor at Curious Cardinals.
         </p>
         <p>
-          In university, I worked as a TA and Grader for multiple HCI classes, usually catered towards Masters students. I spent my summers teaching for Girls Who Code and conducting independent research through Carnegie Mellon.
+          In university, I worked as a TA and Grader for multiple HCI classes, usually catered towards Masters students. I spent my summers teaching for Girls Who Code and conducting independent [...]
         </p>
       </div>
       
@@ -292,11 +292,19 @@
       document.getElementById('navMobile').classList.toggle('open');
     }
 
-    /* scroll-to-top visibility (Synced with Index logic) */
+    /* scroll-to-top visibility */
     const scrollBtn = document.getElementById('scroll-top');
     window.addEventListener('scroll', () => {
-      // Toggle the 'visible' class when user scrolls past 400px
       scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+
+    /* scroll-to-top click handler */
+    scrollBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
   </script>
 </body>
