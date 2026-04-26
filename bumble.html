@@ -1,649 +1,832 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Janelle Tecson</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Lato"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Montserrat"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Janelle Tecson — Bumble's Hive</title>
 
-  <body>
-    <!-- Navbar -->
-    <div class="w3-top">
-      <div class="w3-bar w3-black w3-card w3-left-align w3-large">
-        <a
-          class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-gray w3-large w3-white"
-          href="javascript:void(0);"
-          onclick="myFunction()"
-          title="Toggle Navigation Menu"
-          ><i class="fa fa-bars"></i
-        ></a>
-        <a
-          href="index.html"
-          class="w3-bar-item w3-button w3-padding-large w3-black home-button"
-          >Janelle Tecson</a
-        >
-        <div class="w3-navbar-right">
-          <a
-            href="index.html#gallery"
-            class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
-            >Work</a
-          >
-          <a
-            href="https://medium.com/@jantecson30"
-            class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
-            target="_blank"
-            >Blog</a
-          >
-          <a
-            href="about.html"
-            class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
-            >About</a
-          >
-          <a
-            href="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/JanelleTecson_Resume_25.pdf?v=1727193786685"
-            target="_blank"
-            style="text-decoration: none"
-            class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
-            >Resume</a
-          >
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Tokens — Bumble yellow theme ── */
+    :root {
+      --black:   #111111;
+      --white:   #fafafa;
+      --mid:     #555555;
+      --light:   #e8e8e8;
+      --accent:  #F5C518;   /* Bumble yellow */
+      --accent-dark: #C99A00;
+      --accent-light: #FFF8DC;
+      --serif:   'DM Serif Display', serif;
+      --sans:    'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--light);
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 100;
+    }
+
+    nav .logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--black);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: opacity 0.15s;
+    }
+
+    nav ul a:hover { opacity: 0.45; }
+
+    /* hamburger */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.3rem;
+      color: var(--black);
+    }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      background: var(--white);
+      border-bottom: 1px solid var(--light);
+      padding: 1rem 2rem;
+      gap: 1rem;
+      position: sticky;
+      top: 57px;
+      z-index: 99;
+    }
+
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    @media (max-width: 680px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .nav-hamburger { display: block; }
+    }
+
+    /* ── Side TOC ── */
+    .toc {
+      position: fixed;
+      left: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      z-index: 50;
+    }
+
+    .toc a {
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      text-decoration: none;
+      color: var(--mid);
+      transition: color 0.2s;
+    }
+
+    .toc a:hover, .toc a.active { color: var(--black); }
+
+    @media (max-width: 900px) { .toc { display: none; } }
+
+    /* ── Page wrap ── */
+    .page-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 5rem 0 3rem;
+      border-bottom: 1px solid var(--light);
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--mid);
+      max-width: 560px;
+      margin-bottom: 2rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem 2rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--light);
+    }
+
+    .meta-item label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      margin-bottom: 0.3rem;
+    }
+
+    .meta-item span {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    /* ── Cover image ── */
+    .cover-img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 4.5rem;
+    }
+
+    /* ── Sections ── */
+    section {
+      margin-bottom: 4.5rem;
+      scroll-margin-top: 5rem;
+    }
+
+    section h2 {
+      font-family: var(--serif);
+      font-size: 1.85rem;
+      margin-bottom: 1.2rem;
+    }
+
+    section h3 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 2rem 0 0.7rem;
+      color: var(--black);
+    }
+
+    section p {
+      font-size: 0.97rem;
+      color: #222;
+      margin-bottom: 1rem;
+    }
+
+    hr.section-rule {
+      border: none;
+      border-top: 1px solid var(--light);
+      margin: 3rem 0;
+    }
+
+    /* ── Images ── */
+    .full-img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+      margin: 1.5rem 0;
+    }
+
+    .img-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .img-pair img { width: 100%; border-radius: 8px; display: block; }
+
+    @media (max-width: 600px) { .img-pair { grid-template-columns: 1fr; } }
+
+    /* ── Pillars ── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0;
+    }
+
+    .pillar-card {
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      padding: 1.4rem 1.2rem;
+    }
+
+    .pillar-card .num {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .pillar-card .label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .pillar-card p { font-size: 0.85rem; color: var(--mid); margin: 0; }
+
+    /* ── Pain point list ── */
+    .pain-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .pain-list li {
+      font-size: 0.95rem;
+      padding: 0.9rem 1.2rem;
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* ── Findings ── */
+    .findings {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .finding-item {
+      border-left: 2px solid var(--accent);
+      padding: 0.9rem 1.2rem 0.9rem 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .finding-item .finding-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .finding-item ul { list-style: none; padding: 0; }
+
+    .finding-item ul li {
+      font-size: 0.88rem;
+      color: #333;
+      padding: 0.2rem 0 0.2rem 1rem;
+      position: relative;
+    }
+
+    .finding-item ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--mid);
+    }
+
+    /* ── Design decisions callout ── */
+    .callout {
+      background: var(--black);
+      color: var(--white);
+      border-radius: 6px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .callout h3 { color: var(--white); margin-top: 0; text-transform: none; letter-spacing: 0; font-size: 1rem; font-family: var(--sans); font-weight: 600; }
+    .callout ul { list-style: none; padding: 0; margin-top: 0.8rem; }
+    .callout ul li {
+      font-size: 0.88rem;
+      color: #ccc;
+      padding: 0.35rem 0 0.35rem 1.2rem;
+      position: relative;
+      border-bottom: 1px solid #222;
+    }
+    .callout ul li:last-child { border-bottom: none; }
+    .callout ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+    /* ── Bumble yellow accent highlight ── */
+    .accent-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+    }
+
+    /* ── Quote block ── */
+    .quote-block {
+      border-top: 2px solid var(--accent);
+      border-bottom: 1px solid var(--light);
+      padding: 1.4rem 0;
+      margin: 2rem 0;
+    }
+
+    .quote-block blockquote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: var(--black);
+      margin-bottom: 0.4rem;
+    }
+
+    .quote-block cite {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      font-style: normal;
+    }
+
+    /* ── Video embed ── */
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── External links ── */
+    .link-row {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+
+    .ext-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.4rem;
+      border: 1.5px solid var(--black);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .ext-link:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--black);
+    }
+
+    .ext-link::after { content: ' ↗'; }
+
+    /* ── Reflection callout ── */
+    .reflection-callout {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .reflection-callout h3 {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0;
+      margin-bottom: 0.7rem;
+      color: var(--black);
+    }
+
+    .reflection-callout p { font-size: 0.92rem; color: #333; margin-bottom: 0.6rem; }
+    .reflection-callout p:last-child { margin-bottom: 0; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--black);
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .footer-social { display: flex; gap: 1.5rem; }
+    .footer-social a { color: #888; font-size: 1.1rem; transition: color 0.15s; }
+    .footer-social a:hover { color: var(--white); }
+
+    .footer-credit { font-size: 0.72rem; color: #555; width: 100%; }
+    .footer-credit a { color: #666; text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a class="logo" href="index.html">Janelle Tecson</a>
+    <ul>
+      <li><a href="index.html#projects">Work</a></li>
+      <li><a href="https://medium.com/@jantecson30" target="_blank">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/JanelleTecson_Resume_25.pdf?v=1727193786685" target="_blank">Resume</a></li>
+    </ul>
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+  </nav>
+
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html#projects" onclick="toggleNav()">Work</a>
+    <a href="https://medium.com/@jantecson30" target="_blank">Blog</a>
+    <a href="about.html">About</a>
+    <a href="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/JanelleTecson_Resume_25.pdf?v=1727193786685" target="_blank">Resume</a>
+  </div>
+
+  <!-- ── Side TOC ── -->
+  <aside class="toc" aria-label="Page sections">
+    <a href="#overview">Overview</a>
+    <a href="#design-system">Design System</a>
+    <a href="#research">Research</a>
+    <a href="#painpoints">Pain Points</a>
+    <a href="#safety">Safety</a>
+    <a href="#decisions">Decisions</a>
+    <a href="#final">Final Design</a>
+    <a href="#reflection">Reflection</a>
+  </aside>
+
+  <!-- ── Content ── -->
+  <main class="page-wrap">
+
+    <!-- Hero -->
+    <div class="hero">
+      <p class="hero-eyebrow">Bumble · Advanced Interaction Design Studio</p>
+      <h1>Bumble's Hive</h1>
+      <p class="hero-sub">A location-based service that helps Bumble users meet authentically in third spaces — with exclusive partner discounts, privacy-first design, and a seamless upgrade path to Premium.</p>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <label>Role</label>
+          <span>UI/UX Designer &amp; Researcher</span>
         </div>
-      </div>
-
-      <!-- Navbar on small screens -->
-      <div
-        id="navDemo"
-        class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large"
-      >
-        <a
-          href="index.html#gallery"
-          class="w3-bar-item w3-button w3-padding-large"
-          >Work</a
-        >
-        <a
-          href="https://medium.com/@jantecson30"
-          class="w3-bar-item w3-button w3-padding-large"
-          target="_blank"
-          >Blog</a
-        >
-        <a href="about.html" class="w3-bar-item w3-button w3-padding-large"
-          >About</a
-        >
-        <a
-          href="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/JanelleTecson_Resume_25.pdf?v=1727193786685"
-          target="_blank"
-          style="text-decoration: none"
-          class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
-          >Resume</a
-        >
+        <div class="meta-item">
+          <label>Project</label>
+          <span>Adv. Interaction Design Studio</span>
+        </div>
+        <div class="meta-item">
+          <label>Timeline</label>
+          <span>Three Weeks</span>
+        </div>
+        <div class="meta-item">
+          <label>Tools</label>
+          <span>Figma, FigJam, Miro</span>
+        </div>
       </div>
     </div>
 
-    <!-- Vertical Navigation Bar -->
-    <nav class="w3-large vertical-nav">
-      <ul>
-        <li><a href="bumble.html#hive">Hive</a></li>
-        <li><a href="bumble.html#overview">Overview</a></li>
-        <li><a href="bumble.html#research">Research</a></li>
-        <li><a href="bumble.html#painpoints">Pain Points</a></li>
-        <li><a href="bumble.html#safety">Safety</a></li>
-        <li><a href="bumble.html#design system">Design System</a></li>
-        <li><a href="bumble.html#finaldesign">Final Design</a></li>
-        <li><a href="bumble.html#reflection">Reflection</a></li>
+    <!-- Cover image -->
+    <img
+      class="cover-img"
+      src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_cover_pic.png?v=1725937916305"
+      alt="Bumble's Hive cover"
+    />
+
+    <!-- Overview -->
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>Hive is a location-based service that helps Bumble users meet one another at third places. By turning on their location, users can find participating Bumble Partner businesses that offer exciting opportunities to meet potential partners authentically — while enjoying the benefits of exclusive discounts for new budding couples.</p>
+      <p><em>Note: Exclusive and unlimited access is given to Bumble Premium+ Users.</em></p>
+      <p>I utilized data from previously failed Bumble features that involved location-based services. From their shortcomings, I analyzed the data to figure out how to appeal to the Bumble user demographic. I also used the Uber design system to create new features — practicing working with a design system and creating components that fit both the design system and Bumble's aesthetic.</p>
+
+      <div class="pillars">
+        <div class="pillar-card">
+          <div class="num">01</div>
+          <div class="label">Authentic Connection</div>
+          <p>Meet users nearby at vetted partner venues — no awkward app-only chats required.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="num">02</div>
+          <div class="label">Privacy First</div>
+          <p>Anonymous placards and opt-in controls keep every user in charge of their visibility.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="num">03</div>
+          <div class="label">Premium Incentive</div>
+          <p>Exclusive perks and unlimited venue access motivate free users to convert to Premium+.</p>
+        </div>
+      </div>
+
+      <p>The core problem: how can Bumble create a location-based service that attracts more paying users, motivates those with location on to subscribe, and nudges those without location on to enable it? The flexibility of this feature also means it can easily be adapted to both BFF and Bizz modes.</p>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Design System -->
+    <section id="design-system">
+      <h2>Design System</h2>
+      <h3>Working with Uber's Base</h3>
+      <p>I was given <strong>Base</strong> — Uber's design system — to work with. The components were fairly sleek and simple, providing good guidance on implementation. The main challenge was adapting a predominantly black-and-white system to fit Bumble's 'bumblebee' yellow aesthetic.</p>
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_base.jpg?v=1719274420255"
+        alt="Uber Base Design System"
+      />
+
+      <p>The most challenging part was making new components fit the design theme. I had to reuse icons from Base and build them into new components. For example, to signal a Premium feature, I repurposed a ribbon icon — which carries a different meaning in the Uber app. The limited icon set meant I had to create new icons or cleverly repurpose existing ones.</p>
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_design.png?v=1719277171550"
+        alt="Bumble design system components"
+      />
+
+      <p>The most surprising thing I learned about design systems was how structured they are. There are so many components and sub-parts that go into them — it made me value the amount of work that goes into building one. When designing with an established system, the overarching themes are already built in, which actually speeds up the process significantly.</p>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Research -->
+    <section id="research">
+      <h2>Research</h2>
+      <h3>Data-Driven Insights</h3>
+      <p>I first brainstormed ideas around the prompt to:</p>
+
+      <div class="quote-block">
+        <blockquote>"Correlate usage frequency, location and social drivers to gain insights about the circumstances that motivate users who experience precise location notifications to convert to subscribers."</blockquote>
+      </div>
+
+      <p>From this, I chose an idea centered on having people meet one another "authentically" — where everyone nearby is a Bumble user actively looking to connect with like-minded others.</p>
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_data.jpg?v=1719274591847"
+        alt="Bumble data insights"
+      />
+
+      <h3>Analyzing the Data</h3>
+      <p>From the data of two previously failed features, I found that "Map Integration for Nearby Events" outperformed "Proximity Alert" in adoption rates. This influenced me to build on the map integration component to enhance the social aspect of the app — adding discounts and the ability to see nearby users to maintain adoption and retention.</p>
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_data_2.png?v=1719275145241"
+        alt="Bumble data analysis"
+      />
+
+      <p>Designers should rely on data to some extent — but data alone only goes so far. Overwhelmingly positive or negative data points signal something clearly, but mixed data (which is the norm) should prompt deeper thinking rather than knee-jerk decisions. This is where creativity, user testing, and intuition fill the gaps.</p>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Pain Points -->
+    <section id="painpoints">
+      <h2>Pain Points</h2>
+      <p>Before moving into design, I identified five core questions that needed to be answered:</p>
+
+      <ul class="pain-list">
+        <li>How can locations be used to <strong>benefit</strong> users?</li>
+        <li>How would we make sure all users are <strong>safe</strong>?</li>
+        <li>What if users <strong>don't want</strong> to turn on their location?</li>
+        <li>How can we have free users <strong>switch to premium</strong>?</li>
+        <li>How can we <strong>place women first</strong> with this feature?</li>
       </ul>
-    </nav>
 
-    <div class="w3-container w3-white w3-center" style="padding-top: 90px">
-      <div id="hive"></div>
-      <div class="image-container">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_cover_pic.png?v=1725937916305"
-        />
-      </div>
-      <div class="w3-half w3-padding">
-        <div class="w3-xxxlarge" style="text-align: center">
-          <b> Bumble's Hive </b>
+      <h3>Using Locations to Benefit Users</h3>
+      <p>I incorporated a map feature showing users where Bumble Partner locations are. Within these locations, users can see:</p>
+
+      <div class="findings">
+        <div class="finding-item">
+          <div class="finding-title">Venue Details</div>
+          <ul>
+            <li>Address, rating, and photos of the partner location.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Peak Times</div>
+          <ul>
+            <li>The busiest times when most Bumble users gather at that location.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Personalized Tags</div>
+          <ul>
+            <li>Tags that align with the user's personal preferences and interests.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Enter Event Button</div>
+          <ul>
+            <li>Only available when physically at the venue — unlocking discounts and showing the number of Bumble users present.</li>
+          </ul>
         </div>
       </div>
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/pins_feature.jpg?v=1719275834529"
+        alt="Bumble Hive map pins feature"
+      />
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_prem.jpg?v=1719276180166"
+        alt="Bumble Premium discounts"
+      />
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Safety -->
+    <section id="safety">
+      <h2>Safety &amp; Privacy</h2>
+      <h3>How Would We Make Sure All Users Are Safe?</h3>
+      <p>To protect user privacy, I introduced <strong>single bee placards</strong>. These include a name, age, photo, and icebreaker — but users don't need to use a real photo of themselves. Instead, they can create alternative placards visible only to certain gender categories. Users can also opt out entirely to remain anonymous.</p>
+      <p>Placard settings live inside the user's regular Bumble profile settings — keeping the experience familiar and frictionless.</p>
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_feature.jpg?v=1719276442122"
+        alt="Bumble placard safety feature"
+      />
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Design Decisions -->
+    <section id="decisions">
+      <h2>Design Decisions</h2>
+
+      <div class="callout">
+        <h3>Key Decisions Made</h3>
+        <ul>
+          <li>Used Uber's Design System: Base as the component foundation.</li>
+          <li>Created a new icon within the navigation bar exclusively for the Hive feature.</li>
+          <li>Added new location-related onboarding questions when users first create their account.</li>
+          <li>Introduced <strong>Bumble Partner</strong> — a distinct section for businesses who opt in as a Hive location, including an analytics dashboard and discount creation tools.</li>
+          <li>No desktop experience — this is intentionally mobile-only since the feature is location-dependent. This also motivates more in-app usage.</li>
+          <li>Hive is designed to be easily transferable to BFF and Bizz modes without significant redesign.</li>
+        </ul>
+      </div>
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_design.png?v=1719277171550"
+        alt="Design decisions overview"
+      />
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Final Design -->
+    <section id="final">
+      <h2>The Final Design</h2>
+
+      <img
+        class="full-img"
+        src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_header.jpg?v=1717779572064"
+        alt="Bumble Hive final design overview"
+      />
+
+      <h3>Full Hive Demo Tour</h3>
+      <div class="video-wrap">
+        <iframe
+          src="https://drive.google.com/file/d/1Rt--92Dy5DxXmfx-AuOWqSQ00h4GjUBi/preview"
+          allow="autoplay"
+        ></iframe>
+      </div>
+
+      <div class="link-row">
+        <a class="ext-link" href="https://www.figma.com/file/dHr6Esm8aXBamUe2mHd3l6/Bumble-(Base-Design-System)-JTecson?type=design&node-id=22520%3A198918&mode=design&t=vYCBjyQiPpiUFhlr-1" target="_blank">Figma Prototype</a>
+        <a class="ext-link" href="https://www.figma.com/file/dHr6Esm8aXBamUe2mHd3l6/Bumble-(Base-Design-System)-JTecson?type=design&node-id=22733-205787&mode=design" target="_blank">Custom Components</a>
+      </div>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Reflection -->
+    <section id="reflection">
+      <h2>Reflection</h2>
+
+      <div class="reflection-callout">
+        <h3>What I Learned</h3>
+        <p>From this project, I learned how to integrate new components and work with existing ones in an already-built design system. If I had more time or resources, I would spend more on micro-interactions in Figma to make the feature flow feel polished and truly native to Bumble.</p>
+        <p>I would also run user interviews and tests with people outside the design space — most of my critique came from other designers, and I want to know how non-designers would react to the feature.</p>
+      </div>
+
+      <h3>Going Beyond the Brief</h3>
+      <p>If I had strictly followed the requirements as written, I would have missed several critical design considerations. The brief said nothing about user safety when location is enabled — without addressing this, the feature could have put users at risk of harassment. My solution introduced anonymous placards and opt-out controls to give users safety through choice.</p>
+      <p>Similarly, the brief didn't address third-party partnerships. I developed the Bumble Partner concept independently — a separate interface for businesses to view analytics and create user discounts — to make the full ecosystem work.</p>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <a class="footer-logo" href="index.html">Janelle Tecson</a>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/in/janelle-tecson/" target="_blank" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+      <a href="https://www.instagram.com/ejectorcrabband/" target="_blank" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
     </div>
+    <p class="footer-credit">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+  </footer>
 
-    <div class="w3-padding w3-container aligned-container w3-sand">
-      <div>
-        <h5 class="content-words">
-          A location-based service made to help Bumble users meet in third
-          spaces while promoting security and privacy for all users. This
-          feature allows for complimentary discounts for Bumble users at
-          participating Bumble Partner locations as well as exclusive perks for
-          premium users.
-          <br />
-          This project integrated a new Bumble feature that incorporates the
-          <b> Uber Design System: Base </b>
-        </h5>
-        <br />
-        <div class="content-words">
-          <h5>
-            <div class="w3-quarter">
-              <b>Role</b>
-              <br />
-              UI/UX Designer & Researcher
-            </div>
+  <!-- TOC scroll spy -->
+  <script>
+    function toggleNav() {
+      document.getElementById('navMobile').classList.toggle('open');
+    }
 
-            <div class="w3-quarter">
-              <b>Project</b>
-              <br />
-              Adv. Interaction Design Studio
-            </div>
+    const tocLinks = document.querySelectorAll('.toc a');
+    const sections = document.querySelectorAll('section[id]');
 
-            <div class="w3-quarter">
-              <b>Timeline</b>
-              <br />
-              Three Weeks
-            </div>
-
-            <div class="w3-quarter">
-              <b>Tools</b>
-              <br />
-              Figma, FigJam, Miro
-            </div>
-          </h5>
-          <br />
-          <br />
-          <div id="overview"></div>
-          <br />
-        </div>
-      </div>
-    </div>
-
-    <!-- OVERVIEW -->
-
-    <div class="w3-white">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-left-align">
-          <b> Overview </b>
-        </div>
-      </div>
-      <div class="content-words w3-left-align">
-        <h5>
-          Hive is a location-based service that helps Bumble users meet one
-          another at third places
-          <br />
-          <br />
-
-          By turning on their location, users will be able to find participating
-          Bumble Partner businesses that offer exciting opportunities to meet
-          potential partners authentically– while also enjoying the benefits of
-          exclusive discounts for new budding couples.
-          <br />
-          <i>
-            Note: Exclusive and unlimited access is given to Bumble Premium+
-            Users</i
-          >
-          <br />
-          <br />
-
-          I utilized data from previously failed Bumble features that involved
-          location-based services. From their shortcomings, I analyzed the data
-          to figure out how to appeal to the Bumble user demographic. I also
-          used the Uber design system to create my new features to practice
-          working with a design system and creating components that fits both
-          the design system and Bumble aesthetic
-          <br />
-          <br />
-          <br />
-          The problem I was trying to solve was how Bumble can create a location
-          based service that can attract more users to become paying users. In
-          addition to this, I wanted to motivate users who already have their
-          location notifications turned on to become subscribers but also
-          hopefully motivate users who do not have location notifications on to
-          turn them on specifically for Bumble. To continue, my idea can easily
-          be converted to match both BFF and Bizz because of its flexibility and
-          there is no strong emphasis on necessarily meeting people to date
-          them.
-        </h5>
-        <br />
-      </div>
-      <div class="content-words w3-xxlarge">
-        <b>Design System </b>
-      </div>
-      <div class="medium-image">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_base.jpg?v=1719274420255"
-        />
-      </div>
-      <div id="research"></div>
-      <h5 class="content-words w3-center">
-        I was given Base as a design system to work with. The components were
-        fairly easy to use as they were sleek, simple, and provided good
-        insights on how to implement them into Bumble. However, it was tricky to
-        make a mostly black and white aesthetic to fit a yellow
-        'bumblebee'-esque theme
-      </h5>
-    </div>
-
-    <!-- RESEARCH   -->
-
-    <div class="w3-padding w3-container aligned-container w3-sand">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-left-align">
-          <b> Research </b>
-        </div>
-        <br />
-        <div class="w3-xlarge w3-left-align">
-          <b> Data Driven Insights </b>
-        </div>
-      </div>
-      <div class="content-words w3-left-align">
-        <h5>
-          I first brainstormed a few ideas on the given prompt to
-          <br />
-          <br />
-
-          <div class="w3-center">
-            <i>
-              "correlate usage frequency, location and social drivers to gain
-              insights about the circumstances that motivate users who
-              experience precise location notifications to convert to
-              subscribers. "
-            </i>
-          </div>
-          <br />
-          <br />
-
-          From this, I chose an idea that revolved around having people meet one
-          another "authentically" where everyone around is a Bumble user
-          actively looking to meet like-minded others
-        </h5>
-      </div>
-      <div class="medium-image">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_data.jpg?v=1719274591847"
-        />
-      </div>
-
-      <br />
-    </div>
-
-    <div class="w3-padding w3-container aligned-container w3-white">
-      <div class="w3-padding content-words">
-        <div class="w3-xlarge w3-left-align">
-          <b> Analyzing the Data </b>
-        </div>
-        <br />
-      </div>
-      <div class="content-words w3-left-align">
-        <h5>
-          From the given data of the two failed features, the adoption rates
-          declined but the “Map Integration for Nearby Events” seemed to be more
-          successful compared to the “Proximity Alert”.This helped influence me
-          to use the map integration component to enhance the social aspect of
-          the app. By adding upon that feature with discounts and having the
-          ability to see people in the area, it may keep adoption and retention
-          rates high.
-          <br />
-          <br />
-          <br />
-          I believe that designers should rely on data to make their decisions
-          to some extent. Data can only bring designers so far and they should
-          rely on their creativity and also utilize their own tests, strategies,
-          and interviews when designing.
-        </h5>
-        <br />
-      </div>
-      <div class="medium-image">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_data_2.png?v=1719275145241"
-        />
-      </div>
-      <div class="content-words w3-left-align">
-        <h5>
-          <br />
-          There are times where it is more appropriate to use data. For example,
-          if there are overwhelming large numbers of positive or negative data
-          points, it signals to the designer that something about the feature is
-          extremely good or bad. However, data that seems mixed (which it
-          usually is), should help the designer think about the issue at hand
-          rather than immediately shutting something down.
-        </h5>
-        <br />
-        <div id="painpoints"></div>
-      </div>
-      <br />
-    </div>
-
-    <div class="w3-padding w3-container aligned-container w3-amber">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-left-align">
-          <b> Pain Points </b>
-        </div>
-      </div>
-
-      <div class="w3-twothird">
-        <br />
-        <h5 class="content-words">
-          ○ " How can locations be used to benefit users? "
-          <br />
-          <br />
-
-          ○ " How would we make sure all users are safe? "
-          <br />
-          <br />
-
-          ○ " What if users don't want to turn on their location? "
-          <br />
-          <br />
-
-          ○ " How can we have free users switch to premium? "
-          <br />
-          <br />
-
-          ○ " How can we place women first with this feature? "
-          <br />
-        </h5>
-      </div>
-
-      <div class="w3-third anotha-image w3-left-align">
-        <br />
-        <img
-          id="just-a-girl-pic"
-          style="border-radius: 0.75rem; border: 5px solid black"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumblegirl.jpg?v=1719275337079"
-        />
-      </div>
-    </div>
-
-    <div class="w3-container aligned-container w3-white">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-left-align">
-          <b> How Can Locations Be Used To Benefit Users? </b>
-        </div>
-      </div>
-      <h5 class="content-words w3-left-align">
-        I decided to incorporate a map feature that shows users where Bumble
-        Partner locations are. Within these locations, users can see:
-        <br />
-        <br />
-        ○ The venue address, rating, and pictures
-        <br />
-        <br />
-        ○ The busiest times when most Bumble users gather at that location
-        <br />
-        <br />
-        ○ The tags that line up with the user's personal preferences
-        <br />
-        <br />
-        ○ A button to enter the event (only available when at the venue)
-      </h5>
-
-      <div class="smaller-image">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/pins_feature.jpg?v=1719275834529"
-        />
-      </div>
-      <br />
-      <h5 class="content-words w3-center">
-        Clicking the 'Enter Event' button takes the user to the different
-        discounts offered and shows them the total number of Bumble users at
-        that area
-      </h5>
-
-      <div class="smaller-image">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_prem.jpg?v=1719276180166"
-        />
-        <div id="safety"></div>
-      </div>
-    </div>
-
-    <!-- PROTOTYPING -->
-
-    <div class="w3-container aligned-container w3-sand">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-left-align">
-          <b> How Would We Make Sure All Users Are Safe?</b>
-        </div>
-      </div>
-      <h5 class="content-words w3-left-align">
-        To help mask users and keep their privacy, I introduced single bee
-        placards. These placards will include the person's name, age, a picture,
-        and an icebreaker. The user does not need to use a picture of
-        themselves. Instead, they can create alternative placards for people of
-        a certain gender catergory to view. Users can even opt out of showing
-        their placard if they truly want to remain anonymous
-        <br />
-        <br />
-        Users have the ability to choose their placards within their user
-        settings, where they will usually go to to change their regular Bumble
-        profile.
-      </h5>
-      <div class="medium-image">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_feature.jpg?v=1719276442122"
-        />
-      </div>
-      <div id="design system"></div>
-      <br />
-    </div>
-
-    <div class="w3-container aligned-container w3-white">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-left-align">
-          <b> Working with a Design System</b>
-        </div>
-      </div>
-      <h5 class="content-words w3-left-align">
-        The most challenging part of making a new component for a Design System
-        was making it fit in with the design theme. I had to reuse some icons
-        from my Design System (Base) and built them into new components.
-        <br />
-        <br />
-        For example, to demonstrate that something is a Premium feature, I used
-        a ribbon icon– which might mean something different in the Uber app. The
-        very limited amount of icons made it hard to design because I had to
-        make new icons or reuse ones that already existed.
-      </h5>
-      <div class="medium-image">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_design.png?v=1719277171550"
-        />
-      </div>
-      <h5 class="content-words w3-left-align">
-        The most surprising thing I learned about Design Systems was how
-        structured they were. There are so many components and parts that go
-        into Design Systems that I never thought about. It made me value the
-        amount of work that goes into it. When designing with a Design System,
-        it makes it easier to create as the overarching themes are already built
-        in.
-      </h5>
-      <br />
-    </div>
-
-    <div class="w3-container aligned-container w3-amber">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-center">
-          <b> Design Decisions</b>
-        </div>
-      </div>
-      <h4 class="content-words w3-left-align">
-        <b>
-          ○ Used Uber’s Design System: Base
-          <br />
-          <br />
-          ○ Creation of a new icon within navigation bar just for this feature
-          <br />
-          <br />
-          ○ New location related questions when first creating account
-          <br />
-          <br />
-          ○ Creation of Bumble Partner: a distinct section of Bumble for
-          businesses who opt into being a Hive for Bumble
-          <br />
-          <br />
-          ○ No desktop website feature offered. Due to this feature being
-          location based, bringing a laptop to venues will be challenging. This
-          will also help motivate users to use the app more to have the full
-          experience
-          <br />
-          <br />
-          ○ Although not seen in the demo, Hive can easily be transferred to BFF
-          and Bizz
-        </b>
-      </h4>
-      <div id="finaldesign"></div>
-
-      <br />
-    </div>
-
-    <div class="w3-container aligned-container w3-white">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-left-align">
-          <b>The Final Design </b>
-        </div>
-      </div>
-      <br />
-      <br />
-      <div class="w3-center medium-image">
-        <img
-          style="border-radius: 0.75em"
-          src="https://cdn.glitch.global/52edf5f0-0b73-49d9-8fa2-4d4c2e795bf1/bumble_header.jpg?v=1717779572064"
-        />
-      </div>
-      <br />
-      <br />
-      <div class="w3-center">
-        <div>
-          <h5 class="w3-xlarge">
-            <b> Full Hive Demo Tour </b>
-          </h5>
-        </div>
-        <div class="video-container">
-          <iframe
-            src="https://drive.google.com/file/d/1Rt--92Dy5DxXmfx-AuOWqSQ00h4GjUBi/preview"
-            allow="autoplay"
-            style="border-radius: 0.75em"
-          ></iframe>
-        </div>
-      </div>
-      <h4 class="content-words w3-center">
-        <b
-          ><a
-            href="https://www.figma.com/file/dHr6Esm8aXBamUe2mHd3l6/Bumble-(Base-Design-System)-JTecson?type=design&node-id=22520%3A198918&mode=design&t=vYCBjyQiPpiUFhlr-1"
-            style="color: black"
-            target="_blank"
-          >
-            Figma Prototype Link
-          </a></b
-        >
-        <br />
-      </h4>
-      <h4 class="content-words w3-center">
-        <b
-          ><a
-            href="https://www.figma.com/file/dHr6Esm8aXBamUe2mHd3l6/Bumble-(Base-Design-System)-JTecson?type=design&node-id=22733-205787&mode=design"
-            style="color: black"
-            target="_blank"
-          >
-            Custom Figma Components
-          </a></b
-        >
-        <div id="reflection"></div>
-        <br />
-      </h4>
-    </div>
-
-    <div class="w3-container aligned-container w3-white">
-      <div class="w3-padding content-words">
-        <div class="w3-xxlarge w3-left-align">
-          <b>Reflection</b>
-        </div>
-      </div>
-
-      <h5 class="content-words w3-left-align">
-        From this project, I learned how to integrate new components and work
-        with existing ones in an already built design system. If I had more time
-        or more resources, I would definitely spend more time learning about
-        micro interactions within Figma. This would help my app feature flow
-        more smoothly and seem like a real feature integrated within Bumble. I
-        would also want to run interviews and user tests with my feature to see
-        how other people would react to it. Since most of my critiques came from
-        other designers, I want to see how non-designers or non-HCI people would
-        critique my work.
-        <br />
-        <br />
-        If I were to strictly follow the requirements as written, I would have
-        missed out on multiple key features I added within my design and it
-        would have been missing a lot of design considerations. For example, the
-        brief mentions nothing about security and safety for the users when they
-        have their location turned on. If I were to not consider this, my
-        service would have been a liability to the users and may potentially put
-        them in danger of harassment. My service gave the users the option to
-        hide themselves or provide an alternative way for people to see them on
-        the app to help give them safety via anonymity. To continue, my service
-        utilized third parties and the design brief did not say anything about
-        how to handle third parties. For this, I had to come up with my own
-        ideas on how third parties would view the Bumble app as a partner and I
-        settled on creating a separate app called Bumble Partner for them to
-        view analytics and create discounts for users.
-        <br />
-        <br />
-        Thank you for reading!
-      </h5>
-    </div>
-
-    <!--  footer to be placed at end of every page    -->
-    <footer class="w3-container w3-padding-64 w3-center w3-black">
-      <div class="w3-xlarge w3-padding-32">
-        <a href="https://www.linkedin.com/in/janelle-tecson/" target="_blank"
-          ><i class="fa fa-linkedin w3-hover-opacity"></i
-        ></a>
-        <a href="https://www.instagram.com/ejectorcrabband/" target="_blank"
-          ><i class="fa fa-instagram w3-hover-opacity"></i
-        ></a>
-      </div>
-      <p>
-        Powered by
-        <a href="https://www.w3schools.com/w3css/default.asp" target="_blank"
-          >w3.css</a
-        >
-      </p>
-    </footer>
-
-    <script>
-      // Used to toggle the menu on small screens when clicking on the menu button
-      function myFunction() {
-        var x = document.getElementById("navDemo");
-        if (x.className.indexOf("w3-show") == -1) {
-          x.className += " w3-show";
-        } else {
-          x.className = x.className.replace(" w3-show", "");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
         }
-      }
-    </script>
-  </body>
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
 </html>
-
-
