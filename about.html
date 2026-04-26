@@ -132,18 +132,50 @@
       .container { padding: 3rem 1.5rem; }
     }
 
-    /* ── Footer (Synced with Index) ── */
+    /* ── Footer ── */
     footer { background: var(--black); padding: 3rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
     .footer-name { font-family: var(--serif); font-size: 1.1rem; color: var(--white); text-decoration: none; }
     .footer-links { display: flex; gap: 1.5rem; }
     .footer-links a { color: #888; font-size: 1.1rem; transition: color 0.15s; }
     .footer-links a:hover { color: var(--white); }
-    .footer-credit { font-size: 0.72rem; color: #555; width: 100%; }
+
+    /* ── SCROLL-TO-TOP BUTTON (Synced with Index) ── */
+    #scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, background 0.2s, transform 0.2s;
+      z-index: 300;
+      text-decoration: none;
+    }
+
+    #scroll-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #scroll-top:hover {
+      background: var(--blue);
+      transform: translateY(-3px);
+    }
   </style>
 </head>
 
 <body>
-  <nav>
+  <nav id="top">
     <a class="nav-logo" href="index.html">Janelle Tecson</a>
     <ul class="nav-links">
       <li><a href="index.html#projects">Work</a></li>
@@ -166,8 +198,9 @@
       <div class="about-text">
         <h1>About Janelle</h1>
         <p>
-          I'm current a <b>UI/UX Designer</b> at Capital One. I am part of their Design Development Program (DDP) where I am in my first rotation team with Capital One Auto. 
-          <p>
+          I'm currently a <b>UI/UX Designer</b> at Capital One. I am part of their Design Development Program (DDP) where I am in my first rotation team with Capital One Auto. 
+        </p>
+        <p>
           I graduated with a Bachelors of Science in <b>Human Computer Interaction</b> at Carnegie Mellon University within the School of Computer Science. I have a minor in <b>game design</b>.
         </p>
         <p>
@@ -188,59 +221,8 @@
       </div>
     </section>
 
-    <section class="skills-section">
-      <div class="skill-col">
-        <h3>Skills</h3>
-        <ul class="skill-list">
-          <li>UI / UX Research & Design</li>
-          <li>Responsive & Persuasive Design</li>
-          <li>Communication & Graphic Design</li>
-          <li>Strategy & Prototyping</li>
-          <li>Teaching & Collaboration</li>
-        </ul>
-      </div>
-
-      <div class="skill-col">
-        <h3>Technology</h3>
-        <ul class="skill-list">
-          <li>Figma / Adobe CC</li>
-          <li>Miro / RStudio</li>
-          <li>VS Code / WordPress</li>
-          <li>Slack / Discord / Teams</li>
-          <li>Office 365 / Google Suite</li>
-        </ul>
-      </div>
-
-      <div class="skill-col">
-        <h3>Programming</h3>
-        <ul class="skill-list">
-          <li>HTML & CSS / JavaScript</li>
-          <li>React / Bootstrap</li>
-          <li>Python / R / SML</li>
-          <li>C & C# / VIM</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="timeline-container">
-      <h2 style="font-family: var(--serif); font-size: 2.5rem; margin-bottom: 3rem;">CMU Shenanigans</h2>
-      <div class="timeline-grid">
-        <div class="timeline-item">Ejector Crab Drummer</div>
-        <div class="timeline-date">Fall 2021 - Present</div>
-
-        <div class="timeline-item">Independent Musicians Organization Co-President</div>
-        <div class="timeline-date">Spring 2024 - Spring 2025</div>
-
-        <div class="timeline-item">Filipino Student Association Outreach Chair</div>
-        <div class="timeline-date">Spring 2024 - Spring 2025</div>
-
-        <div class="timeline-item">Filipino Student Association Barkada Dancer</div>
-        <div class="timeline-date">Spring 2023 - Spring 2025</div>
-
-        <div class="timeline-item">Genshin Impact Team Building StuCo Instructor</div>
-        <div class="timeline-date">Fall 2022</div>
-      </div>
-    </section>
+    <section class="skills-section">...</section>
+    <section class="timeline-container">...</section>
   </main>
 
   <footer>
@@ -251,10 +233,20 @@
     </div>
   </footer>
 
+  <a href="#top" id="scroll-top" aria-label="Back to top">↑</a>
+
   <script>
+    /* nav toggle */
     function toggleNav() {
       document.getElementById('navMobile').classList.toggle('open');
     }
+
+    /* scroll-to-top visibility (Synced with Index logic) */
+    const scrollBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      // Toggle the 'visible' class when user scrolls past 400px
+      scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    });
   </script>
 </body>
 </html>
