@@ -159,19 +159,16 @@
 
     /* ── Images ── */
 
-    /* Full-width image — replaces .img-placeholder.tall (420px) */
+    /* Full-width image — never crops, shows the whole image */
     .img-full {
       width: 100%;
+      height: auto;
       border-radius: 6px;
       display: block;
-      object-fit: cover;
+      background: #f4f4f2;
     }
 
-    .img-full.tall  { height: 420px; }
-    .img-full.mid   { height: 300px; }
-    .img-full.short { height: 220px; }
-
-    /* Pair of images side-by-side — replaces .img-pair */
+    /* Pair of images side-by-side */
     .img-pair {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -181,15 +178,14 @@
 
     .img-pair img {
       width: 100%;
-      height: 240px;
-      object-fit: cover;
+      height: auto;
       border-radius: 6px;
       display: block;
+      background: #f4f4f2;
     }
 
     @media (max-width: 600px) {
       .img-pair { grid-template-columns: 1fr; }
-      .img-pair img { height: 200px; }
       nav { padding: 1rem 1.2rem; }
       .page-wrap { padding: 0 1.2rem 4rem; }
     }
@@ -420,7 +416,7 @@
 
     <!-- Cover image — tall (420px) -->
     <img
-      class="img-full tall"
+      class="img-full"
       src="assets/images/inventory-images/inv-final-layout.jpg"
       alt="Finalized five-widget inventory homepage dashboard layout"
       style="margin-bottom: 4.5rem;"
@@ -495,7 +491,7 @@
 
       <!-- short (220px) -->
       <img
-        class="img-full short"
+        class="img-full"
         src="assets/images/inventory-images/inv-research-questions.PNG"
         alt="Research questions and objectives used during dealership discovery interviews"
         style="margin: 1.5rem 0;"
@@ -584,7 +580,7 @@
 
       <!-- mid (300px) — initial components -->
       <img
-        class="img-full mid"
+        class="img-full"
         src="assets/images/inventory-images/inv-initial-components.PNG"
         alt="Initial component concepts explored during early ideation sessions"
         style="margin: 1.5rem 0;"
@@ -657,7 +653,7 @@
 
       <!-- tall (420px) — final layout states showing all widget variations -->
       <img
-        class="img-full tall"
+        class="img-full"
         src="assets/images/inventory-images/inv-final-layout-states.PNG"
         alt="Final inventory homepage showing all widget states and layout variations"
         style="margin: 2rem 0;"
@@ -666,7 +662,7 @@
       <h3>Five Widget Dashboard</h3>
       <!-- mid (300px) — the five-widget dashboard overview -->
       <img
-        class="img-full mid"
+        class="img-full"
         src="assets/images/inventory-images/inv-final-layout.jpg"
         alt="Five-widget dashboard overview: acquisition health, stock age, pricing, recommendations, and market comparison"
         style="margin: 1.5rem 0;"
@@ -675,7 +671,7 @@
       <h3>Responsive Component Design</h3>
       <!-- mid (300px) — responsive components -->
       <img
-        class="img-full mid"
+        class="img-full"
         src="assets/images/inventory-images/inv-responsive-components.PNG"
         alt="Responsive component designs showing how inventory widgets adapt across screen sizes"
         style="margin: 1.5rem 0;"
