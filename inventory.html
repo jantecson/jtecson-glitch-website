@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Janelle Tecson — Inventory Homepage</title>
 
-  <!-- Match existing site fonts: w3.css + Google Fonts implied by site aesthetic -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,7 +34,7 @@
       line-height: 1.65;
     }
 
-    /* ── Nav (mirrors existing site) ── */
+    /* ── Nav ── */
     nav {
       display: flex;
       align-items: center;
@@ -158,24 +157,42 @@
       font-weight: 400;
     }
 
-    /* ── Image placeholder ── */
-    .img-placeholder {
+    /* ── Images ── */
+
+    /* Full-width image — replaces .img-placeholder.tall (420px) */
+    .img-full {
       width: 100%;
-      background: var(--light);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-weight: 500;
+      border-radius: 6px;
+      display: block;
+      object-fit: cover;
     }
 
-    .img-placeholder.tall  { height: 420px; }
-    .img-placeholder.mid   { height: 300px; }
-    .img-placeholder.short { height: 220px; }
+    .img-full.tall  { height: 420px; }
+    .img-full.mid   { height: 300px; }
+    .img-full.short { height: 220px; }
+
+    /* Pair of images side-by-side — replaces .img-pair */
+    .img-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .img-pair img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .img-pair { grid-template-columns: 1fr; }
+      .img-pair img { height: 200px; }
+      nav { padding: 1rem 1.2rem; }
+      .page-wrap { padding: 0 1.2rem 4rem; }
+    }
 
     /* ── Sections ── */
     section {
@@ -348,20 +365,6 @@
       border-top: 1px solid var(--light);
       margin: 3rem 0;
     }
-
-    /* ── Image pair ── */
-    .img-pair {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-
-    @media (max-width: 600px) {
-      .img-pair { grid-template-columns: 1fr; }
-      nav { padding: 1rem 1.2rem; }
-      .page-wrap { padding: 0 1.2rem 4rem; }
-    }
   </style>
 </head>
 <body>
@@ -373,7 +376,7 @@
       <li><a href="index.html#gallery">Work</a></li>
       <li><a href="https://medium.com/@jantecson30" target="_blank">Blog</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="assets/images/DDP_ JTecson_Resume.pdf"" target="_blank">Resume</a></li>
+      <li><a href="assets/images/DDP_ JTecson_Resume.pdf" target="_blank">Resume</a></li>
     </ul>
   </nav>
 
@@ -415,10 +418,13 @@
       </div>
     </div>
 
-    <!-- Cover image placeholder -->
-    <div class="img-placeholder tall" style="margin-bottom: 4.5rem;">
-      <img src="assets/images/inventory-images/inv-final-layout.jpg" alt="final layout for inventory homepage">
-    </div>
+    <!-- Cover image — tall (420px) -->
+    <img
+      class="img-full tall"
+      src="assets/images/inventory-images/inv-final-layout.jpg"
+      alt="Finalized five-widget inventory homepage dashboard layout"
+      style="margin-bottom: 4.5rem;"
+    />
 
     <!-- Overview -->
     <section id="overview">
@@ -487,9 +493,13 @@
       <h3>In-Field Dealership Discovery</h3>
       <p>With a foundational understanding of dealership workflows and a set of initial low-fidelity concepts, I moved into the primary research phase. I facilitated a series of discovery interviews with dealerships, driven by two core hypotheses:</p>
 
-      <div class="img-placeholder short" style="margin-bottom: 4.5rem;">
-        <img src="assets/images/inventory-images/inv-research-questions.PNG" alt="final layout for inventory homepage">
-      </div>
+      <!-- short (220px) -->
+      <img
+        class="img-full short"
+        src="assets/images/inventory-images/inv-research-questions.PNG"
+        alt="Research questions and objectives used during dealership discovery interviews"
+        style="margin: 1.5rem 0;"
+      />
 
       <table class="research-table">
         <thead>
@@ -517,13 +527,13 @@
 
     <!-- Findings -->
     <section id="findings">
-      <h2>Findings & Pain Points</h2>
+      <h2>Findings &amp; Pain Points</h2>
 
       <p>Based on our interviews, I performed a synthesis and found the following key takeaways:</p>
 
       <div class="findings">
         <div class="finding-item">
-          <div class="finding-title">Speed & Real-Time Data Is Critical</div>
+          <div class="finding-title">Speed &amp; Real-Time Data Is Critical</div>
           <ul>
             <li>Current tools update only every few minutes or hours — far too slow for fast-moving inventory decisions.</li>
             <li>Dealers need instant price changes and live inventory status refreshes.</li>
@@ -532,7 +542,7 @@
         </div>
 
         <div class="finding-item">
-          <div class="finding-title">Competitor & Market Comparisons Are Highly Valuable</div>
+          <div class="finding-title">Competitor &amp; Market Comparisons Are Highly Valuable</div>
           <ul>
             <li>General managers constantly monitor competitors to adjust pricing strategy — a centralized view would be a major win.</li>
             <li>Dealers want to see how their dealership compares to others within their local market (MSA / 75-mile radius).</li>
@@ -549,7 +559,6 @@
           </ul>
         </div>
       </div>
-
     </section>
 
     <hr class="section-rule" />
@@ -561,14 +570,25 @@
       <h3>Sketching</h3>
       <p>The dealer visits gave me much richer signal to translate into more accurate designs. With our design system as a foundation, I brought lo-fi sketches to partner and leadership meetings to align on direction before investing in high-fidelity work.</p>
 
+      <!-- Pair: two sketches side by side (240px tall each) -->
       <div class="img-pair">
-        <img src="assets/images/inventory-images/inv-sketch.HEIC" alt="final layout for inventory homepage">
-        <img src="assets/images/inventory-images/inv-many-drafts.PNG" alt="final layout for inventory homepage">
+        <img
+          src="assets/images/inventory-images/inv-sketch.HEIC"
+          alt="Early hand-drawn lo-fi sketch of inventory homepage layout"
+        />
+        <img
+          src="assets/images/inventory-images/inv-many-drafts.PNG"
+          alt="Multiple draft iterations of the inventory homepage side by side"
+        />
       </div>
 
-    <div class="img-placeholder mid" style="margin-bottom: 4.5rem;">
-      <img src="assets/images/inventory-images/inv-initial-components.PNG" alt="final layout for inventory homepage">
-    </div>
+      <!-- mid (300px) — initial components -->
+      <img
+        class="img-full mid"
+        src="assets/images/inventory-images/inv-initial-components.PNG"
+        alt="Initial component concepts explored during early ideation sessions"
+        style="margin: 1.5rem 0;"
+      />
 
       <p>Many different component concepts were explored during these sessions. After alignment with partners and leadership, I designed the first-pass initial designs for validation testing.</p>
 
@@ -593,9 +613,16 @@
       <h3>Layout Exploration</h3>
       <p>I pushed the designs further by exploring a wide range of layout configurations — clickable widgets that open modals, dropdowns, and views that switch entire widget states. The goal was to find the configuration that best balanced scannability with depth.</p>
 
+      <!-- Pair: two layout explorations (240px tall each) -->
       <div class="img-pair">
-        <img src="assets/images/inventory-images/inv-early-layout-consideration-2.PNG" alt="final layout for inventory homepage">
-        <img src="assets/images/inventory-images/inv-early-layout-consideration.PNG" alt="final layout for inventory homepage">
+        <img
+          src="assets/images/inventory-images/inv-early-layout-consideration-2.PNG"
+          alt="Early layout exploration — alternate widget arrangement with dropdown interactions"
+        />
+        <img
+          src="assets/images/inventory-images/inv-early-layout-consideration.PNG"
+          alt="Early layout exploration — initial widget grid configuration"
+        />
       </div>
     </section>
 
@@ -628,14 +655,31 @@
         </div>
       </div>
 
-      <img src="assets/images/inventory-images/inv-final-layout-states.PNG" alt="final layout for inventory homepage">
+      <!-- tall (420px) — final layout states showing all widget variations -->
+      <img
+        class="img-full tall"
+        src="assets/images/inventory-images/inv-final-layout-states.PNG"
+        alt="Final inventory homepage showing all widget states and layout variations"
+        style="margin: 2rem 0;"
+      />
 
       <h3>Five Widget Dashboard</h3>
-     <img src="assets/images/inventory-images/inv-final-layout.jpg" alt="final layout for inventory homepage">
+      <!-- mid (300px) — the five-widget dashboard overview -->
+      <img
+        class="img-full mid"
+        src="assets/images/inventory-images/inv-final-layout.jpg"
+        alt="Five-widget dashboard overview: acquisition health, stock age, pricing, recommendations, and market comparison"
+        style="margin: 1.5rem 0;"
+      />
 
       <h3>Responsive Component Design</h3>
-      <img src="assets/images/inventory-images/inv-responsive-components.PNG" alt="final layout for inventory homepage">
-      
+      <!-- mid (300px) — responsive components -->
+      <img
+        class="img-full mid"
+        src="assets/images/inventory-images/inv-responsive-components.PNG"
+        alt="Responsive component designs showing how inventory widgets adapt across screen sizes"
+        style="margin: 1.5rem 0;"
+      />
     </section>
 
     <hr class="section-rule" />
@@ -649,7 +693,7 @@
         <p>Overall, this was an incredibly fun and eye-opening experience. As my first project — just three weeks into my first corporate role — I was extremely grateful to my team for entrusting me with this responsibility. My manager, fellow designers, product manager, and tech team were all there to help me through it. The lessons I learned here continue to shape my approach to design today.</p>
       </div>
 
-      <h3>Limitations & Opportunities</h3>
+      <h3>Limitations &amp; Opportunities</h3>
 
       <div class="findings">
         <div class="finding-item">
