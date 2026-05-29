@@ -120,6 +120,81 @@
         text-transform: uppercase; color: var(--accent);
       }
 
+      .header-right {display: flex; gap: 12px; align-items: center; }
+
+      .btn-sm {
+        background: none; border: 1px solid var(--gray-200);
+        color: var(--gray-600); padding: 8px 16px;
+        font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+        text-transform: uppercase; cursor: pointer; border-radius: 2px;
+        transition: border-color 0.15s, color 0.15s;
+      }
+      .btn-sm:hover {border-color: var(--black); color: var(--black);}
+      .btn-sm.hint-btn:hover { border-color: var(--accent); color: var(--accent); }
+      .btn-sm:disabled { opacity: 0.3; pointer-events: none; }
+
+      .game-body {
+        flex: 1; display: flex; flex-direction: column;
+        align-items: center; padding: 32px 24px 24px;
+      }
+
+      .prompt {
+        font-size: 12px; font-weight: 700; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--gray-400); margin-bottom: 16px;
+      }
+
+      .canvas-wrap {
+        position: relative; width: 100%; max-width: 780px; height: 500px;
+        background: var(--gray-100); border: 1px solid var(--gray-200);
+        border-radius: 4px; overflow: hidden;
+      }
+
+      .bottom-bar{
+        display: flex; align-items: center; gap: 16px;
+        margin-top: 16px; height: 32px;
+      }
+
+      .attempt-count{ font-size: 12px; font-weight: 500; color: var(--gray-400); }
+      .progress-pips{ display: flex; gap: 6px; align-items: center; }
+      .pip{
+        width: 7px; height: 7px; border-radius: 50%;
+        background: var(--gray-200); transform: background 0.3s;
+      }
+      .pip.done {background: var(--green);}
+
+      /* SHAPES */
+      .shape {
+        position: absolute; cursor: grab; user-select: none;
+        transition: filter 0.15s;
+      }
+
+      .shape:hover {filter: brigtness(0.8); }
+      .shape.dragging {cursor: grabbing; filter: brightness(0.6); z-index: 1000; }
+      .shape svg { display: block; }
+      
+      @keyframes idleFloat {
+        0%, 100% {translate: 0 0; } 50% {translate: 0 -5px}
+      }
+
+      .idle { animation: idleFloat ease-in-out infinite; }
+
+      @keyframes snapIn {
+        from {transform: scale(0.7); opacity: 0.4; }
+        to {transform: scale(1); opacity: 1; }
+      }
+
+      .snap {animation: snapIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+      @keyframes wrongShake {
+        0%, 100% { translate: 0 0; }
+        20% { translate: -7px 0;} 40% { translate: 7px 0;}
+        60% {translate: -4px 0;} 80% { translate: 4px 0;}
+      }
+
+      
+
+      
+
       
 
 
