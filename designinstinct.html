@@ -657,6 +657,166 @@
             tbody.innerHTML = srLevelTimes.map((ms, i) => '<tr><td>Level ${i+1} - ${SPEEDRUN_NAMES[i]}</td><td>${srFormatTime(ms)}</td></tr>').join('');
             showScreen('summary');
           }
+
+      // Normal Level start
+          function startLevel(level){
+            isSpeedrun = false;
+            currentLevel = level;
+            showScreen('game');
+            attempts = 0;
+            hintUsed = false;
+            srStop();
+            document.getElementById('btn-hint').disabled = false;
+            document.getElementById('btn-hint').style.display = '';
+            document.getElementById('speedrun-timer').classList.remove('visible');
+            document.getElementById('attempt-count').textCountent = '';
+            document.getElementById('reveal-banner').classList.remove('show');
+            document.getElementById('btn-reveal-action').textContent = 'Back to levels →';
+
+            if (level === 'proximity') initProximity();
+            else if (level === 'similarity') initSimilarity();
+            else if (level === 'continuity') initContinuity();
+            else if (level === 'closure') initClosure();
+            else if (level === 'figureground') initFigureGround();
+            else if (level === 'symmetry') initSymmetry();
+          }
+
+          function resetGame(){
+            if (isSpeedrun){
+              srStop();
+              srLevelIndex = 0;
+              srLevelTimes = [];
+              srRunStart = Date.now();
+              srLevelStart = Date.now();
+              srTimerInterval = setInterval(srTickTimer, 500);
+              srLoadCurrentLevel();
+            } else {
+              startLevel(currentLevel);
+            }
+          }
+
+          function triggerHint(){
+            if (hintUsed) return;
+            hintUsed = true;
+            document.getElementById('btn-hint').disabled = true;
+            const toast = document.getElementById('hint-toast');
+            toast.classList.add('show');
+            clearTimeout(hintTimer);
+            hintTimer - setTimeout(() => toast.classList.remove('show'), 4500);
+          }
+
+          function updateAttempts(){
+            document.getElementById('attempt-count').textContent = attempts === 1 ? '1 wrong drop' : '${attempts} wrong drops';
+          }
+
+          function shapeCenter(el, canvas) {
+            const cr = canvas.getBoundingClientRect();
+            const er = el.getBoundingClientRect();
+            return { x: er.left - cr.left + er.width / 2, y: er.top - cr.top + er.height / 2};
+          }
+
+          function clearCanvas() {
+            const canvas = document.getElementByID('canvas');
+            const keep = ['hint-toast', 'reveal-banner'];
+            Array.from(canvas.children).forEach(c => { if (!keep.includes(c.id)) c.remove();});
+          }
+
+          function makeDraggable(el, onMove, onUp){
+            let sx, sy, ol, ot;
+            const down = (e) => {
+              e.preventDefault();
+              const pt = e.touches ? e.touches[0] : e;
+              sx = pt.clientX; sy = pt.clientY;
+              ol = parseInt(el.style.left); ot = parseInt(el.style.top);
+              el.classList.add('dragging'); el.classList.remove('idle');
+              el.style.zIndex = 999;
+              document.addEventListener('mousemove', move);
+              document.addEventListener('mouseup', up);
+              document.addEventListener('touchmove', move, {passive: false});
+              document.addEventListener('touchend', up);
+              if (onMove) onMove('start', el);
+            };
+            const move = (e) => {
+              const pt = e.touches ? e.touches[0] : e;
+              el.style.left = (ol + pt.clientX - sx) + 'px';
+              el.style.top = (ot + pt.clientY - sy) + 'px';
+              if (onMove) onMove('move', el);
+            };
+            const up = () => {
+              document.removeEventListener('mousemove', move);
+              document.removeEventListener('mouseup', up);
+              document.removeEventListener('touchmove', move);
+              document.removeEventListener('touchend', up);
+              el.classList.remove('dragging'); el.classList.add('idle');
+              el.style.zIndex = 1;
+              if (onMove) onMove('end', el);
+              if (onUp) onUp(el);
+            };
+            el.addEventListener('mousedown', down);
+            el.addEventListener('touchstart', down, {passive: false});
+          }
+
+          function scatter(shapes, avoidZones) {
+            const place = [];
+            return shapes.map( s => {
+              let x, y, tries = 0;
+              do {
+                x = 24 + Math.random() * (CANVAS_W - 72);
+                y = 24 + Math.random() * (CANVAS_H - 72);
+                tries++;
+                if(avoidZones){
+                  const inAvoid = avoidZones(s,x,y);
+                  if (inAvoid) continue;
+                }
+              }
+                while (tries < 80 && placed.some(p => Math.hypot(p.x - x, p.y - y) < 54));
+              placed.push({x,y});
+              return { ...s,x,y};
+            });
+          }
+
+          function svgShape(type, color, size){
+            const s = size;
+            if (type === 'circle') {
+              return '<svg width = "${s}" height = "${s}" viewBox= "0 0 36 36"><circle cx="18" cy="18" r="16" fill="${color}"/></svg>';
+            } else if (type === 'square') {
+              return '<svg width = "${s}" height = "${s}" viewBox= "0 0 36 36"><rect x="2" y="2" width="32" height="32" fill="${color}"/></svg>';
+            } else {
+              return '<svg width = "${s}" height = "${s}" viewBox= "0 0 36 36"><polygon points="18,2 34, 34 2, 34" fill="${color}"/></svg>';
+            }
+          }
+
+          function spawnConfetti(){
+            const colors = ['#d60000', '#000', '#e5e5e5', '#a00000', '#aaaaaa'];
+            for (let i=0; i<32; i++){
+              const dot = document.createElement('div');
+              dot.className = 'confetti-dot';
+              const size = 4 + Math.random() * 7;
+              dot.style.cssText = '
+                width:${size}px;height:${size}px;
+                background:${colors[Math.floor(Math.random()*colors.length)]};
+                left:${8 + Math.random()*84}%;top:${5+Math.random()*40}%;
+                animation-duration:${0.9+Math.random()*1.3}s;
+                animation-delay:${Math.random()*0.3}s;
+              ';
+              document.body.appendChild(dot);
+              dot.addEventListener('animationend', () => dot.remove());
+            }
+          }
+
+          function showReveal(titleHTML, def){
+            if (isSpeedrun) srLevelComplete();
+            document.getElementById('reveal-title').innerHTML = titleHTML;
+            document.getElementById('reveal-def').textContent = def;
+            document.getElementById('reveal-banner').classList.add('show');
+            spawnConfetti();
+          }
+
+    /* LEVEL 1 + PROXIMITY */
+
+
+
+            
         
       
           
