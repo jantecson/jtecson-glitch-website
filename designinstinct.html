@@ -884,6 +884,84 @@
                               if (event === 'end' || event === 'move') proxClearHighlight();
                               if (event === 'start') proxSetVisible(true, canvas);
                               if (event === 'end') proxSetVisible(false, canvas);
+                            },
+                            () => proxCheckDrop(el,s,canvas)
+                            );
+                          canvas.appendChild(el);
+            });
+          }
+
+          function proxSetVisible(visible, canvas){
+            PROX_ZONE_IDS.forEach(id => {
+              const el = document.getElementById('pzone-${id}');
+              if (!el || el.classList.contains('done')) return;
+              el.classList.toggle('visible', visible);
+              if (!visible) el.classList.remove('highlight');
+            });
+          }
+
+          function proxHighlight(shapeEl, canvas){
+            const center = shapeCenter(shapeEl, canvas);
+            PROX_ZONE_IDS.forEach(id => {
+              const z = PROX_ZONE[id];
+              const el = document.getElementById('pzone-${id}');
+              if (!el || el.classList.contains('done')) return;
+              const inside = center.x >= z.x && center.x <= z.x + z.w &&
+                center.y >= z.y && center.y <= z.y + z.h;
+              el.classList.toggle('highlight', inside);
+            });
+          }
+
+          function proxClearHighlight() {
+            PROX_ZONE_IDS.forEach(id => {
+              const el = document.getElementById('pzone-${id}');
+              if (el) el.classList.remove('highlight');
+            });
+          }
+
+          function proxCheckDrop(el, shapeData, canvas){
+            const center = shapeCenter(el, canvas);
+            let landed = null;
+            PROX_ZONE_IDS.forEach(id => {
+              const z = PROX_ZONE[id];
+              if (center.x >= z.x && center.x <= z.x + z.w && center.y >= z.y && center.y <= z.y + z.h) landed = id;
+            });
+
+            if (!landed) return;
+
+            if (landed === shapeData.type) {
+              proxPlacements[shapeData.id] = landed;
+              el.classList.add('snap');
+              setTimeout(() => el.classList.remove('snap'), 300);
+              proxCheckZoneDone(landed);
+            } else {
+              attempts++; updateAttemps();
+              el.classList.add('shake');
+              el.addEventListener('animationend', () => el.classList.remove('shake'), {once:true});
+            }
+          }
+
+          function proxCheckZoneDone(zoneId){
+            const allIn = [0,1,2,3].every(i => proxPlacements['${zoneId} - ${i}'] === zoneId);
+            if (allIn && !proxCompleted.has(zoneId)){
+              proxCompleted.add(zoneId);
+              const zEl = document.etElementById('pzone - ${zoneId}');
+              if (zEl) {zEl.classList.add('done', 'visible'); zEl.classList.remove('highlight'); }
+              const pip = document.getElementById('pip-${zoneId}');
+              if (pip) pip.classList.add('done');
+              if (proxCompleted.size === 3){
+                setTimeout(() => showReveal (
+                           'Proximity', 'Things grouped close together are perceived as related; even without labels, borders, or color.'
+                  ), 400);
+                }
+              }
+            }
+
+
+          // Level 2: Similarity
+            
+
+            
 
             
 
