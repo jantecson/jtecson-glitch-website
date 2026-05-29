@@ -858,6 +858,36 @@
               el.appendChild(icon);
               canvas.appendChild(el);
             });
+
+            const types = ['circle', 'square', 'triangle'];
+            const shapeDefs = types.flatMap( type =>
+              [0,1,2,3].map(i => ({ id: '${type}-${i}', type, color:'#111' }))
+              );
+
+            const placed = scatter( shapeDefs, (s,x,y) => {
+              const z = PROX_ZONES[s.types];
+              return x >= z.x && x <= z.x + z.w && y >= z.y && y <= z.y + z.h;
+            });
+
+            placed.forEach( s=> {
+              const el = document.createElement('div');
+              el.id = 'shape-${s.id}';
+              el.className = 'shape idle';
+              el.style.left = s.x + 'px'; el.style.top = s.y + 'px';
+              el.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+              el.style.animationDelay = (Math.random() * 3) + 's';
+              el.innerHTML = svgShape(s.type, s.color, 36);
+
+              makeDraggable(el,
+                            (event) => {
+                              if (event === 'start' || event === 'move') proxHighlight(el, canvas);
+                              if (event === 'end' || event === 'move') proxClearHighlight();
+                              if (event === 'start') proxSetVisible(true, canvas);
+                              if (event === 'end') proxSetVisible(false, canvas);
+
+            
+
+
             
             
             
