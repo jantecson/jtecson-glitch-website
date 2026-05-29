@@ -454,6 +454,8 @@
 
       </style>
   </head>
+
+  
   <body>
 
 
@@ -502,6 +504,159 @@
         <button class="btn-start secondary" onclick="goToIntro()">← Levels</button>
       </div>
     </section>
+
+    <!-- GAME -->
+    <div id="game" class="screen">
+      <header class="game-header">
+        <span class="game-logo">Desin Instinct</span>
+        <span class="header-tag" id="header-tag">-</span>
+        <div class="header-right">
+          <button class="btn-sm hint-btn" id="btn-hint" onclick="triggerHint()">Hint</button>
+          <span class="speedrun-timer" id="speedrun-timer">0:00</span>
+          <button class = "btn-sm" onclick="resetGame()">Reset</button>
+          <button class = "btn-sm" onclick="goToIntro()">← Levels</button>
+        </div>
+      </header>
+      <div class="game-body">
+        <p class="prompt" id="prompt-text">-</p>
+        <div class="canvas-wrap" id="canvas">
+          <div class="hint-toast" id="hint-toast"></div>
+          <div class="reveal-banner" id="reveal-banner">
+            <div>
+              <div class="reveal-title" id="reveal-banner">
+                <div>
+                  <div class="reveal-title" id="reveal-title"></div>
+                  <div class="reveal-def" id="reveal-def"></div>
+                </div>
+                <button class="btn-next" id="btn-reveal-action" onclick="revealAction()">Back to levels →</button>
+              </div>
+            </div>
+            <div class="bottom-bar">
+              <div class="progress-pips" id="progress-pips"></div>
+              <span class="attempt-count" id="attempt-count"></span>
+            </div>
+          </div>
+        </div>
+
+        <script>
+        /* SCRIPT */
+          const CANVAS_W = 780, CANVAS_H = 500;
+          let currentLevel = null;
+          let hintUsed = false, hintTimer = null;
+          let attempt = 0;
+
+          // Speedrun state
+          const SPEEDRUN_ORDER = ['proximity', 'similarity', 'continuity', 'closure', 'figureground', 'symmetry'];
+          const SPEEDRUN_NAMES = ['Proximity', 'Similarity', 'Continuity', 'Closure', 'Figure/Ground', 'Symmetry'];
+          let isSpeedrun = false;
+          let srLevelIndex = 0;
+          let srLevelStart = 0;
+          let srRunStart = 0;
+          let srLevelTimes = [];
+          let srTimerInterval = null;
+
+          function switchMode(mode){
+            document.getElementById('btn-mode-levels').classList.toggle('active', mode === 'levels');
+            document.getElementById('btn-mode-speedrun').classList.toggle('active', mode === 'speedrun');
+            document.getElementById('btn-mode-levels').classList.toggle('active', mode === 'levels');
+            document.getElementById('btn-mode-speedrun').classList.toggle('active', mode === 'speedrun');
+          }
+
+          function showScreen(id){
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+          }
+
+          function goToIntro(){
+            srStop();
+            isSpeedrun = false;
+            showScreen('intro');
+          }
+
+          /* Speedrun helpers */
+          function srStop(){
+            clearInterval(srTimerInterval);
+            srTimerInterval = null;
+          }
+
+          function srFormatTime(ms){
+            const totalSec = Math.floor(ms/1000);
+            const m = Math.foor(totalSec/60);
+            const s = totalSec % 60;
+            return m > 0 ? '${m}m ${s}s' : '${s}s';
+          }
+
+          function srFormatClock(ms){
+            const totalSec = Math.floor(ms/1000);
+            const m = Math.foor(totalSec/60);
+            const s = totalSec % 60;
+            return '${m}:${s.toString().padStart(2,'0')}';
+          }
+
+          function srTickTimer(){
+            const elapsed = Date.now() - srRunStart;
+            document.getElementById('speedrun-timer').textContent = srFormatClock(elapsed);
+          }
+
+          function startSpeedrun(){
+            isSpeedrun = true;
+            srLevelIndex = 0;
+            srLevelTimes = [];
+            srRunStart = Date.now();
+            srLevelStart = Date.now();
+            showScreen('game');
+            srStop();
+            srTimerInterval = setInterval(srTickTimer, 500);
+            srLoadCurrentLevel();
+          }
+
+          function srLoadCurrentLevel(){
+            const level = SPEEDRUN_ORDER[srLevelIndex];
+            srLevelStart = Date.now();
+            currentLevel = level;
+            attempts = 0;
+            hintUsed = false;
+            document.getElementById('reveal-banner').classList.remove('show');
+            document.getElementById('attempt-count').textContent = '';
+            document.getElementById('btn-hint').style.display = 'none';
+            document.getElementById('speedrun-timer').classList.add('visible');
+            const btn = document.getElementById('btn-reveal-action');
+            btn.textContent = srLevelIndex < SPEEDRUN_ORDER.length - 1 ? 'Next Level →' : 'See Results →';
+            if (level === 'proximity') initProximity();
+            else if (level === 'similarity') initSimilarity();
+             else if (level === 'continuity') initContinuity();
+             else if (level === 'closure') initClosure();
+             else if (level === 'figureground') initFigureGround();
+             else if (level === 'symmetry') initSymmetry();
+          }
+
+          function srLevelComplete(){
+            srLevelTimes.push(Date.now() - srLevelStart);
+          }
+
+          function revealAction(){
+            if (!isSpeedrun){
+              goToIntro();
+              return;
+            }
+            srLevelIndex++;
+            if (srLevelIndex >= SPEEDRUN_ORDER.length){
+              srStop();
+              showSummary();
+            }
+            else{
+              srLoadCurrentLevel();
+            }
+          }
+
+          function showSummary(){
+            spawnConfetti;
+            const totalMs = srLevelTimes.reduce((a,b) => a + b, 0);
+            document.getElementById('summary-total').textContent = srFormatTime(totalMs);
+            const tbody = document.getElementById('summary-table');
+            tbody.innerHTML = srLevelTimes.map((ms, i) => '<tr><td>Level ${i+1} - ${SPEEDRUN_NAMES[i]}</td><td>${srFormatTime(ms)}</td></tr>').join('');
+            showScreen('summary');
+          }
         
       
           
