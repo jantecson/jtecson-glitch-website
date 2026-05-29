@@ -812,7 +812,56 @@
             spawnConfetti();
           }
 
-    /* LEVEL 1 + PROXIMITY */
+    /* LEVEL 1 - PROXIMITY */
+          const PROX_ZONE_IDS = ['circle', 'square', 'triangle'];
+          const PROX_ZONES = {
+            circle: {x: 40, y:50, w:200, h:390},
+            square: {x: 290, y:50, w:200, h:390},
+            triangle: {x: 540, y:50, w:200, h:390},
+          };
+          let proxPlacements={};
+          let proxCompleted = new Set();
+
+          function initProximity(){
+            clearCanvas();
+            proxPlacements = {};
+            proxCompleted = new Set();
+
+            document.getElementById('header-tag').textContent = 'Level 1: Proximity';
+            document.getElementById('prompt-text').textContent = 'Make sense of this.';
+            document.getElementById('hint-toast').textContent = 'Each shape belongs with shapes that look like it.';
+
+            //pips
+            const pips = document.getElementById('progress-pips');
+            pips.innerHTML = PROX_ZONE_IDS.map(id => '<div class="pip" id="pip-${id}"></div>').join('');
+
+            const canvas = document.getElementById('canvas');
+
+            //zones
+            PROX_ZONE_IDS.forEach( id => {
+              const z = PROX_ZONES[id];
+              const el = document.createElement('div');
+              el.className = 'drop-zone';
+              el.id = 'pzone-${id}';
+              el.style.cssText = 'left:${z.x}px;top:${z.y}px;width:${z.w}px;height:${z.h}px;';
+
+              const icon = document.createElement('span');
+              icon.className = 'zone-icon';
+
+              if (id === 'circle'){
+                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="3" /></svg>';
+              } else if (id === 'square'){
+                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><rect x="4" y="4" width="40" hieght="40" fill="none" stroke="currentColor" stroke-width="3" /></svg>';
+              } else {
+                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><polygon points="24,4 44,44 4,44" fill="none" stroke="currentColor" stroke-width="3" /></svg>';
+              }
+              el.appendChild(icon);
+              canvas.appendChild(el);
+            });
+            
+            
+            
+      
 
 
 
