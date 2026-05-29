@@ -455,6 +455,57 @@
       </style>
   </head>
   <body>
+
+
+  <!-- INTRO -->
+    <section id= "intro" class="screen active">
+      <p class="eyebrow"> Design Instinct</p>
+      <h1 class="intro-title">Trust<br><span class="u">Your Eye</span></h1>
+      <p class="intro-sub">No instructions. Just shapes.<br>Figure out what belongs together.</p>
+
+      <div class="mode-picker">
+        <button class="btn-mode active" id="btn-mode-levels" onclick="switchMode('levels')">Level Selection</button>
+        <button class="btn-mode" id="btn-mode-speedrun" onclick="switchMode('speedrun')">Speedrun</button>
+      </div>
+
+      <!-- Level selection panel -->
+      <div class="mode-panel active" id="panel-levels">
+        <div class="intro-buttons">
+          <button class="btn-start secondary" onclick="startLevel('proximity')">Level 1: Proximity</button>
+          <button class="btn-start secondary" onclick="startLevel('similarity')">Level 2: Similarity</button>
+          <button class="btn-start secondary" onclick="startLevel('continuity')">Level 3: Continuity</button>
+          <button class="btn-start secondary" onclick="startLevel('closure')">Level 4: Closure</button>
+          <button class="btn-start secondary" onclick="startLevel('figureground')">Level 5: Figure/Ground</button>
+          <button class="btn-start secondary" onclick="startLevel('symmetry')">Level 6: Symmetry</button>
+        </div>
+      </div>
+
+      <!-- Speedrun panel -->
+      <div class="mode-panel" id="panel-speedrun">
+        <p class="intro-sub" style="margin-bottom: 28px; margin-top: -16px;"> All 6 levels, no hints, no stopping.</p>
+        <div class="speedrun-start-wrap">
+          <button class="btn-start" onclick="startSpeedrun()">Start Run</button>
+        </div>
+      </div>
+
+      <p class="intro-note">drag · group · discover </p>
+    </section>
+
+<!-- SUMMARY -->
+    <section id="summary" class="screen">
+      <p class="summary-eyebrow">Speedrun Complete</p>
+      <div class="summary-total" id="summary-total">-</div>
+      <div class="summary-total-label">total time</div>
+      <table class="summary-table" id="summary-table"></table>
+      <div class="summary-actions">
+        <button class="btn-start" onclick="startSpeedrun()">Run Again</button>
+        <button class="btn-start secondary" onclick="goToIntro()">← Levels</button>
+      </div>
+    </section>
+        
+      
+          
+        
       
 
       
