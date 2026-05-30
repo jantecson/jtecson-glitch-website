@@ -1260,6 +1260,79 @@
               buildContPiece(piece, px, py, ang, canvas);
             });
           }
+
+          function buildContPiece(piece, px, py, initAngle, canvas){
+            const wrap=document.createElement('div');
+            wrap.id = 'cont-${piece.id}';
+            wrap.className = 'cont-piece';
+            wrap.style.cssText = 'left:${px}px;top:${py}px;width:${piece.svgW}px;height:${piece.svgH}px;';
+
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', piece.svgW);
+            svg.setAttribute('height', piece.svgH);
+            svg.style.transformOrigin = '${piece.svgW/2}px ${piece.svgH/2}px';
+            svg.style.transform = 'rotate(${initAngle}deg)';
+            svg.style.overflow = 'visible';
+
+            const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            pathEl.setAttribute('d', piece.path);
+            pathEl.setAttribute('stroke', '#222');
+            pathEl.setAttribute('stroke-width', '3');
+            pathEl.setAttribute('fill', 'none');
+            pathEl.setAttribute('stroke-linecap', 'round');
+            svg.appendChild(pathEl);
+            wrap.appendChild(svg);
+
+            // rotation handle
+            const rotHandle = document.createElement('div');
+            rotHandle.className = 'rot-handle';
+            rotHandle.style.right = '-7px';
+            rotHandle.style.top = (piece.svgH/2 - 7) + 'px';
+            wrap.appendChild(rotHandle);
+
+            // drag to move
+            let dSx, dSy, dOl, dOt;
+            const dragDown = e => {
+              if (e.target === rotHandle) return;
+              e.preventDefault();
+              const pt = e.touches ? e.touches[0] : e;
+              dSx = pt.clientX; dSy = pt.clientY;
+              dOl = parseInt(wrap.style.left); dOt = pasrseInt(wrap.style.top);
+              wrap.style.zIndex = 999;
+              document.addEventListener('mousemove', dragMove);
+              document.addEventListener('mouseup', dragUp);
+              document.addEventListener('touchmove', dragMove, {passive: false});
+              document.addEventListener('touchend', dragUp);
+            };
+            const dragMove = e => {
+              const pt = e.touches ? e.touches[0] : e;
+              wrap.style.left = (dOl + pt.clientX - dSx) + 'px';
+              wrap.style.top = (dOt + pt.clientY - dSy) + 'px';
+            };
+            const dragUp = () => {
+              document.removeEventListener('mousemove', dragMove);
+              document.addEventListener('mouseup', dragUp);
+              document.addEventListener('touchmove', dragMove);
+              document.addEventListener('touchend', dragUp);
+              wrap.style.zIndex = 1;
+              contTrySnap(piece, wrap, svg, canvas);
+            };
+            wrap.addEventListener('mousedown', dragDown);
+            wrap.addEventListener('touchstart', dragDown, {passive: false});
+
+            // rotation handle drag
+            let rBase, rMouse0;
+            const rotDown = e => {
+              e.preventDefault(); e.stopPropagation();
+              const pt = e.touches ? e.touches[0] : e;
+              const r = wrap.getBoundingClientRect();
+              rBase = contPieceAngles[piece.id];
+              rMouse0 = Math.atan2(pt.clientY - (r.top + r.height/2), pt.clientX - (r.left + r.width/2)) * 180/Math.PI;
+              document.addEventListener('mousemove', rotMove);
+              document.addEventListener('mouseup', rotUp);
+              document.addEventListener('touchmove', rotMove, {passive: false});
+              document.addEventListener('touchend', rotUp);
+            };
           
 
             
