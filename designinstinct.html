@@ -964,6 +964,51 @@
           // 16 shapes (4 groups x 4 shapes), mixed types per group
           // Groups defined only by color. no drop zones
           // WIN: each color group is clustered within a radius
+
+          // 4 muted color groups
+          const SIM_GROUPS = [
+            {id: 'terracotta', color: '#b5614a'},
+            {id: 'slate', color: '#5a7fa3'},
+            {id: 'sage', color: '#5e8c6a'},
+            {id: 'mauve', color: '#7d5c7a'},
+            ];
+
+          // each group gets one of each shape type and a fourth mixed in
+          const SHAPE_TYPES = ['circle', 'square', 'triangle'];
+
+          // cluster detection: all four shapes of a color must fit inside a circle of this radius
+          const CLUSTER_RADIUS = 110;
+
+          // minimum distance between cluster centers (so groups don't blur into each other)
+          const CLUSTER_SEPARATION = 160;
+
+          let simShapes = []; // {id, groupid, color, type, el}
+          let simClusters = new Set(); // groupids that are done
+          let simCheckTimer = null;
+
+          function initSimilarity(){
+            clearCanvas();
+            simShapes = [];
+            simClusters = new Set();
+
+            document.getElementById('header-tag').textcontent = 'Level 2: Similarity';
+            document.getElementById('prompt-text').textcontent = 'Something connects these. What is it?';
+            document.getElementById('hint-toast').textcontent = 'Ignore the shapes. Look at something else.';
+
+            // 4 pips
+            const pips = document.getElementById('progress-pips');
+            pips.innerHTML = SIM_GROUPS.map(g => '<div class = "pip" id="simpip-${g.id}"></div>').join('');
+
+            // build 16 shapes: each group gets circle square triangle and one random repeat
+            const shapeDefs = [];
+            SIM_GROUPS.forEach(g => {
+              const types = [...SHAPE_TYPES, SHAPE_TYPES[Math.floor(Math.random() * 3)]];
+              types.forEach((type,i) => {
+                shapeDefs.push({id: '${g.id} - ${i}', groupId: g.id, color: g.color, type});
+              });
+            });
+
+            // shuffle so same color shapes don't cluster by default
           
             
 
