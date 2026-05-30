@@ -1333,6 +1333,99 @@
               document.addEventListener('touchmove', rotMove, {passive: false});
               document.addEventListener('touchend', rotUp);
             };
+            const rotMove = e => {
+              const pt = e.touches ? e.touches[0] : e;
+              const r = wrap.getBoundingClientRect();
+              const deg = Math.atan2(pt.clientY - (r.top + r.height/2), pt.clientX - (r.left + r.width/2)) * 180/Math.PI;
+              const newAng = rBase + deg - rMouse0;
+              contPieceAngles[piece.id] = newAng;
+              svg.style.transform = 'rotate(${newAng}deg)';
+            };
+            const rotUp = () => {
+              document.removeEventListener('mousemove', rotMove);
+              document.removeEventListener('mouseup', rotUp);
+              document.removeEventListener('touchmove', rotMove);
+              document.removeEventListener('touchend', rotUp);
+              contTrySnap(piece, wrap, svg, canvas);
+            };
+            rotHandle.addEventListener('mousedown', rotDown);
+            rothandle.addEventListener('touchstart', rotDown, {passive: false});
+
+            canvas.appendChild(wrap);
+          }
+
+          function contTrpSnap(piece, wrap, svg, canvas){
+            if (piece.redHerring || contSnapped.has(piece.id)) return;
+
+            const cr = canvas.getBoundingClientRect();
+            const wr = wrap.getBoundingClientRect();
+            const cx = wr.left - cr.left + wr.width / 2;
+            const cy = wr.top - cr.top + wr.height / 2;
+
+            const distOk = Math.hypot(cx - piece.targetCx, cy - piece.targetCy) <= SNAP_DIST;
+            const cur = contPieceAngles[piece.id];
+            const diff = normalAngle(curr - piece.targetAngle);
+            const diff180 = normAngle(curr - piece.targetAngle - 180);
+            const AngleOk = Math.abs(diff) <= SNAP_ANGLE || (piece.symmetric && Math.abs(diff180) <= SNAP_ANGLE);
+
+            if (!idstOk || !angleOk) return;
+
+            // lock in place
+            wrap.style.left = (piece.targetCx - piece.svgW/2) + 'px';
+            wrap.style.top = (piece.targetCy - piece.svgH/2) + 'px';
+            svg.style.transform = 'rotate(${piece.targetAngle}deg)';
+            wrap.classList.add('snapped', 'snap-flesh');
+            wrap.style.zIndex = 2;
+            contSnapped.add(piece.id);
+            setTimeout(() => wrap.classList.remove('snap-flash'), 400);
+
+            contDrawSolid(piece);
+            contCheckWin();
+          }
+
+          function normAngle(a){
+            while (a > 180) a -= 360;
+            while (a < -180) a += 360;
+            return a;
+          }
+
+          function contDrawSolid(piece){
+            const bgSvg = document.getElementById('cont-bg');
+            if (!bgSvg) return;
+            const pcx = piece.svgW / 2, pcy = piece.svgH / 2;
+            const tx = piece.targetCx - pcx, ty = piece.target.Cy - pcy;
+            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            p.setAttribute('d', piece.path);
+            p.setAttribute('stroke', '#111');
+            p.setAttribute('stroke-width', '3');
+            p.setAttribute('fill', 'none');
+            p.setAttribute('stroke-linecap', 'round');
+            p.setAttribute('transform', 'translate(${tx+pcx}, ${ty+pcy}) rotate(${piece.targetAngle}) translate(${-pcx}, ${-pcy})');
+            bigSvg.appendChild(p);
+          }
+
+          function contCheckWin(){
+            contActiveIds.forEach((id, i) => {
+              if (contSnapped.has(id)) document.getElementById('contpip-${i}').classList.add('done');
+            });
+
+            if (contActiveIds.every(id => contSnapped.has(id))){
+              setTimeout(() => showReveal(
+                'Continuity', 'The eye naturally completes broken paths. They fill gaps to perceive a whole shape.'
+                ), 500);
+            }
+          }
+
+      // level 4: closure
+          // proper kanizsa figures: one pac man wedge per vertex of a polygon
+          // each wedge sits exactly at a vertex, mouth open at the interior angle, pointing towards the shape centre.
+          // a faint ghost outline shows where the shape goes (position hint) but not how to rotate
+          // shape pool: triangle (3 wedges, 60 degrees), square (4 wedges, 90 degrees), hexagon (6 wedges, 60 degrees).
+          // two random shapes per game, left (~210, 240) and right (~570, 240)
+
+        
+              
+            
           
 
             
