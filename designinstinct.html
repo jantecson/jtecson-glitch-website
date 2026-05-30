@@ -1423,9 +1423,59 @@
           // shape pool: triangle (3 wedges, 60 degrees), square (4 wedges, 90 degrees), hexagon (6 wedges, 60 degrees).
           // two random shapes per game, left (~210, 240) and right (~570, 240)
 
-        
+          const CLOS_SNAP_DIST = 55;
+          const CLOS_SNAP_ANGLE = 24;
+
+          const CLOS_COLORS = {
+            triangle: '5a7fa3',
+            square: '#b5614a',
+            hexagon: '#5e8c6a',
+          };
+
+          // pacman path centered at (40, 40), radius 34.
+          // mouth opens 'gapDeg' degrees, pointing RIGHT at angle 0
+          function closWedgePath(gapDeg){
+            const r = 34;
+            const half = (gapDeg / 2) * Math.PI / 180;
+            const x1 = 40 + r * Math.cos(half);
+            const y1 = 40 - r * Math.sin(half);
+            const x2 = 40 + r * Math.cos(-half);
+            const y2 = 40 - r * Math.sin(-half);
+            return 'M 40 40 L ${x2.toFixed(2)} ${y2.toFixed(2)} A ${r} ${r} 0 1 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z';
+          }
+
+          // build a regular polygon kanizsa shape with fixed canas positions
+          function closRegularShape(shapeId, cx, cy, n, R, gapDeg, startA){
+            const color = CLOS_COLORS[shapeId];
+            const wedges = Array.from({length:n}, (_, i) => {
+              const angleDeg = startA + i * (360/n);
+              const a = angleDeg * Math.PI / 180;
+              return {
+                id: '${shapeId}-w${i}',
+                svgW: 80, svgH: 80,
+                path: closWedgePath(gapDeg),
+                targetCx: cx + R * Math.cos(a),
+                targetCy: cy + R * Math.sin(a),
+                targetAngle: angleDeg + 180, // mouth faces inward toward centre
+                shapeId,
+                color,
+              };
+            });
+
+            const pts = Array.from( {length:n}, (_, i) => {
+              const a = (startA + i * (360/n)) * Math.PI / 180;
+              return '${(cx + R * Math.cos(a)).toFixed(1)}, ${(cy + R * Math.sin(a)).toFixed(1)}';
+            });
+            const revealPath = 'M ' + pts.join('L ') + ' Z';
+
+            return { id: shapeId, cx, cy, revealPath, wedges };
+          }
+
+          function closTriangle(cx, cy) {return closRegularShape('triangle', cx, cy, 3, 60, 60, -90); }
+          function closSquare(cx, cy) {return closRegularShape('square', cx, cy, 4, 95, 90, -45); }
+          function closHexagon(cx, cy) {return closRegularShape('hexagon', cx, cy, 6, 90, 120, -90); }
               
-            
+          // state
           
 
             
