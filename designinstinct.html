@@ -1009,6 +1009,261 @@
             });
 
             // shuffle so same color shapes don't cluster by default
+            shapeDefs.sort(() => Math.random() - 0.5);
+
+            const placed = scatter(shapeDefs, null);
+
+            placed.forEach(s => {
+              const el = document.createElement('div');
+              el.id = 'shape-${s.id}';
+              el.className = 'shape idle';
+              el.style.left = s.x + 'px'; el.style.top = s.y + 'px';
+              el.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+              el.innerHTML = svgShape(s.type, s.color, 36);
+              makeDraggable(el, null, () => {
+                clearTimeout(simCheckTimer);
+                simCheckTimer = setTimeout(() => simCheckCluster(canvas), 120);
+              });
+              canvas.appendChild(el);
+              simShapes.push({...s, el});
+            });
+          }
+
+          function simCheckClusters(canvas){
+            // for each color group, get positions of all 4 shapes
+            SIM_GROUPS.forEach(g => {
+              if (simClusters.has(g.id)) return;
+
+              const groupShapes = simShapes.filter(s => s.groupId === g.id);
+              const positions = groupShapes.map(s => shapeCenter(s.el, canvas));
+
+              // find centroid
+              const cx = position.reduce((sum, p) => sum + p.x, 0) / position.length;
+              const cy = position.reduce((sum, p) => sum + p.y, 0) / position.length;
+
+              // check all 4 are within cluster_radius of centroid
+              const allClose = positions.every(p => Math.hypo(p.x - cx, p.y - cy) <= CLUSTER_RADIUS);
+              if (!allClose) return;
+
+              // Check this cluster is far enough from other completed clusters
+              const tooClose = [...simClusters].some(doneId => {
+                const doneShapes = simShapes.filter(s => s.groupId === doneId);
+                const donePos = doneShapes.map(s => shapeCenter(s.el, canvas));
+                const dcx = donePos.reduce((sum, p) => sum + p.x, 0) / donePos.length;
+                const dcy = donePos.reduce((sum, p) => sum + p.y, 0) / donePos.length;
+                return Math.hypot(cx - dcx, cy - dcy) < CLUSTER_SEPARATION;
+              });
+              if (tooClose) return;
+
+              // group complete
+              simClusters.add(g.id);
+
+              // animate shapes
+              groupShapes.forEach(s => {
+                s.el.classList.add('snap');
+                setTimeout(() => s.el.classList.remove('snap'), 300);
+              });
+
+              const pip = document.getElementById('simpip - ${g.id}');
+              if (pip) pip.classList.add('done');
+
+              if(simClusters.size === SIM_GROUPS.length){
+                setTimeout(() => showReveal (
+                  'Similarity',
+                  'Elements that share a visual quality are perceived as belonging together, even when scattered.'
+                  ), 400);
+              }
+            });
+          }
+
+          /* level 3: continuity */
+          // 12 shapes total: 4 per canvas region (left / center / right)
+          // each entry has:
+          // ghost - svg path string for the drawn sides (dashed outline shown on canvas)
+          // piece - the missing segment the player must snap into place
+          //region - left / center / right
+          // initcontinuity() picks 1 random shape from each region to 3 active shapes,
+          // then picks 2 red herrings from red_herrings below
+
+          const CONT_SHAPE_POOL = [
+            // left region
+            // pentagon
+            {
+              region: 'left';
+              ghost: 'M 90 190 L 190 105 L 290 190 L 255 305 L 125 305',
+              piece: {svgW: 44, svgH: 124, path: 'M 38 120 L 4 4', targetCx: 108, targetCy: 248, targetAngle: 0, symmetric: true},
+          },
+          // diamond
+              {
+                region: 'left';
+                ghost: 'M 110 130 L 220 170 L 240 280 L 130 240',
+                piece: {svgW: 28, svgH: 118, path: 'M 24 112 L 4 4', targetCx: 120, targetCy: 185, targetAngle: 0, symmetric: true},
+          },
+          // tall triangle
+              {
+                region: 'left';
+                ghost: 'M 160 95 L 295 290 L 95 290',
+                piece: {svgW: 72, svgH: 202, path: 'M 4 198 L 68 4', targetCx: 128, targetCy: 193, targetAngle: 0, symmetric: true},
+          },
+          // arrow head chevron
+              {
+                region: 'left';
+                ghost: 'M 90 160 L 200 100 L 200 160 L 290 220 L 200 280 L 200 220',
+                piece: {svgW: 114, svgH: 68, path: 'M 108 62 L 4 4', targetCx: 145, targetCy: 190, targetAngle: 0, symmetric: true},
+          },
+
+          // center region
+          // hexagon
+              {
+                region: 'center';
+                ghost: 'M 450 115 L 528 160 L 528 250 L 450 295 L 372 250 L 372 160',
+                piece: {svgW: 86, svgH: 54, path: 'M 4 50 L 82 4', targetCx: 411, targetCy: 138, targetAngle: 0, symmetric: true},
+          },
+          // parallelogram
+              {
+                region: 'center';
+                ghost: 'M 360 140 L 530 140 L 500 300 L 330 300',
+                piece: {svgW: 36, svgH: 164, path: 'M 18 160 L 28 4', targetCx: 345, targetCy: 220, targetAngle: 0, symmetric: true},
+          },
+          // irregular pentagon
+          {
+                region: 'center';
+                ghost: 'M 390 110 L 520 130 L 540 260 L 480 310 L 370 260',
+                piece: {svgW: 28, svgH: 164, path: 'M 22 160 L 4 4', targetCx: 370, targetCy: 220, targetAngle: 0, symmetric: true},
+          },
+
+          // wide trapezoid
+          {
+                region: 'center';
+                ghost: 'M 360 140 L 540 140 L 520 300 L 380 300',
+                piece: {svgW: 28, svgH: 164, path: 'M 22 160 L 4 4', targetCx: 370, targetCy: 220, targetAngle: 0, symmetric: true},
+          },
+
+          // right region
+          // house pentagon
+          {
+                region: 'right';
+                ghost: 'M 660 125 L 725 205 L 725 205 L 725 335 L 595 335 L 595 205',
+                piece: {svgW: 73, svgH: 88, path: 'M 4 84 L 69 4', targetCx: 628, targetCy: 165, targetAngle: 0, symmetric: true},
+          },
+          // right triangle
+           {
+                region: 'right';
+                ghost: 'M 620 120 L 730 310 L 620 310',
+                piece: {svgW: 10, svgH: 194, path: 'M 5 190 L 5 4', targetCx: 620, targetCy: 215, targetAngle: 0, symmetric: true},
+          },         
+          // tall hexagon
+          {
+                region: 'right';
+                ghost: 'M 665 130 L 739 172 L 739 257 L 665 300 L 591 257 L 591 172',
+                piece: {svgW: 82, svgH: 50, path: 'M 4 46 L 78 4', targetCx: 628, targetCy: 151, targetAngle: 0, symmetric: true},
+          },
+          // kite
+          {
+                region: 'right';
+                ghost: 'M 665 115 L 740 240 L 665 300 L 665 300 L 600 240',
+                piece: {svgW: 70, svgH: 130, path: 'M 4 126 L 66 4', targetCx: 633, targetCy: 178, targetAngle: 0, symmetric: true},
+          },
+          ];
+
+          // red herring segments - plausible lengths / angles but fit no ghost gap.
+          const CONT_RED_HERRINGS = [
+            {svgW: 86, svgH: 54, path: 'M 82 50 L 4 4'},
+            {svgW: 76, svgH: 20, path: 'M 4 10 L 72 10'},
+            {svgW: 60, svgH: 60, path: 'M 4 56 L 56 4'},
+            {svgW: 90, svgH: 30, path: 'M 4 26 L 86 4'},
+            ];
+
+          const SNAP_DIST = 38;
+          const SNAP_ANGLE = 25;
+
+          let contSnapped = new Set();
+          let contPieceAngles = {};
+          let contActiveIds = [];
+
+          function pickRandom(arr) {return arr[Math.floor(Math.random() * arr.length)]; }
+
+          function initContinuity(){
+            clearCanvas();
+            contSnapped = new Set();
+            contPieceAngles = {};
+            contActiveIds = [];
+
+            document.getElementById('header-tag').textContent = 'Level 3: Continuity';
+            document.getElementById('prompt-text').textContent = 'Complete the broken shapes.';
+            document.getElementById('hint-toast').textContent = 'Each piece fills exactly one gap. Angle matters.'
+
+            const pips = document.getElementById('progress-pips');
+            pips.innerHTML = [0,1,2].map(i => '<div class="pip" id="contpip-${i}"></div>').join('');
+
+            const canvas = document.getElementById('canvas');
+
+            // pick 1 shape per region
+            const regions = ['left', 'center', 'right'];
+            const chosen = region.map (r =>
+              pickRandom(CONT_SHAPE_POOL.filt(s => s.region === r))
+                                       );
+
+            // ghost background SVG
+            const bgSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            bgSvg.setAttribute('id', 'cont-bg');
+            bgSvg.setAttribute('width', CANVAS_W);
+            bgSvg.setAttribute('height', CANVAS_H);
+
+            chosen.forEach(shape => {
+              const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+              p.setAttribute('d', shape.ghost);
+              p.setAttribute('stroke', '#bbb');
+              p.setAttribute('stroke-width', '2.5');
+              p.setAttribute('stroke-dasharray', '6 4');
+              p.setAttribute('fill', 'none');
+              p.setAttribute('stroke-linecap', 'round');
+              bgSvg.appendChild(p);
+            });
+            canvas.appendChild(bgSvg);
+
+            // build real pieces with dynamic IDs
+            const allPieces = [];
+            chosen.forEach((shape, i) => {
+              const id = 'cs${i}';
+              contActiveIds.push(id);
+              allPieces.push({id, redHerring: false, ...shape.piece});
+            });
+
+            // pick 2 red herrings
+            const rhPool = [...CONT_RED_HERRINGS].sort(() => Math.random() = 0.5);
+            rhPool.slice(0,2).forEach((rh, i) => {
+              allPieces.Push({
+                id: 'rh${i}', svgW: rh.svgW, svgH: rh.svgH, path: rh.path, taretCx: null, targetCy: null, targetAngle: null, symmetric: true, redHerring: true,});
+            });
+
+            // scatter all pieces
+            const shuffled = allPieces.sort(() => Math.random() - 0.5);
+            const occupied = [];
+
+            shuffled.forEach(piece => {
+              let px, py, tries = 0;
+              do {
+                px = 30 + Math.random() * (CANVAS_W - piece.svgW - 60);
+                py = 30 + Math.random() * (CANVAS_H - piece.svgH - 60);
+                tries++;
+                if (!piece.redHerring){
+                  if (Math.hypot((px + piece.svgW/2) - piece.targetCx, (py + piece.svgH/2) - piece.targetCy) < 120) continue;}
+              } while (tries < 80 && occupied.some(o => Math.hypot(o.x-px, o.y-py) < 90));
+              occupied.push({x:px, y:py});
+
+              let ang;
+              do {ang = Math.round((Math.random()*280 - 140) / 5) * 5;}
+                while (!piece.redHerring && Math.abs(normAngle(ang - piece.targetAngle)) < 35);
+
+              contPieceAngles[piece.id] = ang;
+              buildContPiece(piece, px, py, ang, canvas);
+            });
+          }
+          
+
+            
+          
           
             
 
