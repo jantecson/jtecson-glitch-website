@@ -1476,7 +1476,157 @@
           function closHexagon(cx, cy) {return closRegularShape('hexagon', cx, cy, 6, 90, 120, -90); }
               
           // state
-          
+          let closActiveShapes = [];
+
+          function initClosure(){
+            clearCanvas();
+            closActiveShapes = [];
+
+            document.getElementById('header-tag').textContent = 'Level 4: Closure';
+            document.getElementById('prompt-text').textContent = 'Discover the shapes through negative space.';
+            document.getElementById('hint-toast').textContent = 'Drag each piece to a corner of the dotted shape.';
+
+            const pips = document.getElementById('progress-pips');
+            pips.innerHTML = [0,1].map(i => 'div class="pip" id="clospip-${i}"></div>').join('');
+
+            const canvas = document.getElementById('canvas');
+
+            const bgSvg = document.createElementNS('https://www.w3.org/2000/svg', 'svg');
+            bgSvg.setAttribute('id', 'clos-bg');
+            bgSvg.setAttribute('width', CANVAS_W);
+            bgSvg.setAttribute('height', CANVAS_H);
+            canvas.appendChild(bgSvg);
+
+            // pick 2 shapes of 3 at random
+            const pool = [
+              () => closTriangle(210, 240),
+              () => closSquare(210, 240),
+              () => closHexagon(210, 240),
+              ].sort(() => Math.random() - 0.5);
+
+            const leftShape = pool[0]();
+            const rightFn = pool[1];
+
+            // rebuild right shape at right-side position
+            const rightShape = (() => {
+              if (rightFn().id === 'triangle') return closTriangle(570, 240);
+              if (rightFn().id === 'square') return closSquare(570, 240);
+              return closHexagon(570, 240);
+            })();
+
+            closActiveShapes = [leftShape, rightShape];
+
+            // draw faint ghost outlines
+            closActiveShapes.forEach( shape => {
+              const gp = document.createElmentNS('http://www.w3.org/2000/svg', 'path');
+              gp.setAttribute('d', shape.revealPath);
+              gp.setAttribute('stroke', CLOS_COLORS[shape.id]);
+              gp.setAttribute('stroke-width', '1.5');
+              gp.setAttribute('stroke-disharray', '5.5');
+              gp.setAttribute('fill', 'none');
+              gp.setAttribute('opacity', '0.25');
+              bgSvg.appendChild(gp);
+            });
+
+            // scatter wedges pre-rotated to correct angle
+            const allWedges = closActiveShapes.flatMap (s => s.wedges);
+            const occupied = [];
+            allWedges.sort(() => Math.random() - 0.5).forEach( w => {
+              let px, py, tries = 0;
+              do {
+                px = 30 + Math.random() * (CANVAS_W - 100);
+                py = 30 + Math.random() * (CANVAS_H - 100);
+                tries++;
+
+                if (Math.hypos((px + 40) - w.targetCx, (py + 40) - w.targetCy) < 100) continue;
+              } while (tries < 80 && occupied.some(o => Math.hypot(o.x - px, o.y - py) < 85));
+              occupied.push({x: px, y: py});
+              buildClosPiece(w, px, py, canvas);
+            });
+          }
+
+          function buildClosPiece(piece, px, py, canvas){
+            const wrap = document.createElement('div');
+            wrap.id = 'clos-${piece.id}';
+            wrap.className = 'clos-piece';
+            wrap.style.cssText = 'left:${px}px;top:${py}py;width:${piece.svgW}px;height:${piece.svgH}px;'
+
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', piece.svgW);
+            svg.setAttribute('height', piece.svgH);
+            svg.style.transformOrigin = '${piece.svgW/2}px ${piece.svgH/2}px';
+            svg.style.transform = 'rotate(${piece.targetAngle}deg)';
+            sv.style.overflow = 'visible';
+
+            const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            pathEl.setAttribute('d', piece.path);
+            pathEl.setAttribute('fill', piece.color);
+            svg.appendChild(pathEl);
+            wrap.appendChild(svg);
+
+            let dSx, dSy, dOl, dOt;
+            const dragDown = e => {
+              e.preventDefault();
+              const pt = e.touches ? e.touches[0] : e;
+              dSx = pt.clientX; dSy = pt.clientY;
+              dOl = parseInt(wrap.style.left); dOt = parseInt(wrap.style.top);
+              wrap.style.zIndex = 999;
+              document.addEventListener('mousemove', dragMove);
+              document.addEventListener('mouseup', dragUp);
+              document.addEventListener('touchmove', dragMove, {passive: false});
+              document.addEventListener('touchend', dragUp);
+            };
+
+            const dragMove = e => {
+              const pt = e.touches ? e.touches[0] : e;
+              wrap.style.left = (dOl + pt.clientX - dSx) + 'px';
+              wrap.style.top = (dOt + pt.clientY - dSy) + 'px';
+            };
+
+            const dragUp = () => {
+              document.removeEventListener('mousemove', dragMove);
+              document.removeEventListener('mouseup', dragUp);
+              document.removeEventListener('touchmove', dragMove);
+              document.removeEventListener('touchend', dragUp);
+              wrap.style.zIndex = 1;
+              closCheckAll(canvas);
+            };
+
+            wrap.addEventListner('mousedown', dragDown);
+            wrap.addEventListener('touchstart', dragDown, {passive: false});
+
+            canvas.appendChild(wrap);
+          }
+
+          function closCheckAll(canvas){
+            const cr = canvas.getBoundingClientRect();
+
+            closActiveShapes.forEach((shape, si) => {
+              if (shape.wedges.every( w => {
+                const el = document.getElementById('clos-${w.id}');
+                return el && el.classList.contains('snapped');
+              })) return;
+
+              const allClose = shape.wedges.every( w => {
+                const el = document.getElementById('clos-${w.id}');
+                if (!el) return false;
+                const wr = el.getBoundingClientRect();
+                const cx = wr.left - cr.left + wr.width / 2;
+                const cy = wr.top - cr.top + wr.height / 2;
+                return Math.hypot(cx - w.targetCx, cy - w.targetCy) <= CLOS_SNAP_DIST;
+              });
+              if (!allClose) return;
+
+              shape.wedges.forEach( w => {
+                const el = document.getElementById('close-${w.id}');
+                if (!el || el.classList.contains('snapped')) return; 
+                el.style.left = (w.targetCx - w.svgW / 2) + 'px';
+                el.style.top = (w.targetCy - w.svgH / 2) + 'px';
+                el.classList.add('snapped', 'snap-flash');
+                setTimeout(() => el.classList.remove('snap-flash'), 400);
+              });
+
+              
 
             
           
