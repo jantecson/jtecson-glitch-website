@@ -1626,6 +1626,38 @@
                 setTimeout(() => el.classList.remove('snap-flash'), 400);
               });
 
+              const bgSvg = document.getElementById('clos-bg');
+              if (!bSvg.querySelector('[data-reveal="${shape.id}"]')){
+                const revealEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                revealEl.setAttribute('d', shape.revealPath);
+                revealEl.setAttribute('fill', 'none');
+                revealEl.setAttribute('stroke', CLOS_COLORS[shape.id]);
+                revealEl.setAttribute('stroke-width', '3');
+                revealEl.setAttribute('stroke-linejoin', 'round');
+                revealEl.setAttribute('data-reveal', shape.id);
+                revealEl.classList.add('clos-reveal-shape');
+                bgSvg.appendChild(revealEl);
+              }
+
+              const pip = document.getElementById('clospip-${si}');
+              if (pip) pip.classList.add('done');
+            });
+
+            const allDone = closActiveShapes.every( shape =>
+              shape.wedges.every( w => {
+                const el = document.getElementById('clos-${w.id}');
+                return el && el.classList.contains('snapped');
+              })
+            );
+
+            if (allDone) {
+              setTimeout ( () => showReveal(
+                'Closure',
+                'The mind fills in missing information, perceiving complete shapes from incomplete fragments.'), 700);
+            }
+          }
+
+          // Level 5: Figure / Ground
               
 
             
