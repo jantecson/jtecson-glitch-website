@@ -509,7 +509,7 @@
     <div id="game" class="screen">
       <header class="game-header">
         <span class="game-logo">Desin Instinct</span>
-        <span class="header-tag" id="header-tag">-</span>
+        <span class="" id="">-</span>
         <div class="header-right">
           <button class="btn-sm hint-btn" id="btn-hint" onclick="triggerHint()">Hint</button>
           <span class="speedrun-timer" id="speedrun-timer">0:00</span>
@@ -829,7 +829,7 @@
             proxPlacements = {};
             proxCompleted = new Set();
 
-            document.getElementById('header-tag').textContent = 'Level 1: Proximity';
+            document.getElementById('').textContent = 'Level 1: Proximity';
             document.getElementById('prompt-text').textContent = 'Make sense of this.';
             document.getElementById('hint-toast').textContent = 'Each shape belongs with shapes that look like it.';
 
@@ -1658,6 +1658,186 @@
           }
 
           // Level 5: Figure / Ground
+          // around 20 ground shapes scattered across the full canvas, 2 red figures 
+          // buried somewhere in the pile. player drags ground shapes away to 
+          // excavate the red ones. win: both red figures are the top most shape
+          // at their position (nothing covering them)
+
+          const FG_ACCENT = '#d60000';
+          const FG_GROUNDS = ['#c8bfb0', '#a8b8c8', '#c8c0b8', '#b0b8c8', '#c4bdb5'];
+          const FG_TYPES = ['rect', 'circle', 'triangle'];
+
+          let fgZCounter = 10;
+          let fgFigures = [];
+          let fgAllEls = [];
+
+          function fgMMakeSVG(type, w, h, color){
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', w);
+            svg.setAttribute('height', h);
+            svg.style.display = 'block';
+
+            if (type === 'rect'){
+              const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+              r.setAttribute('x',0); r.setAttribute('y', 0);
+              r.setAttribute('width',w); r.setAttribute('height', h);
+              r.setAttribute('rx',8); r.setAttribute('fill', color);
+              svg.appendChild(r);
+            } else if (type === 'circle'){
+              const c = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+              c.setAttribute('cx',w/2); c.setAttribute('cy', h/2);
+              c.setAttribute('rx',w/2); c.setAttribute('ry', h/2);
+              c.setAttribute('fill', color);
+              svg.appendChild(c);
+            } else {
+              const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+              poly.setAttribute('points', '${w/2}, 4 ${w-4}, ${h-4} 4, ${h-4}');
+              poly.setAttribute('fill', color);
+              svg.appendChild(poly);
+            }
+            return svg;
+
+          }
+
+          function fgSpawnShape(canvas, x, y, w, h, type, color, isFigure) {
+            const el = document.createElement('div');
+            el.style.cssText = 'position:absolute; left:${x}px; top:${y}px; width:${w}px; height:${h}px; z-index:${fgZCounter++}; cursor:grab; user-select:none; touch-action:none;';
+            el.appendChild(fgMakeSVG(type, w, h, color));
+            canvas.appendChild(el);
+            fgAllEls.push(el);
+            if (isFigure) fgFigures.push({ el, cx: x + w/2, cy: y + h/2, w, h});
+
+            let dSx, dSy, dOl, dOt;
+            const dragDown = e => {
+              e.preventDefault();
+              const pt = e.touches ? e.touches[0] : e;
+              dSx = pt.clientX; dSy = pt.clientY;
+              dOl = parseInt(el.style.left); dOt = parseInt(el.style.top);
+              el.style.zIndex = ++fgZCounter;
+              el.style.cursor = 'grabbing';
+              document.addEventListener('mousemove', dragMove);
+              document.addEventListener('mouseup', dragUp);
+              document.addEventListener('touchmove', dragMove, {passive: false});
+              document.addEventListener('touchend', dragUp);
+            };
+
+            const dragMove = e => {
+              const pt = e.touches ? e.touches[0] : e;
+              wrap.style.left = (dOl + pt.clientX - dSx) + 'px';
+              wrap.style.top = (dOt + pt.clientY - dSy) + 'px';
+            };
+
+            const dragUp = () => {
+              document.removeEventListener('mousemove', dragMove);
+              document.removeEventListener('mouseup', dragUp);
+              document.removeEventListener('touchmove', dragMove);
+              document.removeEventListener('touchend', dragUp);
+              el.style.cursor = 'grab';
+              fgCheckWin();
+            };
+            el.addEventListener('mousedown', dragDown);
+            el.addEventListener('touchstart', dragDown, {passive: false});
+            return el;
+          }
+
+          function fgRectsOverlap(ax,ay,aw,ah,bx,by,bw,bh){
+            return ax < bx+bw && ax+aw > bx && ay < by+bh && ay+ah > by;
+          }
+
+          function initFigureGround(){
+            clearCanvas();
+            fgZCounter = 10;
+            fgFiguress = [];
+            fgAllEls = [];
+
+            document.getElementById('header-tag').textcontent = 'Level 5: Figure / Ground';
+            document.getElementById('prompt-text').textcontent = 'Something is hiding here. Find it';
+            document.getElementById('hint-toast').textcontent = 'Drag the gray shapes away. The red shapes are hiding underneath.';
+
+            const pips = document.getElementById('progress-pips');
+            pips.innerHTML=  [0,1].map(i => '<div class = "pip" id = "fgpip - ${i}"></div>').join('');
+
+            const canvas = document.getElementById('canvas');
+
+            // place 2 red figure shapes first, at random places
+            const figurePositions = [];
+            for (let f = 0; f < 2; f++){
+              const fw = 90 + Math.foor(Math.random() + 50);
+              const fh = 90 + Math.foor(Math.random() + 50);
+              let fx, fy, tries = 0;
+
+              do {
+                fx = 40 + Math.random() * (CANVAS_W - fw - 80);
+                fy = 40 + Math.random() * (CANVAS_H - fh - 80);
+                tries++;
+              }
+                while (tries < 60 && figurePositions.some( p =>
+                  fgRectsOverlap(fx,fy,fw,fh,p.x,p.y,p.w,p.h)
+                                                         ));
+              figurePositions.push({x: fx, y: fy, w: fw, h: fh});
+              const type = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
+              fgSpawnShape(canvas,fx,fy,fw,fh,type,FG_ACCENT, true};
+          }
+
+          // choose 3-4 decoy cluster centers (avoid figure positions)
+          const decoyCentres = [];
+          const decoyCentreCount = 3 + Math.floor(Math.random() * 2); // 3 or 4
+          for (let d = 0; d < decoyCentreCount; d++){
+            let dcx, dcy, tries = 0;
+            do {
+              dcx = 80 + Math.random() * (CANVAS_W - 160);
+              dcy = 80 + Math.random() * (CANVAS_H - 160);
+              tries++;
+            } while (tries < 60 && (
+              figurePositions.some(p => Math.hypot(dcx - (p.x+p.w/2), dcy - (p.y+p.h/2)) < 160) ||
+                decoyCentres.some(c => Math.hypot(dcx - c.x, dcy - c.y) < 140)
+                                  ));
+            decoyCenres.push({x:dcx, y:dcy});
+          }
+
+          // pile ground shapes, cover each figure and fill each decoy clusters
+          const spawnCluster = (cx, cy, count) => {
+            for (let i = 0; i < count; i++){
+              const w = 65 + Math.floor(Math.random() * 100);
+              const h = 60 + Math.floor(Math.random() * 100);
+              const type = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
+              const color = FG_GROUNDS[Math.floor(Math.random() * FG_GROUNDS.length)];
+              const x = Math.max(10, Math.min(CANVAS_W - w - 10,
+                                              cx - w/2 + (Math.random() - 0.5) * 130));
+              const y = Math.max(10, Math.min(CANVAS_H - h - 10,
+                                              cy - h/2 + (Math.random() - 0.5) * 130));
+              fgSpawnShape(canvas,x,y,w,h,type,color,false);
+            }
+          };
+
+          // for each figure: first spawn 3 large shapes centred directly on it to 
+          // gaurantee full coverage, then add looser surrounding shapes
+          figurePositions.forEach( p => {
+            const fcx = p.x + p.w/2;
+            const fcy = p.y + p.h/2;
+
+            // 3 gaurenteed covers - larger than the figure, centered on it
+            for (let i = 0; i < 3; i++){
+              const w = p.w + 30 + Math.floor(Math.random() * 40);
+              const h = p.h + 30 + Math.floor(Math.random() * 40);
+              const type = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
+              const color = FG_GROUNDS[Math.floor(Math.random() * FG_GROUNDS.length)];
+              const x = Math.max(10, Math.min(CANVAS_W - w - 10,
+                                              fcx - w/2 + (Math.random() - 0.5) * 20));
+              const y = Math.max(10, Math.min(CANVAS_H - h - 10,
+                                              fcy - h/2 + (Math.random() - 0.5) * 20));
+              fgSpawnShape(canvas,x,y,w,h,type,color,false);
+            }
+            // then 3 more looser shapes to build up the pile
+            spawnCluster(fcx,fcy,3);
+          });
+
+          decoyCentres.forEach(c => spawnCluster(c.x,c.y, 4 + Math.floor(Math.random() * 2)));
+          }
+
+          
+
+          
               
 
             
