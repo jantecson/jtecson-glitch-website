@@ -3,34 +3,134 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Instinct</title>
+    <title>Design Instinct – Janelle Tecson</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Source+Code+Pro&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
+      /* ── Reset ── */
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-
-      /* UI/UX Game based on the Gestalt Principles. this is a mini game that belongs on Janelle's UI/UX Portfolio */
-
-      
       :root {
-        --black: #000;
-        --white: #fff;
+        --black:  #111111;
+        --white:  #fafafa;
+        --mid:    #555555;
+        --light:  #e8e8e8;
+        --red:    #cb0010;
+        --serif:  'DM Serif Display', serif;
+        --sans:   'DM Sans', sans-serif;
+        --mono:   'Source Code Pro', monospace;
+
+        /* game-specific */
         --gray-100: #f5f5f5;
         --gray-200: #e5e5e5;
         --gray-400: #a0a0a0;
         --gray-600: #666;
-        --accent: #d60000;
-        --green: #2e9e6e;
+        --accent:   #d60000;
+        --green:    #2e9e6e;
         --green-soft: #eaf7f2;
       }
 
-      html, body {
-        height: 100%; font-family: 'Inter', sans-serif;
-        background: var(--white); color: var(--black); overflow-x: hidden;
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: var(--sans);
+        background: var(--white);
+        color: var(--black);
+        font-size: 16px;
+        line-height: 1.65;
+        overflow-x: hidden;
       }
 
+      /* ─────────────────────────────
+         NAV  (matching index.html)
+      ───────────────────────────── */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 3rem;
+        border-bottom: 1px solid var(--light);
+        position: sticky;
+        top: 0;
+        background: var(--white);
+        z-index: 200;
+      }
+
+      .nav-logo {
+        font-family: var(--serif);
+        font-size: 1.15rem;
+        text-decoration: none;
+        color: var(--black);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--black);
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        transition: opacity 0.15s;
+      }
+
+      .nav-links a:hover { opacity: 0.4; }
+      .nav-links a.active { border-bottom: 2px solid var(--red); padding-bottom: 1px; }
+
+      .nav-hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.4rem;
+        color: var(--black);
+        line-height: 1;
+      }
+
+      .nav-mobile {
+        display: none;
+        flex-direction: column;
+        background: var(--white);
+        border-bottom: 1px solid var(--light);
+        padding: 1.2rem 2rem;
+        gap: 1.1rem;
+        position: sticky;
+        top: 57px;
+        z-index: 199;
+      }
+
+      .nav-mobile.open { display: flex; }
+
+      .nav-mobile a {
+        font-size: 0.88rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        text-decoration: none;
+        color: var(--black);
+      }
+
+      @media (max-width: 680px) {
+        nav { padding: 1rem 1.5rem; }
+        .nav-links { display: none; }
+        .nav-hamburger { display: block; }
+      }
+
+      /* ─────────────────────────────
+         GAME STYLES
+      ───────────────────────────── */
+
       /* SCREENS */
-      .screen { display: none; min-height: 100vh; }
+      .screen { display: none; min-height: calc(100vh - 57px); }
       .screen.active { display: flex; }
 
       /* INTRO */
@@ -45,7 +145,7 @@
         width: 600px; height: 600px; border-radius: 50%;
         border: 1px solid var(--gray-200);
         top: -200px; right: -200px;
-        animation: slowSpin 30s linear infinite; 
+        animation: slowSpin 30s linear infinite;
       }
 
       #intro::after {
@@ -53,10 +153,10 @@
         width: 400px; height: 400px; border-radius: 50%;
         border: 1px solid var(--gray-200);
         bottom: -150px; left: -100px;
-        animation: slowSpin 20s linear infinite reverse; 
+        animation: slowSpin 20s linear infinite reverse;
       }
 
-      @keyframe slowSpin {
+      @keyframes slowSpin {
         from { transform: rotate(0deg); } to { transform: rotate(360deg); }
       }
 
@@ -66,7 +166,7 @@
         margin-bottom: 20px; position: relative; z-index: 1;
       }
 
-      .intro-title{
+      .intro-title {
         font-size: clamp(52px, 9vw, 100px); font-weight: 900;
         line-height: 0.92; letter-spacing: -0.04em;
         margin-bottom: 24px; position: relative; z-index: 1;
@@ -74,17 +174,17 @@
 
       .intro-title .u { border-bottom: 4px solid var(--accent); }
 
-      intro-sub{
+      .intro-sub {
         font-size: 17px; font-weight: 300; color: var(--gray-600);
-        max-width: 400px; line-height: 1.65
+        max-width: 400px; line-height: 1.65;
       }
 
-      .intro-buttons{
+      .intro-buttons {
         display: flex; gap: 12px; flex-wrap: wrap;
         justify-content: center; position: relative; z-index: 1;
       }
 
-      .btn-start{
+      .btn-start {
         background: var(--black); color: var(--white); border: none;
         padding: 18px 44px; font-size: 14px; font-weight: 700;
         letter-spacing: 0.07em; text-transform: uppercase;
@@ -92,7 +192,7 @@
         transition: background 0.15s, transform 0.15s;
       }
 
-      .btn-start:hover {background: var(--accent); transform: translateY(-2px); }
+      .btn-start:hover { background: var(--accent); transform: translateY(-2px); }
 
       .btn-start.secondary {
         background: none; color: var(--black);
@@ -100,12 +200,12 @@
       }
 
       .btn-start.secondary:hover {
-        background:none; border-color: var(--black);
+        background: none; border-color: var(--black);
         transform: translateY(-2px);
       }
 
-      .intro-note{
-        margin-top: 20px; font-size: 12px; color: var (--gray-400);
+      .intro-note {
+        margin-top: 20px; font-size: 12px; color: var(--gray-400);
         font-style: italic; position: relative; z-index: 1;
       }
 
@@ -114,17 +214,17 @@
 
       .game-header {
         display: flex; align-items: center; justify-content: space-between;
-        padding: 20px 40px; border-bottom: 1px solid var (--gray-200); flex-shrink: 0;
+        padding: 20px 40px; border-bottom: 1px solid var(--gray-200); flex-shrink: 0;
       }
 
-      .game-logo {font-size: 14px; font-weight: 900; letter-spacing: -0.02em; }
+      .game-logo { font-size: 14px; font-weight: 900; letter-spacing: -0.02em; }
 
       .header-tag {
         font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
         text-transform: uppercase; color: var(--accent);
       }
 
-      .header-right {display: flex; gap: 12px; align-items: center; }
+      .header-right { display: flex; gap: 12px; align-items: center; }
 
       .btn-sm {
         background: none; border: 1px solid var(--gray-200);
@@ -133,7 +233,7 @@
         text-transform: uppercase; cursor: pointer; border-radius: 2px;
         transition: border-color 0.15s, color 0.15s;
       }
-      .btn-sm:hover {border-color: var(--black); color: var(--black);}
+      .btn-sm:hover { border-color: var(--black); color: var(--black); }
       .btn-sm.hint-btn:hover { border-color: var(--accent); color: var(--accent); }
       .btn-sm:disabled { opacity: 0.3; pointer-events: none; }
 
@@ -153,18 +253,18 @@
         border-radius: 4px; overflow: hidden;
       }
 
-      .bottom-bar{
+      .bottom-bar {
         display: flex; align-items: center; gap: 16px;
         margin-top: 16px; height: 32px;
       }
 
-      .attempt-count{ font-size: 12px; font-weight: 500; color: var(--gray-400); }
-      .progress-pips{ display: flex; gap: 6px; align-items: center; }
-      .pip{
+      .attempt-count { font-size: 12px; font-weight: 500; color: var(--gray-400); }
+      .progress-pips { display: flex; gap: 6px; align-items: center; }
+      .pip {
         width: 7px; height: 7px; border-radius: 50%;
-        background: var(--gray-200); transform: background 0.3s;
+        background: var(--gray-200); transition: background 0.3s;
       }
-      .pip.done {background: var(--green);}
+      .pip.done { background: var(--green); }
 
       /* SHAPES */
       .shape {
@@ -172,27 +272,27 @@
         transition: filter 0.15s;
       }
 
-      .shape:hover {filter: brigtness(0.8); }
-      .shape.dragging {cursor: grabbing; filter: brightness(0.6); z-index: 1000; }
+      .shape:hover { filter: brightness(0.8); }
+      .shape.dragging { cursor: grabbing; filter: brightness(0.6); z-index: 1000; }
       .shape svg { display: block; }
-      
+
       @keyframes idleFloat {
-        0%, 100% {translate: 0 0; } 50% {translate: 0 -5px}
+        0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; }
       }
 
       .idle { animation: idleFloat ease-in-out infinite; }
 
       @keyframes snapIn {
-        from {transform: scale(0.7); opacity: 0.4; }
-        to {transform: scale(1); opacity: 1; }
+        from { transform: scale(0.7); opacity: 0.4; }
+        to   { transform: scale(1);   opacity: 1; }
       }
 
-      .snap {animation: snapIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1); }
+      .snap { animation: snapIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
       @keyframes wrongShake {
         0%, 100% { translate: 0 0; }
-        20% { translate: -7px 0;} 40% { translate: 7px 0;}
-        60% {translate: -4px 0;} 80% { translate: 4px 0;}
+        20% { translate: -7px 0; } 40% { translate: 7px 0; }
+        60% { translate: -4px 0; } 80% { translate: 4px 0; }
       }
 
       .shake { animation: wrongShake 0.35s ease; }
@@ -213,81 +313,56 @@
       .drop-zone.visible { border-color: var(--gray-400); }
       .drop-zone.visible .zone-icon { opacity: 0.12; }
       .drop-zone.done .zone-icon { opacity: 0.25; }
-      .drop-zone.visible.highlight {border-color: var(--gray-600); background: rgba(0,0,0,0.04); }
+      .drop-zone.visible.highlight { border-color: var(--gray-600); background: rgba(0,0,0,0.04); }
       .drop-zone.done { border-color: var(--green) !important; background: var(--green-soft) !important; }
 
-
       /* SIMILARITY */
-
-      .cluster-halo { 
+      .cluster-halo {
         position: absolute; border-radius: 50%;
         pointer-events: none; transition: opacity 0.3s;
         opacity: 0;
       }
+      .cluster-halo.active { opacity: 1; }
 
-      .cluster-halo.active {opacity: 1;}
-
-      /* CONTINUITY: segments */
-
+      /* CONTINUITY */
       .cont-piece {
-        position: absolute;
-        cursor: grab;
-        user-select: none;
-        touch-action: none;
+        position: absolute; cursor: grab;
+        user-select: none; touch-action: none;
       }
-
-      .cont-piece.snapped {
-        cursor: default;
-        pointer-events: none;
-      }
-
+      .cont-piece.snapped { cursor: default; pointer-events: none; }
       .cont-piece svg { display: block; overflow: visible; }
 
       .rot-handle {
-        position: absolute;
-        width: 14px; height: 14px;
-        border-radius: 50%;
-        background: var(--white);
-        border: 2px solid var(--gray-400);
-        cursor: crosshair;
-        z-index: 10;
+        position: absolute; width: 14px; height: 14px;
+        border-radius: 50%; background: var(--white);
+        border: 2px solid var(--gray-400); cursor: crosshair; z-index: 10;
       }
-
-      .rot-handle:hover {border-color: var(--accent); }
-      .cont-piece.snapped .rot-handle {display: none; }
+      .rot-handle:hover { border-color: var(--accent); }
+      .cont-piece.snapped .rot-handle { display: none; }
 
       #cont-bg { position: absolute; top: 0; left: 0; pointer-events: none; }
 
       @keyframes snapFlash {
-        0% { filter: brightness(2); }
+        0%   { filter: brightness(2); }
         100% { filter: brightness(1); }
       }
-
       .snap-flash { animation: snapFlash 0.35s ease; }
 
       /* CLOSURE */
-
       .clos-piece {
-        position: absolute;
-        cursor: grab;
-        user-select: none;
-        touch-action: none;
+        position: absolute; cursor: grab;
+        user-select: none; touch-action: none;
       }
-
-      .clos-piece.snapped {
-        cursor: default;
-        pointer-events: none;
-      }
-
-      .clos-piece svg { display: block; overflow: visisble; }
+      .clos-piece.snapped { cursor: default; pointer-events: none; }
+      .clos-piece svg { display: block; overflow: visible; }
       #clos-bg { position: absolute; top: 0; left: 0; pointer-events: none; }
 
       @keyframes closReveal {
-        0% {opacity: 0; transform: scale(0.92); }
-        60% {opacity: 1; transform: scale(1.04); }
-        100% {opacity: 0.18; transform: scale(1); }
+        0%   { opacity: 0; transform: scale(0.92); }
+        60%  { opacity: 1; transform: scale(1.04); }
+        100% { opacity: 0.18; transform: scale(1); }
       }
-      .clos-reveal-shape {animation: closReveal 1.1s ease forwards; }
+      .clos-reveal-shape { animation: closReveal 1.1s ease forwards; }
 
       .hint-toast {
         position: absolute; top: 12px; left: 50%;
@@ -298,11 +373,9 @@
         white-space: nowrap; z-index: 400; pointer-events: none;
         transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
-
       .hint-toast.show { transform: translateX(-50%) translateY(0); }
 
       /* REVEAL BANNER */
-
       .reveal-banner {
         position: absolute; bottom: 0; left: 0; right: 0;
         background: var(--black); color: var(--white);
@@ -312,10 +385,10 @@
         transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         z-index: 300;
       }
-      .reveal-banner.show {transform: translateY(0);}
-      .reveal-title {font-size: 26px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 4px; }
-      .reveal-title .r {color: #e05555; }
-      .reveal-def { font-size: 13px; color: var(--gray-400); max-width: 340px; line-height: 1.5;}
+      .reveal-banner.show { transform: translateY(0); }
+      .reveal-title { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 4px; }
+      .reveal-title .r { color: #e05555; }
+      .reveal-def { font-size: 13px; color: var(--gray-400); max-width: 340px; line-height: 1.5; }
 
       .btn-next {
         background: var(--accent); color: var(--white); border: none;
@@ -324,51 +397,41 @@
         cursor: pointer; border-radius: 2px;
         transition: opacity 0.15s, transform 0.15s; white-space: nowrap;
       }
-
       .btn-next:hover { opacity: 0.85; transform: translateY(-1px); }
 
       /* SYMMETRY */
-      .sym-fixed {
-        position: absolute; pointer-events: none;
-        border-radius: 3px;
-      }
-
+      .sym-fixed { position: absolute; pointer-events: none; border-radius: 3px; }
       .sym-piece {
         position: absolute; cursor: grab; border-radius: 3px;
         transition: box-shadow 0.15s;
       }
-
       .sym-piece.dragging { cursor: grabbing; box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
-      .sym-piece.snapped { cursor: default; pointer-events: none; }
+      .sym-piece.snapped  { cursor: default; pointer-events: none; }
       .sym-ghost {
         position: absolute; pointer-events: none; border-radius: 3px;
         border: 2px dashed rgba(0,0,0,0.18); background: transparent;
         opacity: 0; transition: opacity 0.1s;
       }
-
-      .sym-ghost-visible {opacity: 1; }
+      .sym-ghost-visible { opacity: 1; }
       .sym-axis {
         position: absolute; top: 0; bottom: 0; width: 1px;
         background: repeating-linear-gradient(
           to bottom, var(--gray-400) 0 6px, transparent 6px 12px
-          );
+        );
         pointer-events: none;
       }
-
       @keyframes symSnap {
-        0% {transform: scale(1.12); }
-        60% {transform: scale(0.94); }
-        100% {transform: scale(1); }
+        0%   { transform: scale(1.12); }
+        60%  { transform: scale(0.94); }
+        100% { transform: scale(1); }
       }
-
-      .sym-snap-anim {animation: symSnap 0.28s ease forwards}
+      .sym-snap-anim { animation: symSnap 0.28s ease forwards; }
 
       /* INTRO MODE PICKER */
       .mode-picker {
         display: flex; gap: 16px; margin-bottom: 40px;
         position: relative; z-index: 1;
       }
-
       .btn-mode {
         background: none; border: 2px solid var(--gray-200);
         color: var(--black); padding: 14px 36px;
@@ -376,25 +439,20 @@
         text-transform: uppercase; cursor: pointer; border-radius: 2px;
         transition: border-color 0.15s, background 0.15s, transform 0.15s;
       }
+      .btn-mode:hover { border-color: var(--black); transform: translateY(-2px); }
+      .btn-mode.active { background: var(--black); color: var(--white); border-color: var(--black); }
 
-      .btn-mode:hover { border-color: var(--black); transform: translateY(-2px);}
-      .btn-mode.active {
-        background: var(--black); color: var(--white);
-        border-color: var(--black);
-      }
-
-      .mode-panel {display: none;}
-      .mode-panel.active {dispaly: flex; flex-direction: column; align-items: center; gap: 0;}
-      .speedrun-start-wrap { position: relative; z-index: 1;}
+      .mode-panel { display: none; }
+      .mode-panel.active { display: flex; flex-direction: column; align-items: center; gap: 0; }
+      .speedrun-start-wrap { position: relative; z-index: 1; }
 
       /* SPEEDRUN TIMER */
-      .speedrun-timer{
+      .speedrun-timer {
         font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
         font-variant-numeric: tabular-nums; color: var(--black);
         display: none;
       }
-
-      .speedrun-timer.visible {display: block; }
+      .speedrun-timer.visible { display: block; }
 
       /* SUMMARY SCREEN */
       #summary {
@@ -406,7 +464,7 @@
         content: ''; position: absolute;
         width: 600px; height: 600px; border-radius: 50%;
         border: 1px solid var(--gray-200);
-        top: -200px; right: -200px; 
+        top: -200px; right: -200px;
         animation: slowSpin 30s linear infinite;
       }
       #summary::after {
@@ -428,7 +486,7 @@
         margin-bottom: 8px; position: relative; z-index: 1;
       }
       .summary-total-label {
-        font-size: 13pxl font-weight: 300; color: var(--gray-600);
+        font-size: 13px; font-weight: 300; color: var(--gray-600);
         margin-bottom: 40px; position: relative; z-index: 1;
       }
       .summary-table {
@@ -439,33 +497,72 @@
         padding: 10px 0; border-bottom: 1px solid var(--gray-200);
         font-size: 14px; text-align: left;
       }
-      .summary-table td:last-child {text-align: right; font-weight: 700; }
+      .summary-table td:last-child { text-align: right; font-weight: 700; }
       .summary-table tr:last-child td { border-bottom: none; }
-      .summary-actions {
-        display: flex; gap: 12px; position: relative; z-index: 1;
-      }
+      .summary-actions { display: flex; gap: 12px; position: relative; z-index: 1; }
 
       /* CONFETTI */
       .confetti-dot {
         position: fixed; border-radius: 50%; pointer-events: none;
         animation: confettiFall linear forwards;
       }
-
       @keyframes confettiFall {
-        0% {opacity: 1; transform: translateY(0) rotate(0deg); }
-        100% {opacity: 0; transform: translateY(280px) rotate(600deg); }
+        0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+        100% { opacity: 0; transform: translateY(280px) rotate(600deg); }
       }
 
-      </style>
+      /* ─────────────────────────────
+         FOOTER  (matching index.html)
+      ───────────────────────────── */
+      footer {
+        background: var(--black);
+        padding: 3rem 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+      .footer-name {
+        font-family: var(--serif);
+        font-size: 1.1rem;
+        color: var(--white);
+        text-decoration: none;
+      }
+      .footer-links { display: flex; gap: 1.5rem; }
+      .footer-links a { color: #888; font-size: 1.1rem; transition: color 0.15s; }
+      .footer-links a:hover { color: var(--white); }
+      .footer-credit { font-size: 0.72rem; color: #555; width: 100%; }
+      .footer-credit a { color: #666; text-decoration: underline; }
+    </style>
   </head>
 
-  
   <body>
 
+    <!-- ── Nav (matching index.html) ── -->
+    <nav>
+      <a class="nav-logo" href="index.html">Janelle Tecson</a>
+      <ul class="nav-links">
+        <li><a href="index.html#projects">Work</a></li>
+        <li><a href="https://medium.com/@jantecson30" target="_blank">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="designinstinct.html" class="active">Design Instinct</a></li>
+        <li><a href="assets/images/DDP_ JTecson_Resume.pdf" target="_blank">Resume</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+    </nav>
 
-  <!-- INTRO -->
-    <section id= "intro" class="screen active">
-      <p class="eyebrow"> Design Instinct</p>
+    <div class="nav-mobile" id="navMobile">
+      <a href="index.html#projects" onclick="toggleNav()">Work</a>
+      <a href="https://medium.com/@jantecson30" target="_blank">Blog</a>
+      <a href="about.html">About</a>
+      <a href="designinstinct.html">Design Instinct</a>
+      <a href="assets/images/DDP_JTecson_Resume.pdf" target="_blank">Resume</a>
+    </div>
+
+    <!-- INTRO -->
+    <section id="intro" class="screen active">
+      <p class="eyebrow">Design Instinct</p>
       <h1 class="intro-title">Trust<br><span class="u">Your Eye</span></h1>
       <p class="intro-sub">No instructions. Just shapes.<br>Figure out what belongs together.</p>
 
@@ -488,16 +585,16 @@
 
       <!-- Speedrun panel -->
       <div class="mode-panel" id="panel-speedrun">
-        <p class="intro-sub" style="margin-bottom: 28px; margin-top: -16px;"> All 6 levels, no hints, no stopping.</p>
+        <p class="intro-sub" style="margin-bottom: 28px; margin-top: -16px;">All 6 levels, no hints, no stopping.</p>
         <div class="speedrun-start-wrap">
           <button class="btn-start" onclick="startSpeedrun()">Start Run</button>
         </div>
       </div>
 
-      <p class="intro-note">drag · group · discover </p>
+      <p class="intro-note">drag · group · discover</p>
     </section>
 
-<!-- SUMMARY -->
+    <!-- SUMMARY -->
     <section id="summary" class="screen">
       <p class="summary-eyebrow">Speedrun Complete</p>
       <div class="summary-total" id="summary-total">-</div>
@@ -512,13 +609,13 @@
     <!-- GAME -->
     <div id="game" class="screen">
       <header class="game-header">
-        <span class="game-logo">Desin Instinct</span>
-        <span class="" id="">-</span>
+        <span class="game-logo">Design Instinct</span>
+        <span class="header-tag" id="header-tag">-</span>
         <div class="header-right">
           <button class="btn-sm hint-btn" id="btn-hint" onclick="triggerHint()">Hint</button>
           <span class="speedrun-timer" id="speedrun-timer">0:00</span>
-          <button class = "btn-sm" onclick="resetGame()">Reset</button>
-          <button class = "btn-sm" onclick="goToIntro()">← Levels</button>
+          <button class="btn-sm" onclick="resetGame()">Reset</button>
+          <button class="btn-sm" onclick="goToIntro()">← Levels</button>
         </div>
       </header>
       <div class="game-body">
@@ -527,1615 +624,1445 @@
           <div class="hint-toast" id="hint-toast"></div>
           <div class="reveal-banner" id="reveal-banner">
             <div>
-              <div class="reveal-title" id="reveal-banner">
-                <div>
-                  <div class="reveal-title" id="reveal-title"></div>
-                  <div class="reveal-def" id="reveal-def"></div>
-                </div>
-                <button class="btn-next" id="btn-reveal-action" onclick="revealAction()">Back to levels →</button>
-              </div>
+              <div class="reveal-title" id="reveal-title"></div>
+              <div class="reveal-def" id="reveal-def"></div>
             </div>
-            <div class="bottom-bar">
-              <div class="progress-pips" id="progress-pips"></div>
-              <span class="attempt-count" id="attempt-count"></span>
-            </div>
+            <button class="btn-next" id="btn-reveal-action" onclick="revealAction()">Back to levels →</button>
           </div>
         </div>
+        <div class="bottom-bar">
+          <div class="progress-pips" id="progress-pips"></div>
+          <span class="attempt-count" id="attempt-count"></span>
+        </div>
+      </div>
+    </div>
 
-        <script>
-        /* SCRIPT */
-          const CANVAS_W = 780, CANVAS_H = 500;
-          let currentLevel = null;
-          let hintUsed = false, hintTimer = null;
-          let attempt = 0;
+    <!-- ── Footer (matching index.html) ── -->
+    <footer>
+      <a class="footer-name" href="index.html">Janelle Tecson</a>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/janelle-tecson/" target="_blank" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/ejectorcrabband/" target="_blank" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+      </div>
+      <p class="footer-credit">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </footer>
 
-          // Speedrun state
-          const SPEEDRUN_ORDER = ['proximity', 'similarity', 'continuity', 'closure', 'figureground', 'symmetry'];
-          const SPEEDRUN_NAMES = ['Proximity', 'Similarity', 'Continuity', 'Closure', 'Figure/Ground', 'Symmetry'];
-          let isSpeedrun = false;
-          let srLevelIndex = 0;
-          let srLevelStart = 0;
-          let srRunStart = 0;
-          let srLevelTimes = [];
-          let srTimerInterval = null;
+    <script>
+    /* ═══════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════ */
+    function toggleNav() {
+      document.getElementById('navMobile').classList.toggle('open');
+    }
 
-          function switchMode(mode){
-            document.getElementById('btn-mode-levels').classList.toggle('active', mode === 'levels');
-            document.getElementById('btn-mode-speedrun').classList.toggle('active', mode === 'speedrun');
-            document.getElementById('btn-mode-levels').classList.toggle('active', mode === 'levels');
-            document.getElementById('btn-mode-speedrun').classList.toggle('active', mode === 'speedrun');
+    /* ═══════════════════════════════════════
+       CORE GAME ENGINE
+    ═══════════════════════════════════════ */
+    const CANVAS_W = 780, CANVAS_H = 500;
+    let currentLevel = null;
+    let hintUsed = false, hintTimer = null;
+    let attempts = 0;
+
+    // Speedrun state
+    const SPEEDRUN_ORDER = ['proximity','similarity','continuity','closure','figureground','symmetry'];
+    const SPEEDRUN_NAMES = ['Proximity','Similarity','Continuity','Closure','Figure/Ground','Symmetry'];
+    let isSpeedrun = false;
+    let srLevelIndex = 0;
+    let srLevelStart = 0;
+    let srRunStart = 0;
+    let srLevelTimes = [];
+    let srTimerInterval = null;
+
+    function switchMode(mode) {
+      document.getElementById('btn-mode-levels').classList.toggle('active', mode === 'levels');
+      document.getElementById('btn-mode-speedrun').classList.toggle('active', mode === 'speedrun');
+      document.getElementById('panel-levels').classList.toggle('active', mode === 'levels');
+      document.getElementById('panel-speedrun').classList.toggle('active', mode === 'speedrun');
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function goToIntro() {
+      srStop();
+      isSpeedrun = false;
+      showScreen('intro');
+    }
+
+    /* Speedrun helpers */
+    function srStop() {
+      clearInterval(srTimerInterval);
+      srTimerInterval = null;
+    }
+
+    function srFormatTime(ms) {
+      const totalSec = Math.floor(ms / 1000);
+      const m = Math.floor(totalSec / 60);
+      const s = totalSec % 60;
+      return m > 0 ? `${m}m ${s}s` : `${s}s`;
+    }
+
+    function srFormatClock(ms) {
+      const totalSec = Math.floor(ms / 1000);
+      const m = Math.floor(totalSec / 60);
+      const s = totalSec % 60;
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function srTickTimer() {
+      const elapsed = Date.now() - srRunStart;
+      document.getElementById('speedrun-timer').textContent = srFormatClock(elapsed);
+    }
+
+    function startSpeedrun() {
+      isSpeedrun = true;
+      srLevelIndex = 0;
+      srLevelTimes = [];
+      srRunStart = Date.now();
+      srLevelStart = Date.now();
+      showScreen('game');
+      srStop();
+      srTimerInterval = setInterval(srTickTimer, 500);
+      srLoadCurrentLevel();
+    }
+
+    function srLoadCurrentLevel() {
+      const level = SPEEDRUN_ORDER[srLevelIndex];
+      srLevelStart = Date.now();
+      currentLevel = level;
+      attempts = 0;
+      hintUsed = false;
+      document.getElementById('reveal-banner').classList.remove('show');
+      document.getElementById('attempt-count').textContent = '';
+      document.getElementById('btn-hint').style.display = 'none';
+      document.getElementById('speedrun-timer').classList.add('visible');
+      const btn = document.getElementById('btn-reveal-action');
+      btn.textContent = srLevelIndex < SPEEDRUN_ORDER.length - 1 ? 'Next Level →' : 'See Results →';
+      if (level === 'proximity')    initProximity();
+      else if (level === 'similarity')  initSimilarity();
+      else if (level === 'continuity')  initContinuity();
+      else if (level === 'closure')     initClosure();
+      else if (level === 'figureground') initFigureGround();
+      else if (level === 'symmetry')    initSymmetry();
+    }
+
+    function srLevelComplete() {
+      srLevelTimes.push(Date.now() - srLevelStart);
+    }
+
+    function revealAction() {
+      if (!isSpeedrun) { goToIntro(); return; }
+      srLevelIndex++;
+      if (srLevelIndex >= SPEEDRUN_ORDER.length) {
+        srStop();
+        showSummary();
+      } else {
+        srLoadCurrentLevel();
+      }
+    }
+
+    function showSummary() {
+      spawnConfetti();
+      const totalMs = srLevelTimes.reduce((a, b) => a + b, 0);
+      document.getElementById('summary-total').textContent = srFormatTime(totalMs);
+      const tbody = document.getElementById('summary-table');
+      tbody.innerHTML = srLevelTimes.map((ms, i) =>
+        `<tr><td>Level ${i+1} – ${SPEEDRUN_NAMES[i]}</td><td>${srFormatTime(ms)}</td></tr>`
+      ).join('');
+      showScreen('summary');
+    }
+
+    // Normal level start
+    function startLevel(level) {
+      isSpeedrun = false;
+      currentLevel = level;
+      showScreen('game');
+      attempts = 0;
+      hintUsed = false;
+      srStop();
+      document.getElementById('btn-hint').disabled = false;
+      document.getElementById('btn-hint').style.display = '';
+      document.getElementById('speedrun-timer').classList.remove('visible');
+      document.getElementById('attempt-count').textContent = '';
+      document.getElementById('reveal-banner').classList.remove('show');
+      document.getElementById('btn-reveal-action').textContent = 'Back to levels →';
+      if (level === 'proximity')    initProximity();
+      else if (level === 'similarity')  initSimilarity();
+      else if (level === 'continuity')  initContinuity();
+      else if (level === 'closure')     initClosure();
+      else if (level === 'figureground') initFigureGround();
+      else if (level === 'symmetry')    initSymmetry();
+    }
+
+    function resetGame() {
+      if (isSpeedrun) {
+        srStop();
+        srLevelIndex = 0;
+        srLevelTimes = [];
+        srRunStart = Date.now();
+        srLevelStart = Date.now();
+        srTimerInterval = setInterval(srTickTimer, 500);
+        srLoadCurrentLevel();
+      } else {
+        startLevel(currentLevel);
+      }
+    }
+
+    function triggerHint() {
+      if (hintUsed) return;
+      hintUsed = true;
+      document.getElementById('btn-hint').disabled = true;
+      const toast = document.getElementById('hint-toast');
+      toast.classList.add('show');
+      clearTimeout(hintTimer);
+      hintTimer = setTimeout(() => toast.classList.remove('show'), 4500);
+    }
+
+    function updateAttempts() {
+      document.getElementById('attempt-count').textContent =
+        attempts === 1 ? '1 wrong drop' : `${attempts} wrong drops`;
+    }
+
+    function shapeCenter(el, canvas) {
+      const cr = canvas.getBoundingClientRect();
+      const er = el.getBoundingClientRect();
+      return { x: er.left - cr.left + er.width / 2, y: er.top - cr.top + er.height / 2 };
+    }
+
+    function clearCanvas() {
+      const canvas = document.getElementById('canvas');
+      const keep = ['hint-toast', 'reveal-banner'];
+      Array.from(canvas.children).forEach(c => { if (!keep.includes(c.id)) c.remove(); });
+    }
+
+    function makeDraggable(el, onMove, onUp) {
+      let sx, sy, ol, ot;
+      const down = (e) => {
+        e.preventDefault();
+        const pt = e.touches ? e.touches[0] : e;
+        sx = pt.clientX; sy = pt.clientY;
+        ol = parseInt(el.style.left); ot = parseInt(el.style.top);
+        el.classList.add('dragging'); el.classList.remove('idle');
+        el.style.zIndex = 999;
+        document.addEventListener('mousemove', move);
+        document.addEventListener('mouseup', up);
+        document.addEventListener('touchmove', move, { passive: false });
+        document.addEventListener('touchend', up);
+        if (onMove) onMove('start', el);
+      };
+      const move = (e) => {
+        const pt = e.touches ? e.touches[0] : e;
+        el.style.left = (ol + pt.clientX - sx) + 'px';
+        el.style.top  = (ot + pt.clientY - sy) + 'px';
+        if (onMove) onMove('move', el);
+      };
+      const up = () => {
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', up);
+        document.removeEventListener('touchmove', move);
+        document.removeEventListener('touchend', up);
+        el.classList.remove('dragging'); el.classList.add('idle');
+        el.style.zIndex = 1;
+        if (onMove) onMove('end', el);
+        if (onUp) onUp(el);
+      };
+      el.addEventListener('mousedown', down);
+      el.addEventListener('touchstart', down, { passive: false });
+    }
+
+    function scatter(shapes, avoidZones) {
+      const placed = [];
+      return shapes.map(s => {
+        let x, y, tries = 0;
+        do {
+          x = 24 + Math.random() * (CANVAS_W - 72);
+          y = 24 + Math.random() * (CANVAS_H - 72);
+          tries++;
+          if (avoidZones) {
+            const inAvoid = avoidZones(s, x, y);
+            if (inAvoid) continue;
           }
-
-          function showScreen(id){
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-          }
-
-          function goToIntro(){
-            srStop();
-            isSpeedrun = false;
-            showScreen('intro');
-          }
-
-          /* Speedrun helpers */
-          function srStop(){
-            clearInterval(srTimerInterval);
-            srTimerInterval = null;
-          }
-
-          function srFormatTime(ms){
-            const totalSec = Math.floor(ms/1000);
-            const m = Math.foor(totalSec/60);
-            const s = totalSec % 60;
-            return m > 0 ? '${m}m ${s}s' : '${s}s';
-          }
-
-          function srFormatClock(ms){
-            const totalSec = Math.floor(ms/1000);
-            const m = Math.foor(totalSec/60);
-            const s = totalSec % 60;
-            return '${m}:${s.toString().padStart(2,'0')}';
-          }
-
-          function srTickTimer(){
-            const elapsed = Date.now() - srRunStart;
-            document.getElementById('speedrun-timer').textContent = srFormatClock(elapsed);
-          }
-
-          function startSpeedrun(){
-            isSpeedrun = true;
-            srLevelIndex = 0;
-            srLevelTimes = [];
-            srRunStart = Date.now();
-            srLevelStart = Date.now();
-            showScreen('game');
-            srStop();
-            srTimerInterval = setInterval(srTickTimer, 500);
-            srLoadCurrentLevel();
-          }
-
-          function srLoadCurrentLevel(){
-            const level = SPEEDRUN_ORDER[srLevelIndex];
-            srLevelStart = Date.now();
-            currentLevel = level;
-            attempts = 0;
-            hintUsed = false;
-            document.getElementById('reveal-banner').classList.remove('show');
-            document.getElementById('attempt-count').textContent = '';
-            document.getElementById('btn-hint').style.display = 'none';
-            document.getElementById('speedrun-timer').classList.add('visible');
-            const btn = document.getElementById('btn-reveal-action');
-            btn.textContent = srLevelIndex < SPEEDRUN_ORDER.length - 1 ? 'Next Level →' : 'See Results →';
-            if (level === 'proximity') initProximity();
-            else if (level === 'similarity') initSimilarity();
-             else if (level === 'continuity') initContinuity();
-             else if (level === 'closure') initClosure();
-             else if (level === 'figureground') initFigureGround();
-             else if (level === 'symmetry') initSymmetry();
-          }
-
-          function srLevelComplete(){
-            srLevelTimes.push(Date.now() - srLevelStart);
-          }
-
-          function revealAction(){
-            if (!isSpeedrun){
-              goToIntro();
-              return;
-            }
-            srLevelIndex++;
-            if (srLevelIndex >= SPEEDRUN_ORDER.length){
-              srStop();
-              showSummary();
-            }
-            else{
-              srLoadCurrentLevel();
-            }
-          }
-
-          function showSummary(){
-            spawnConfetti;
-            const totalMs = srLevelTimes.reduce((a,b) => a + b, 0);
-            document.getElementById('summary-total').textContent = srFormatTime(totalMs);
-            const tbody = document.getElementById('summary-table');
-            tbody.innerHTML = srLevelTimes.map((ms, i) => '<tr><td>Level ${i+1} - ${SPEEDRUN_NAMES[i]}</td><td>${srFormatTime(ms)}</td></tr>').join('');
-            showScreen('summary');
-          }
-
-      // Normal Level start
-          function startLevel(level){
-            isSpeedrun = false;
-            currentLevel = level;
-            showScreen('game');
-            attempts = 0;
-            hintUsed = false;
-            srStop();
-            document.getElementById('btn-hint').disabled = false;
-            document.getElementById('btn-hint').style.display = '';
-            document.getElementById('speedrun-timer').classList.remove('visible');
-            document.getElementById('attempt-count').textCountent = '';
-            document.getElementById('reveal-banner').classList.remove('show');
-            document.getElementById('btn-reveal-action').textContent = 'Back to levels →';
-
-            if (level === 'proximity') initProximity();
-            else if (level === 'similarity') initSimilarity();
-            else if (level === 'continuity') initContinuity();
-            else if (level === 'closure') initClosure();
-            else if (level === 'figureground') initFigureGround();
-            else if (level === 'symmetry') initSymmetry();
-          }
-
-          function resetGame(){
-            if (isSpeedrun){
-              srStop();
-              srLevelIndex = 0;
-              srLevelTimes = [];
-              srRunStart = Date.now();
-              srLevelStart = Date.now();
-              srTimerInterval = setInterval(srTickTimer, 500);
-              srLoadCurrentLevel();
-            } else {
-              startLevel(currentLevel);
-            }
-          }
-
-          function triggerHint(){
-            if (hintUsed) return;
-            hintUsed = true;
-            document.getElementById('btn-hint').disabled = true;
-            const toast = document.getElementById('hint-toast');
-            toast.classList.add('show');
-            clearTimeout(hintTimer);
-            hintTimer - setTimeout(() => toast.classList.remove('show'), 4500);
-          }
-
-          function updateAttempts(){
-            document.getElementById('attempt-count').textContent = attempts === 1 ? '1 wrong drop' : '${attempts} wrong drops';
-          }
-
-          function shapeCenter(el, canvas) {
-            const cr = canvas.getBoundingClientRect();
-            const er = el.getBoundingClientRect();
-            return { x: er.left - cr.left + er.width / 2, y: er.top - cr.top + er.height / 2};
-          }
-
-          function clearCanvas() {
-            const canvas = document.getElementByID('canvas');
-            const keep = ['hint-toast', 'reveal-banner'];
-            Array.from(canvas.children).forEach(c => { if (!keep.includes(c.id)) c.remove();});
-          }
-
-          function makeDraggable(el, onMove, onUp){
-            let sx, sy, ol, ot;
-            const down = (e) => {
-              e.preventDefault();
-              const pt = e.touches ? e.touches[0] : e;
-              sx = pt.clientX; sy = pt.clientY;
-              ol = parseInt(el.style.left); ot = parseInt(el.style.top);
-              el.classList.add('dragging'); el.classList.remove('idle');
-              el.style.zIndex = 999;
-              document.addEventListener('mousemove', move);
-              document.addEventListener('mouseup', up);
-              document.addEventListener('touchmove', move, {passive: false});
-              document.addEventListener('touchend', up);
-              if (onMove) onMove('start', el);
-            };
-            const move = (e) => {
-              const pt = e.touches ? e.touches[0] : e;
-              el.style.left = (ol + pt.clientX - sx) + 'px';
-              el.style.top = (ot + pt.clientY - sy) + 'px';
-              if (onMove) onMove('move', el);
-            };
-            const up = () => {
-              document.removeEventListener('mousemove', move);
-              document.removeEventListener('mouseup', up);
-              document.removeEventListener('touchmove', move);
-              document.removeEventListener('touchend', up);
-              el.classList.remove('dragging'); el.classList.add('idle');
-              el.style.zIndex = 1;
-              if (onMove) onMove('end', el);
-              if (onUp) onUp(el);
-            };
-            el.addEventListener('mousedown', down);
-            el.addEventListener('touchstart', down, {passive: false});
-          }
-
-          function scatter(shapes, avoidZones) {
-            const place = [];
-            return shapes.map( s => {
-              let x, y, tries = 0;
-              do {
-                x = 24 + Math.random() * (CANVAS_W - 72);
-                y = 24 + Math.random() * (CANVAS_H - 72);
-                tries++;
-                if(avoidZones){
-                  const inAvoid = avoidZones(s,x,y);
-                  if (inAvoid) continue;
-                }
-              }
-                while (tries < 80 && placed.some(p => Math.hypot(p.x - x, p.y - y) < 54));
-              placed.push({x,y});
-              return { ...s,x,y};
-            });
-          }
-
-          function svgShape(type, color, size){
-            const s = size;
-            if (type === 'circle') {
-              return '<svg width = "${s}" height = "${s}" viewBox= "0 0 36 36"><circle cx="18" cy="18" r="16" fill="${color}"/></svg>';
-            } else if (type === 'square') {
-              return '<svg width = "${s}" height = "${s}" viewBox= "0 0 36 36"><rect x="2" y="2" width="32" height="32" fill="${color}"/></svg>';
-            } else {
-              return '<svg width = "${s}" height = "${s}" viewBox= "0 0 36 36"><polygon points="18,2 34, 34 2, 34" fill="${color}"/></svg>';
-            }
-          }
-
-          function spawnConfetti(){
-            const colors = ['#d60000', '#000', '#e5e5e5', '#a00000', '#aaaaaa'];
-            for (let i=0; i<32; i++){
-              const dot = document.createElement('div');
-              dot.className = 'confetti-dot';
-              const size = 4 + Math.random() * 7;
-              dot.style.cssText = '
-                width:${size}px;height:${size}px;
-                background:${colors[Math.floor(Math.random()*colors.length)]};
-                left:${8 + Math.random()*84}%;top:${5+Math.random()*40}%;
-                animation-duration:${0.9+Math.random()*1.3}s;
-                animation-delay:${Math.random()*0.3}s;
-              ';
-              document.body.appendChild(dot);
-              dot.addEventListener('animationend', () => dot.remove());
-            }
-          }
-
-          function showReveal(titleHTML, def){
-            if (isSpeedrun) srLevelComplete();
-            document.getElementById('reveal-title').innerHTML = titleHTML;
-            document.getElementById('reveal-def').textContent = def;
-            document.getElementById('reveal-banner').classList.add('show');
-            spawnConfetti();
-          }
-
-    /* LEVEL 1 - PROXIMITY */
-    // group shapes that are related to one another in their designated sections 
-          
-          const PROX_ZONE_IDS = ['circle', 'square', 'triangle'];
-          const PROX_ZONES = {
-            circle: {x: 40, y:50, w:200, h:390},
-            square: {x: 290, y:50, w:200, h:390},
-            triangle: {x: 540, y:50, w:200, h:390},
-          };
-          let proxPlacements={};
-          let proxCompleted = new Set();
-
-          function initProximity(){
-            clearCanvas();
-            proxPlacements = {};
-            proxCompleted = new Set();
-
-            document.getElementById('').textContent = 'Level 1: Proximity';
-            document.getElementById('prompt-text').textContent = 'Make sense of this.';
-            document.getElementById('hint-toast').textContent = 'Each shape belongs with shapes that look like it.';
-
-            //pips
-            const pips = document.getElementById('progress-pips');
-            pips.innerHTML = PROX_ZONE_IDS.map(id => '<div class="pip" id="pip-${id}"></div>').join('');
-
-            const canvas = document.getElementById('canvas');
-
-            //zones
-            PROX_ZONE_IDS.forEach( id => {
-              const z = PROX_ZONES[id];
-              const el = document.createElement('div');
-              el.className = 'drop-zone';
-              el.id = 'pzone-${id}';
-              el.style.cssText = 'left:${z.x}px;top:${z.y}px;width:${z.w}px;height:${z.h}px;';
-
-              const icon = document.createElement('span');
-              icon.className = 'zone-icon';
-
-              if (id === 'circle'){
-                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="3" /></svg>';
-              } else if (id === 'square'){
-                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><rect x="4" y="4" width="40" hieght="40" fill="none" stroke="currentColor" stroke-width="3" /></svg>';
-              } else {
-                icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><polygon points="24,4 44,44 4,44" fill="none" stroke="currentColor" stroke-width="3" /></svg>';
-              }
-              el.appendChild(icon);
-              canvas.appendChild(el);
-            });
-
-            const types = ['circle', 'square', 'triangle'];
-            const shapeDefs = types.flatMap( type =>
-              [0,1,2,3].map(i => ({ id: '${type}-${i}', type, color:'#111' }))
-              );
-
-            const placed = scatter( shapeDefs, (s,x,y) => {
-              const z = PROX_ZONES[s.types];
-              return x >= z.x && x <= z.x + z.w && y >= z.y && y <= z.y + z.h;
-            });
-
-            placed.forEach( s=> {
-              const el = document.createElement('div');
-              el.id = 'shape-${s.id}';
-              el.className = 'shape idle';
-              el.style.left = s.x + 'px'; el.style.top = s.y + 'px';
-              el.style.animationDuration = (2.5 + Math.random() * 2) + 's';
-              el.style.animationDelay = (Math.random() * 3) + 's';
-              el.innerHTML = svgShape(s.type, s.color, 36);
-
-              makeDraggable(el,
-                            (event) => {
-                              if (event === 'start' || event === 'move') proxHighlight(el, canvas);
-                              if (event === 'end' || event === 'move') proxClearHighlight();
-                              if (event === 'start') proxSetVisible(true, canvas);
-                              if (event === 'end') proxSetVisible(false, canvas);
-                            },
-                            () => proxCheckDrop(el,s,canvas)
-                            );
-                          canvas.appendChild(el);
-            });
-          }
-
-          function proxSetVisible(visible, canvas){
-            PROX_ZONE_IDS.forEach(id => {
-              const el = document.getElementById('pzone-${id}');
-              if (!el || el.classList.contains('done')) return;
-              el.classList.toggle('visible', visible);
-              if (!visible) el.classList.remove('highlight');
-            });
-          }
-
-          function proxHighlight(shapeEl, canvas){
-            const center = shapeCenter(shapeEl, canvas);
-            PROX_ZONE_IDS.forEach(id => {
-              const z = PROX_ZONE[id];
-              const el = document.getElementById('pzone-${id}');
-              if (!el || el.classList.contains('done')) return;
-              const inside = center.x >= z.x && center.x <= z.x + z.w &&
-                center.y >= z.y && center.y <= z.y + z.h;
-              el.classList.toggle('highlight', inside);
-            });
-          }
-
-          function proxClearHighlight() {
-            PROX_ZONE_IDS.forEach(id => {
-              const el = document.getElementById('pzone-${id}');
-              if (el) el.classList.remove('highlight');
-            });
-          }
-
-          function proxCheckDrop(el, shapeData, canvas){
-            const center = shapeCenter(el, canvas);
-            let landed = null;
-            PROX_ZONE_IDS.forEach(id => {
-              const z = PROX_ZONE[id];
-              if (center.x >= z.x && center.x <= z.x + z.w && center.y >= z.y && center.y <= z.y + z.h) landed = id;
-            });
-
-            if (!landed) return;
-
-            if (landed === shapeData.type) {
-              proxPlacements[shapeData.id] = landed;
-              el.classList.add('snap');
-              setTimeout(() => el.classList.remove('snap'), 300);
-              proxCheckZoneDone(landed);
-            } else {
-              attempts++; updateAttemps();
-              el.classList.add('shake');
-              el.addEventListener('animationend', () => el.classList.remove('shake'), {once:true});
-            }
-          }
-
-          function proxCheckZoneDone(zoneId){
-            const allIn = [0,1,2,3].every(i => proxPlacements['${zoneId} - ${i}'] === zoneId);
-            if (allIn && !proxCompleted.has(zoneId)){
-              proxCompleted.add(zoneId);
-              const zEl = document.etElementById('pzone - ${zoneId}');
-              if (zEl) {zEl.classList.add('done', 'visible'); zEl.classList.remove('highlight'); }
-              const pip = document.getElementById('pip-${zoneId}');
-              if (pip) pip.classList.add('done');
-              if (proxCompleted.size === 3){
-                setTimeout(() => showReveal (
-                           'Proximity', 'Things grouped close together are perceived as related; even without labels, borders, or color.'
-                  ), 400);
-                }
-              }
-            }
-
-
-          // Level 2: Similarity
-          // 16 shapes (4 groups x 4 shapes), mixed types per group
-          // Groups defined only by color. no drop zones
-          // WIN: each color group is clustered within a radius
-
-          // 4 muted color groups
-          const SIM_GROUPS = [
-            {id: 'terracotta', color: '#b5614a'},
-            {id: 'slate', color: '#5a7fa3'},
-            {id: 'sage', color: '#5e8c6a'},
-            {id: 'mauve', color: '#7d5c7a'},
-            ];
-
-          // each group gets one of each shape type and a fourth mixed in
-          const SHAPE_TYPES = ['circle', 'square', 'triangle'];
-
-          // cluster detection: all four shapes of a color must fit inside a circle of this radius
-          const CLUSTER_RADIUS = 110;
-
-          // minimum distance between cluster centers (so groups don't blur into each other)
-          const CLUSTER_SEPARATION = 160;
-
-          let simShapes = []; // {id, groupid, color, type, el}
-          let simClusters = new Set(); // groupids that are done
-          let simCheckTimer = null;
-
-          function initSimilarity(){
-            clearCanvas();
-            simShapes = [];
-            simClusters = new Set();
-
-            document.getElementById('header-tag').textcontent = 'Level 2: Similarity';
-            document.getElementById('prompt-text').textcontent = 'Something connects these. What is it?';
-            document.getElementById('hint-toast').textcontent = 'Ignore the shapes. Look at something else.';
-
-            // 4 pips
-            const pips = document.getElementById('progress-pips');
-            pips.innerHTML = SIM_GROUPS.map(g => '<div class = "pip" id="simpip-${g.id}"></div>').join('');
-
-            // build 16 shapes: each group gets circle square triangle and one random repeat
-            const shapeDefs = [];
-            SIM_GROUPS.forEach(g => {
-              const types = [...SHAPE_TYPES, SHAPE_TYPES[Math.floor(Math.random() * 3)]];
-              types.forEach((type,i) => {
-                shapeDefs.push({id: '${g.id} - ${i}', groupId: g.id, color: g.color, type});
-              });
-            });
-
-            // shuffle so same color shapes don't cluster by default
-            shapeDefs.sort(() => Math.random() - 0.5);
-
-            const placed = scatter(shapeDefs, null);
-
-            placed.forEach(s => {
-              const el = document.createElement('div');
-              el.id = 'shape-${s.id}';
-              el.className = 'shape idle';
-              el.style.left = s.x + 'px'; el.style.top = s.y + 'px';
-              el.style.animationDuration = (2.5 + Math.random() * 3) + 's';
-              el.innerHTML = svgShape(s.type, s.color, 36);
-              makeDraggable(el, null, () => {
-                clearTimeout(simCheckTimer);
-                simCheckTimer = setTimeout(() => simCheckCluster(canvas), 120);
-              });
-              canvas.appendChild(el);
-              simShapes.push({...s, el});
-            });
-          }
-
-          function simCheckClusters(canvas){
-            // for each color group, get positions of all 4 shapes
-            SIM_GROUPS.forEach(g => {
-              if (simClusters.has(g.id)) return;
-
-              const groupShapes = simShapes.filter(s => s.groupId === g.id);
-              const positions = groupShapes.map(s => shapeCenter(s.el, canvas));
-
-              // find centroid
-              const cx = position.reduce((sum, p) => sum + p.x, 0) / position.length;
-              const cy = position.reduce((sum, p) => sum + p.y, 0) / position.length;
-
-              // check all 4 are within cluster_radius of centroid
-              const allClose = positions.every(p => Math.hypo(p.x - cx, p.y - cy) <= CLUSTER_RADIUS);
-              if (!allClose) return;
-
-              // Check this cluster is far enough from other completed clusters
-              const tooClose = [...simClusters].some(doneId => {
-                const doneShapes = simShapes.filter(s => s.groupId === doneId);
-                const donePos = doneShapes.map(s => shapeCenter(s.el, canvas));
-                const dcx = donePos.reduce((sum, p) => sum + p.x, 0) / donePos.length;
-                const dcy = donePos.reduce((sum, p) => sum + p.y, 0) / donePos.length;
-                return Math.hypot(cx - dcx, cy - dcy) < CLUSTER_SEPARATION;
-              });
-              if (tooClose) return;
-
-              // group complete
-              simClusters.add(g.id);
-
-              // animate shapes
-              groupShapes.forEach(s => {
-                s.el.classList.add('snap');
-                setTimeout(() => s.el.classList.remove('snap'), 300);
-              });
-
-              const pip = document.getElementById('simpip - ${g.id}');
-              if (pip) pip.classList.add('done');
-
-              if(simClusters.size === SIM_GROUPS.length){
-                setTimeout(() => showReveal (
-                  'Similarity',
-                  'Elements that share a visual quality are perceived as belonging together, even when scattered.'
-                  ), 400);
-              }
-            });
-          }
-
-          /* level 3: continuity */
-          // 12 shapes total: 4 per canvas region (left / center / right)
-          // each entry has:
-          // ghost - svg path string for the drawn sides (dashed outline shown on canvas)
-          // piece - the missing segment the player must snap into place
-          //region - left / center / right
-          // initcontinuity() picks 1 random shape from each region to 3 active shapes,
-          // then picks 2 red herrings from red_herrings below
-
-          const CONT_SHAPE_POOL = [
-            // left region
-            // pentagon
-            {
-              region: 'left';
-              ghost: 'M 90 190 L 190 105 L 290 190 L 255 305 L 125 305',
-              piece: {svgW: 44, svgH: 124, path: 'M 38 120 L 4 4', targetCx: 108, targetCy: 248, targetAngle: 0, symmetric: true},
+        } while (tries < 80 && placed.some(p => Math.hypot(p.x - x, p.y - y) < 54));
+        placed.push({ x, y });
+        return { ...s, x, y };
+      });
+    }
+
+    function svgShape(type, color, size) {
+      const s = size;
+      if (type === 'circle') {
+        return `<svg width="${s}" height="${s}" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="${color}"/></svg>`;
+      } else if (type === 'square') {
+        return `<svg width="${s}" height="${s}" viewBox="0 0 36 36"><rect x="2" y="2" width="32" height="32" fill="${color}"/></svg>`;
+      } else {
+        return `<svg width="${s}" height="${s}" viewBox="0 0 36 36"><polygon points="18,2 34,34 2,34" fill="${color}"/></svg>`;
+      }
+    }
+
+    function spawnConfetti() {
+      const colors = ['#d60000', '#000', '#e5e5e5', '#a00000', '#aaaaaa'];
+      for (let i = 0; i < 32; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'confetti-dot';
+        const size = 4 + Math.random() * 7;
+        dot.style.cssText = `
+          width:${size}px;height:${size}px;
+          background:${colors[Math.floor(Math.random() * colors.length)]};
+          left:${8 + Math.random() * 84}%;top:${5 + Math.random() * 40}%;
+          animation-duration:${0.9 + Math.random() * 1.3}s;
+          animation-delay:${Math.random() * 0.3}s;
+        `;
+        document.body.appendChild(dot);
+        dot.addEventListener('animationend', () => dot.remove());
+      }
+    }
+
+    function showReveal(titleHTML, def) {
+      if (isSpeedrun) srLevelComplete();
+      document.getElementById('reveal-title').innerHTML = titleHTML;
+      document.getElementById('reveal-def').textContent = def;
+      document.getElementById('reveal-banner').classList.add('show');
+      spawnConfetti();
+    }
+
+    /* ═══════════════════════════════════════
+       LEVEL 1 – PROXIMITY
+       Group shapes that look alike into their designated drop zones.
+    ═══════════════════════════════════════ */
+    const PROX_ZONE_IDS = ['circle', 'square', 'triangle'];
+    const PROX_ZONES = {
+      circle:   { x: 40,  y: 50, w: 200, h: 390 },
+      square:   { x: 290, y: 50, w: 200, h: 390 },
+      triangle: { x: 540, y: 50, w: 200, h: 390 },
+    };
+    let proxPlacements = {};
+    let proxCompleted  = new Set();
+
+    function initProximity() {
+      clearCanvas();
+      proxPlacements = {};
+      proxCompleted  = new Set();
+
+      document.getElementById('header-tag').textContent  = 'Level 1: Proximity';
+      document.getElementById('prompt-text').textContent = 'Make sense of this.';
+      document.getElementById('hint-toast').textContent  = 'Each shape belongs with shapes that look like it.';
+
+      const pips = document.getElementById('progress-pips');
+      pips.innerHTML = PROX_ZONE_IDS.map(id => `<div class="pip" id="pip-${id}"></div>`).join('');
+
+      const canvas = document.getElementById('canvas');
+
+      // zones
+      PROX_ZONE_IDS.forEach(id => {
+        const z  = PROX_ZONES[id];
+        const el = document.createElement('div');
+        el.className = 'drop-zone';
+        el.id = `pzone-${id}`;
+        el.style.cssText = `left:${z.x}px;top:${z.y}px;width:${z.w}px;height:${z.h}px;`;
+
+        const icon = document.createElement('span');
+        icon.className = 'zone-icon';
+        if (id === 'circle') {
+          icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="3"/></svg>';
+        } else if (id === 'square') {
+          icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" fill="none" stroke="currentColor" stroke-width="3"/></svg>';
+        } else {
+          icon.innerHTML = '<svg width="48" height="48" viewBox="0 0 48 48"><polygon points="24,4 44,44 4,44" fill="none" stroke="currentColor" stroke-width="3"/></svg>';
+        }
+        el.appendChild(icon);
+        canvas.appendChild(el);
+      });
+
+      const types = ['circle', 'square', 'triangle'];
+      const shapeDefs = types.flatMap(type =>
+        [0, 1, 2, 3].map(i => ({ id: `${type}-${i}`, type, color: '#111' }))
+      );
+
+      const placed = scatter(shapeDefs, (s, x, y) => {
+        const z = PROX_ZONES[s.type];
+        return x >= z.x && x <= z.x + z.w && y >= z.y && y <= z.y + z.h;
+      });
+
+      placed.forEach(s => {
+        const el = document.createElement('div');
+        el.id = `shape-${s.id}`;
+        el.className = 'shape idle';
+        el.style.left = s.x + 'px'; el.style.top = s.y + 'px';
+        el.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+        el.style.animationDelay    = (Math.random() * 3) + 's';
+        el.innerHTML = svgShape(s.type, s.color, 36);
+        makeDraggable(el,
+          (event) => {
+            if (event === 'start' || event === 'move') proxHighlight(el, canvas);
+            if (event === 'end'   || event === 'move') proxClearHighlight();
+            if (event === 'start') proxSetVisible(true,  canvas);
+            if (event === 'end')   proxSetVisible(false, canvas);
           },
-          // diamond
-              {
-                region: 'left';
-                ghost: 'M 110 130 L 220 170 L 240 280 L 130 240',
-                piece: {svgW: 28, svgH: 118, path: 'M 24 112 L 4 4', targetCx: 120, targetCy: 185, targetAngle: 0, symmetric: true},
-          },
-          // tall triangle
-              {
-                region: 'left';
-                ghost: 'M 160 95 L 295 290 L 95 290',
-                piece: {svgW: 72, svgH: 202, path: 'M 4 198 L 68 4', targetCx: 128, targetCy: 193, targetAngle: 0, symmetric: true},
-          },
-          // arrow head chevron
-              {
-                region: 'left';
-                ghost: 'M 90 160 L 200 100 L 200 160 L 290 220 L 200 280 L 200 220',
-                piece: {svgW: 114, svgH: 68, path: 'M 108 62 L 4 4', targetCx: 145, targetCy: 190, targetAngle: 0, symmetric: true},
-          },
+          () => proxCheckDrop(el, s, canvas)
+        );
+        canvas.appendChild(el);
+      });
+    }
 
-          // center region
-          // hexagon
-              {
-                region: 'center';
-                ghost: 'M 450 115 L 528 160 L 528 250 L 450 295 L 372 250 L 372 160',
-                piece: {svgW: 86, svgH: 54, path: 'M 4 50 L 82 4', targetCx: 411, targetCy: 138, targetAngle: 0, symmetric: true},
-          },
-          // parallelogram
-              {
-                region: 'center';
-                ghost: 'M 360 140 L 530 140 L 500 300 L 330 300',
-                piece: {svgW: 36, svgH: 164, path: 'M 18 160 L 28 4', targetCx: 345, targetCy: 220, targetAngle: 0, symmetric: true},
-          },
-          // irregular pentagon
-          {
-                region: 'center';
-                ghost: 'M 390 110 L 520 130 L 540 260 L 480 310 L 370 260',
-                piece: {svgW: 28, svgH: 164, path: 'M 22 160 L 4 4', targetCx: 370, targetCy: 220, targetAngle: 0, symmetric: true},
-          },
+    function proxSetVisible(visible, canvas) {
+      PROX_ZONE_IDS.forEach(id => {
+        const el = document.getElementById(`pzone-${id}`);
+        if (!el || el.classList.contains('done')) return;
+        el.classList.toggle('visible', visible);
+        if (!visible) el.classList.remove('highlight');
+      });
+    }
 
-          // wide trapezoid
-          {
-                region: 'center';
-                ghost: 'M 360 140 L 540 140 L 520 300 L 380 300',
-                piece: {svgW: 28, svgH: 164, path: 'M 22 160 L 4 4', targetCx: 370, targetCy: 220, targetAngle: 0, symmetric: true},
-          },
+    function proxHighlight(shapeEl, canvas) {
+      const center = shapeCenter(shapeEl, canvas);
+      PROX_ZONE_IDS.forEach(id => {
+        const z  = PROX_ZONES[id];
+        const el = document.getElementById(`pzone-${id}`);
+        if (!el || el.classList.contains('done')) return;
+        const inside = center.x >= z.x && center.x <= z.x + z.w &&
+                       center.y >= z.y && center.y <= z.y + z.h;
+        el.classList.toggle('highlight', inside);
+      });
+    }
 
-          // right region
-          // house pentagon
-          {
-                region: 'right';
-                ghost: 'M 660 125 L 725 205 L 725 205 L 725 335 L 595 335 L 595 205',
-                piece: {svgW: 73, svgH: 88, path: 'M 4 84 L 69 4', targetCx: 628, targetCy: 165, targetAngle: 0, symmetric: true},
-          },
-          // right triangle
-           {
-                region: 'right';
-                ghost: 'M 620 120 L 730 310 L 620 310',
-                piece: {svgW: 10, svgH: 194, path: 'M 5 190 L 5 4', targetCx: 620, targetCy: 215, targetAngle: 0, symmetric: true},
-          },         
-          // tall hexagon
-          {
-                region: 'right';
-                ghost: 'M 665 130 L 739 172 L 739 257 L 665 300 L 591 257 L 591 172',
-                piece: {svgW: 82, svgH: 50, path: 'M 4 46 L 78 4', targetCx: 628, targetCy: 151, targetAngle: 0, symmetric: true},
-          },
-          // kite
-          {
-                region: 'right';
-                ghost: 'M 665 115 L 740 240 L 665 300 L 665 300 L 600 240',
-                piece: {svgW: 70, svgH: 130, path: 'M 4 126 L 66 4', targetCx: 633, targetCy: 178, targetAngle: 0, symmetric: true},
-          },
-          ];
+    function proxClearHighlight() {
+      PROX_ZONE_IDS.forEach(id => {
+        const el = document.getElementById(`pzone-${id}`);
+        if (el) el.classList.remove('highlight');
+      });
+    }
 
-          // red herring segments - plausible lengths / angles but fit no ghost gap.
-          const CONT_RED_HERRINGS = [
-            {svgW: 86, svgH: 54, path: 'M 82 50 L 4 4'},
-            {svgW: 76, svgH: 20, path: 'M 4 10 L 72 10'},
-            {svgW: 60, svgH: 60, path: 'M 4 56 L 56 4'},
-            {svgW: 90, svgH: 30, path: 'M 4 26 L 86 4'},
-            ];
+    function proxCheckDrop(el, shapeData, canvas) {
+      const center = shapeCenter(el, canvas);
+      let landed = null;
+      PROX_ZONE_IDS.forEach(id => {
+        const z = PROX_ZONES[id];
+        if (center.x >= z.x && center.x <= z.x + z.w &&
+            center.y >= z.y && center.y <= z.y + z.h) landed = id;
+      });
 
-          const SNAP_DIST = 38;
-          const SNAP_ANGLE = 25;
+      if (!landed) return;
 
-          let contSnapped = new Set();
-          let contPieceAngles = {};
-          let contActiveIds = [];
+      if (landed === shapeData.type) {
+        proxPlacements[shapeData.id] = landed;
+        el.classList.add('snap');
+        setTimeout(() => el.classList.remove('snap'), 300);
+        proxCheckZoneDone(landed);
+      } else {
+        attempts++; updateAttempts();
+        el.classList.add('shake');
+        el.addEventListener('animationend', () => el.classList.remove('shake'), { once: true });
+      }
+    }
 
-          function pickRandom(arr) {return arr[Math.floor(Math.random() * arr.length)]; }
+    function proxCheckZoneDone(zoneId) {
+      const allIn = [0, 1, 2, 3].every(i => proxPlacements[`${zoneId}-${i}`] === zoneId);
+      if (allIn && !proxCompleted.has(zoneId)) {
+        proxCompleted.add(zoneId);
+        const zEl = document.getElementById(`pzone-${zoneId}`);
+        if (zEl) { zEl.classList.add('done', 'visible'); zEl.classList.remove('highlight'); }
+        const pip = document.getElementById(`pip-${zoneId}`);
+        if (pip) pip.classList.add('done');
+        if (proxCompleted.size === 3) {
+          setTimeout(() => showReveal(
+            'Proximity',
+            'Things grouped close together are perceived as related — even without labels, borders, or color.'
+          ), 400);
+        }
+      }
+    }
 
-          function initContinuity(){
-            clearCanvas();
-            contSnapped = new Set();
-            contPieceAngles = {};
-            contActiveIds = [];
+    /* ═══════════════════════════════════════
+       LEVEL 2 – SIMILARITY
+       16 shapes (4 groups × 4), distinguished only by color.
+       Win: each color group clustered within a radius.
+    ═══════════════════════════════════════ */
+    const SIM_GROUPS = [
+      { id: 'terracotta', color: '#b5614a' },
+      { id: 'slate',      color: '#5a7fa3' },
+      { id: 'sage',       color: '#5e8c6a' },
+      { id: 'mauve',      color: '#7d5c7a' },
+    ];
+    const SHAPE_TYPES      = ['circle', 'square', 'triangle'];
+    const CLUSTER_RADIUS    = 110;
+    const CLUSTER_SEPARATION = 160;
 
-            document.getElementById('header-tag').textContent = 'Level 3: Continuity';
-            document.getElementById('prompt-text').textContent = 'Complete the broken shapes.';
-            document.getElementById('hint-toast').textContent = 'Each piece fills exactly one gap. Angle matters.'
+    let simShapes    = [];
+    let simClusters  = new Set();
+    let simCheckTimer = null;
 
-            const pips = document.getElementById('progress-pips');
-            pips.innerHTML = [0,1,2].map(i => '<div class="pip" id="contpip-${i}"></div>').join('');
+    function initSimilarity() {
+      clearCanvas();
+      simShapes   = [];
+      simClusters = new Set();
 
-            const canvas = document.getElementById('canvas');
+      document.getElementById('header-tag').textContent  = 'Level 2: Similarity';
+      document.getElementById('prompt-text').textContent = 'Something connects these. What is it?';
+      document.getElementById('hint-toast').textContent  = 'Ignore the shapes. Look at something else.';
 
-            // pick 1 shape per region
-            const regions = ['left', 'center', 'right'];
-            const chosen = region.map (r =>
-              pickRandom(CONT_SHAPE_POOL.filt(s => s.region === r))
-                                       );
+      const pips = document.getElementById('progress-pips');
+      pips.innerHTML = SIM_GROUPS.map(g => `<div class="pip" id="simpip-${g.id}"></div>`).join('');
 
-            // ghost background SVG
-            const bgSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            bgSvg.setAttribute('id', 'cont-bg');
-            bgSvg.setAttribute('width', CANVAS_W);
-            bgSvg.setAttribute('height', CANVAS_H);
+      const canvas = document.getElementById('canvas');
 
-            chosen.forEach(shape => {
-              const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-              p.setAttribute('d', shape.ghost);
-              p.setAttribute('stroke', '#bbb');
-              p.setAttribute('stroke-width', '2.5');
-              p.setAttribute('stroke-dasharray', '6 4');
-              p.setAttribute('fill', 'none');
-              p.setAttribute('stroke-linecap', 'round');
-              bgSvg.appendChild(p);
-            });
-            canvas.appendChild(bgSvg);
+      const shapeDefs = [];
+      SIM_GROUPS.forEach(g => {
+        const types = [...SHAPE_TYPES, SHAPE_TYPES[Math.floor(Math.random() * 3)]];
+        types.forEach((type, i) => {
+          shapeDefs.push({ id: `${g.id}-${i}`, groupId: g.id, color: g.color, type });
+        });
+      });
+      shapeDefs.sort(() => Math.random() - 0.5);
 
-            // build real pieces with dynamic IDs
-            const allPieces = [];
-            chosen.forEach((shape, i) => {
-              const id = 'cs${i}';
-              contActiveIds.push(id);
-              allPieces.push({id, redHerring: false, ...shape.piece});
-            });
+      const placed = scatter(shapeDefs, null);
 
-            // pick 2 red herrings
-            const rhPool = [...CONT_RED_HERRINGS].sort(() => Math.random() = 0.5);
-            rhPool.slice(0,2).forEach((rh, i) => {
-              allPieces.Push({
-                id: 'rh${i}', svgW: rh.svgW, svgH: rh.svgH, path: rh.path, taretCx: null, targetCy: null, targetAngle: null, symmetric: true, redHerring: true,});
-            });
+      placed.forEach(s => {
+        const el = document.createElement('div');
+        el.id = `shape-${s.id}`;
+        el.className = 'shape idle';
+        el.style.left = s.x + 'px'; el.style.top = s.y + 'px';
+        el.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+        el.innerHTML = svgShape(s.type, s.color, 36);
+        makeDraggable(el, null, () => {
+          clearTimeout(simCheckTimer);
+          simCheckTimer = setTimeout(() => simCheckClusters(canvas), 120);
+        });
+        canvas.appendChild(el);
+        simShapes.push({ ...s, el });
+      });
+    }
 
-            // scatter all pieces
-            const shuffled = allPieces.sort(() => Math.random() - 0.5);
-            const occupied = [];
+    function simCheckClusters(canvas) {
+      SIM_GROUPS.forEach(g => {
+        if (simClusters.has(g.id)) return;
+        const groupShapes = simShapes.filter(s => s.groupId === g.id);
+        const positions   = groupShapes.map(s => shapeCenter(s.el, canvas));
+        const cx = positions.reduce((sum, p) => sum + p.x, 0) / positions.length;
+        const cy = positions.reduce((sum, p) => sum + p.y, 0) / positions.length;
+        const allClose = positions.every(p => Math.hypot(p.x - cx, p.y - cy) <= CLUSTER_RADIUS);
+        if (!allClose) return;
 
-            shuffled.forEach(piece => {
-              let px, py, tries = 0;
-              do {
-                px = 30 + Math.random() * (CANVAS_W - piece.svgW - 60);
-                py = 30 + Math.random() * (CANVAS_H - piece.svgH - 60);
-                tries++;
-                if (!piece.redHerring){
-                  if (Math.hypot((px + piece.svgW/2) - piece.targetCx, (py + piece.svgH/2) - piece.targetCy) < 120) continue;}
-              } while (tries < 80 && occupied.some(o => Math.hypot(o.x-px, o.y-py) < 90));
-              occupied.push({x:px, y:py});
+        const tooClose = [...simClusters].some(doneId => {
+          const doneShapes = simShapes.filter(s => s.groupId === doneId);
+          const donePos = doneShapes.map(s => shapeCenter(s.el, canvas));
+          const dcx = donePos.reduce((sum, p) => sum + p.x, 0) / donePos.length;
+          const dcy = donePos.reduce((sum, p) => sum + p.y, 0) / donePos.length;
+          return Math.hypot(cx - dcx, cy - dcy) < CLUSTER_SEPARATION;
+        });
+        if (tooClose) return;
 
-              let ang;
-              do {ang = Math.round((Math.random()*280 - 140) / 5) * 5;}
-                while (!piece.redHerring && Math.abs(normAngle(ang - piece.targetAngle)) < 35);
+        simClusters.add(g.id);
+        groupShapes.forEach(s => {
+          s.el.classList.add('snap');
+          setTimeout(() => s.el.classList.remove('snap'), 300);
+        });
+        const pip = document.getElementById(`simpip-${g.id}`);
+        if (pip) pip.classList.add('done');
 
-              contPieceAngles[piece.id] = ang;
-              buildContPiece(piece, px, py, ang, canvas);
-            });
+        if (simClusters.size === SIM_GROUPS.length) {
+          setTimeout(() => showReveal(
+            'Similarity',
+            'Elements that share a visual quality are perceived as belonging together, even when scattered.'
+          ), 400);
+        }
+      });
+    }
+
+    /* ═══════════════════════════════════════
+       LEVEL 3 – CONTINUITY
+       Drag + rotate segments to complete broken shapes.
+    ═══════════════════════════════════════ */
+    const CONT_SHAPE_POOL = [
+      // left region
+      { region: 'left',
+        ghost: 'M 90 190 L 190 105 L 290 190 L 255 305 L 125 305',
+        piece: { svgW:44, svgH:124, path:'M 38 120 L 4 4', targetCx:108, targetCy:248, targetAngle:0, symmetric:true } },
+      { region: 'left',
+        ghost: 'M 110 130 L 220 170 L 240 280 L 130 240',
+        piece: { svgW:28, svgH:118, path:'M 24 112 L 4 4', targetCx:120, targetCy:185, targetAngle:0, symmetric:true } },
+      { region: 'left',
+        ghost: 'M 160 95 L 295 290 L 95 290',
+        piece: { svgW:72, svgH:202, path:'M 4 198 L 68 4', targetCx:128, targetCy:193, targetAngle:0, symmetric:true } },
+      { region: 'left',
+        ghost: 'M 90 160 L 200 100 L 200 160 L 290 220 L 200 280 L 200 220',
+        piece: { svgW:114, svgH:68, path:'M 108 62 L 4 4', targetCx:145, targetCy:190, targetAngle:0, symmetric:true } },
+      // center region
+      { region: 'center',
+        ghost: 'M 450 115 L 528 160 L 528 250 L 450 295 L 372 250 L 372 160',
+        piece: { svgW:86, svgH:54, path:'M 4 50 L 82 4', targetCx:411, targetCy:138, targetAngle:0, symmetric:true } },
+      { region: 'center',
+        ghost: 'M 360 140 L 530 140 L 500 300 L 330 300',
+        piece: { svgW:36, svgH:164, path:'M 18 160 L 28 4', targetCx:345, targetCy:220, targetAngle:0, symmetric:true } },
+      { region: 'center',
+        ghost: 'M 390 110 L 520 130 L 540 260 L 480 310 L 370 260',
+        piece: { svgW:28, svgH:164, path:'M 22 160 L 4 4', targetCx:370, targetCy:220, targetAngle:0, symmetric:true } },
+      { region: 'center',
+        ghost: 'M 360 140 L 540 140 L 520 300 L 380 300',
+        piece: { svgW:28, svgH:164, path:'M 22 160 L 4 4', targetCx:370, targetCy:220, targetAngle:0, symmetric:true } },
+      // right region
+      { region: 'right',
+        ghost: 'M 660 125 L 725 205 L 725 335 L 595 335 L 595 205',
+        piece: { svgW:73, svgH:88, path:'M 4 84 L 69 4', targetCx:628, targetCy:165, targetAngle:0, symmetric:true } },
+      { region: 'right',
+        ghost: 'M 620 120 L 730 310 L 620 310',
+        piece: { svgW:10, svgH:194, path:'M 5 190 L 5 4', targetCx:620, targetCy:215, targetAngle:0, symmetric:true } },
+      { region: 'right',
+        ghost: 'M 665 130 L 739 172 L 739 257 L 665 300 L 591 257 L 591 172',
+        piece: { svgW:82, svgH:50, path:'M 4 46 L 78 4', targetCx:628, targetCy:151, targetAngle:0, symmetric:true } },
+      { region: 'right',
+        ghost: 'M 665 115 L 740 240 L 665 300 L 600 240',
+        piece: { svgW:70, svgH:130, path:'M 4 126 L 66 4', targetCx:633, targetCy:178, targetAngle:0, symmetric:true } },
+    ];
+
+    const CONT_RED_HERRINGS = [
+      { svgW:86, svgH:54, path:'M 82 50 L 4 4' },
+      { svgW:76, svgH:20, path:'M 4 10 L 72 10' },
+      { svgW:60, svgH:60, path:'M 4 56 L 56 4' },
+      { svgW:90, svgH:30, path:'M 4 26 L 86 4' },
+    ];
+
+    const SNAP_DIST  = 38;
+    const SNAP_ANGLE = 25;
+
+    let contSnapped    = new Set();
+    let contPieceAngles = {};
+    let contActiveIds  = [];
+
+    function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function initContinuity() {
+      clearCanvas();
+      contSnapped     = new Set();
+      contPieceAngles = {};
+      contActiveIds   = [];
+
+      document.getElementById('header-tag').textContent  = 'Level 3: Continuity';
+      document.getElementById('prompt-text').textContent = 'Complete the broken shapes.';
+      document.getElementById('hint-toast').textContent  = 'Each piece fills exactly one gap. Angle matters.';
+
+      const pips = document.getElementById('progress-pips');
+      pips.innerHTML = [0, 1, 2].map(i => `<div class="pip" id="contpip-${i}"></div>`).join('');
+
+      const canvas = document.getElementById('canvas');
+
+      const regions = ['left', 'center', 'right'];
+      const chosen  = regions.map(r =>
+        pickRandom(CONT_SHAPE_POOL.filter(s => s.region === r))
+      );
+
+      const bgSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      bgSvg.setAttribute('id', 'cont-bg');
+      bgSvg.setAttribute('width', CANVAS_W);
+      bgSvg.setAttribute('height', CANVAS_H);
+
+      chosen.forEach(shape => {
+        const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', shape.ghost);
+        p.setAttribute('stroke', '#bbb');
+        p.setAttribute('stroke-width', '2.5');
+        p.setAttribute('stroke-dasharray', '6 4');
+        p.setAttribute('fill', 'none');
+        p.setAttribute('stroke-linecap', 'round');
+        bgSvg.appendChild(p);
+      });
+      canvas.appendChild(bgSvg);
+
+      const allPieces = [];
+      chosen.forEach((shape, i) => {
+        const id = `cs${i}`;
+        contActiveIds.push(id);
+        allPieces.push({ id, redHerring: false, ...shape.piece });
+      });
+
+      const rhPool = [...CONT_RED_HERRINGS].sort(() => Math.random() - 0.5);
+      rhPool.slice(0, 2).forEach((rh, i) => {
+        allPieces.push({
+          id: `rh${i}`, svgW: rh.svgW, svgH: rh.svgH, path: rh.path,
+          targetCx: null, targetCy: null, targetAngle: null,
+          symmetric: true, redHerring: true,
+        });
+      });
+
+      const shuffled = allPieces.sort(() => Math.random() - 0.5);
+      const occupied = [];
+
+      shuffled.forEach(piece => {
+        let px, py, tries = 0;
+        do {
+          px = 30 + Math.random() * (CANVAS_W - piece.svgW - 60);
+          py = 30 + Math.random() * (CANVAS_H - piece.svgH - 60);
+          tries++;
+          if (!piece.redHerring) {
+            if (Math.hypot((px + piece.svgW/2) - piece.targetCx,
+                           (py + piece.svgH/2) - piece.targetCy) < 120) continue;
           }
-
-          function buildContPiece(piece, px, py, initAngle, canvas){
-            const wrap=document.createElement('div');
-            wrap.id = 'cont-${piece.id}';
-            wrap.className = 'cont-piece';
-            wrap.style.cssText = 'left:${px}px;top:${py}px;width:${piece.svgW}px;height:${piece.svgH}px;';
-
-            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute('width', piece.svgW);
-            svg.setAttribute('height', piece.svgH);
-            svg.style.transformOrigin = '${piece.svgW/2}px ${piece.svgH/2}px';
-            svg.style.transform = 'rotate(${initAngle}deg)';
-            svg.style.overflow = 'visible';
-
-            const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            pathEl.setAttribute('d', piece.path);
-            pathEl.setAttribute('stroke', '#222');
-            pathEl.setAttribute('stroke-width', '3');
-            pathEl.setAttribute('fill', 'none');
-            pathEl.setAttribute('stroke-linecap', 'round');
-            svg.appendChild(pathEl);
-            wrap.appendChild(svg);
-
-            // rotation handle
-            const rotHandle = document.createElement('div');
-            rotHandle.className = 'rot-handle';
-            rotHandle.style.right = '-7px';
-            rotHandle.style.top = (piece.svgH/2 - 7) + 'px';
-            wrap.appendChild(rotHandle);
-
-            // drag to move
-            let dSx, dSy, dOl, dOt;
-            const dragDown = e => {
-              if (e.target === rotHandle) return;
-              e.preventDefault();
-              const pt = e.touches ? e.touches[0] : e;
-              dSx = pt.clientX; dSy = pt.clientY;
-              dOl = parseInt(wrap.style.left); dOt = pasrseInt(wrap.style.top);
-              wrap.style.zIndex = 999;
-              document.addEventListener('mousemove', dragMove);
-              document.addEventListener('mouseup', dragUp);
-              document.addEventListener('touchmove', dragMove, {passive: false});
-              document.addEventListener('touchend', dragUp);
-            };
-            const dragMove = e => {
-              const pt = e.touches ? e.touches[0] : e;
-              wrap.style.left = (dOl + pt.clientX - dSx) + 'px';
-              wrap.style.top = (dOt + pt.clientY - dSy) + 'px';
-            };
-            const dragUp = () => {
-              document.removeEventListener('mousemove', dragMove);
-              document.addEventListener('mouseup', dragUp);
-              document.addEventListener('touchmove', dragMove);
-              document.addEventListener('touchend', dragUp);
-              wrap.style.zIndex = 1;
-              contTrySnap(piece, wrap, svg, canvas);
-            };
-            wrap.addEventListener('mousedown', dragDown);
-            wrap.addEventListener('touchstart', dragDown, {passive: false});
-
-            // rotation handle drag
-            let rBase, rMouse0;
-            const rotDown = e => {
-              e.preventDefault(); e.stopPropagation();
-              const pt = e.touches ? e.touches[0] : e;
-              const r = wrap.getBoundingClientRect();
-              rBase = contPieceAngles[piece.id];
-              rMouse0 = Math.atan2(pt.clientY - (r.top + r.height/2), pt.clientX - (r.left + r.width/2)) * 180/Math.PI;
-              document.addEventListener('mousemove', rotMove);
-              document.addEventListener('mouseup', rotUp);
-              document.addEventListener('touchmove', rotMove, {passive: false});
-              document.addEventListener('touchend', rotUp);
-            };
-            const rotMove = e => {
-              const pt = e.touches ? e.touches[0] : e;
-              const r = wrap.getBoundingClientRect();
-              const deg = Math.atan2(pt.clientY - (r.top + r.height/2), pt.clientX - (r.left + r.width/2)) * 180/Math.PI;
-              const newAng = rBase + deg - rMouse0;
-              contPieceAngles[piece.id] = newAng;
-              svg.style.transform = 'rotate(${newAng}deg)';
-            };
-            const rotUp = () => {
-              document.removeEventListener('mousemove', rotMove);
-              document.removeEventListener('mouseup', rotUp);
-              document.removeEventListener('touchmove', rotMove);
-              document.removeEventListener('touchend', rotUp);
-              contTrySnap(piece, wrap, svg, canvas);
-            };
-            rotHandle.addEventListener('mousedown', rotDown);
-            rothandle.addEventListener('touchstart', rotDown, {passive: false});
-
-            canvas.appendChild(wrap);
-          }
-
-          function contTrpSnap(piece, wrap, svg, canvas){
-            if (piece.redHerring || contSnapped.has(piece.id)) return;
-
-            const cr = canvas.getBoundingClientRect();
-            const wr = wrap.getBoundingClientRect();
-            const cx = wr.left - cr.left + wr.width / 2;
-            const cy = wr.top - cr.top + wr.height / 2;
-
-            const distOk = Math.hypot(cx - piece.targetCx, cy - piece.targetCy) <= SNAP_DIST;
-            const cur = contPieceAngles[piece.id];
-            const diff = normalAngle(curr - piece.targetAngle);
-            const diff180 = normAngle(curr - piece.targetAngle - 180);
-            const AngleOk = Math.abs(diff) <= SNAP_ANGLE || (piece.symmetric && Math.abs(diff180) <= SNAP_ANGLE);
-
-            if (!idstOk || !angleOk) return;
-
-            // lock in place
-            wrap.style.left = (piece.targetCx - piece.svgW/2) + 'px';
-            wrap.style.top = (piece.targetCy - piece.svgH/2) + 'px';
-            svg.style.transform = 'rotate(${piece.targetAngle}deg)';
-            wrap.classList.add('snapped', 'snap-flesh');
-            wrap.style.zIndex = 2;
-            contSnapped.add(piece.id);
-            setTimeout(() => wrap.classList.remove('snap-flash'), 400);
-
-            contDrawSolid(piece);
-            contCheckWin();
-          }
-
-          function normAngle(a){
-            while (a > 180) a -= 360;
-            while (a < -180) a += 360;
-            return a;
-          }
-
-          function contDrawSolid(piece){
-            const bgSvg = document.getElementById('cont-bg');
-            if (!bgSvg) return;
-            const pcx = piece.svgW / 2, pcy = piece.svgH / 2;
-            const tx = piece.targetCx - pcx, ty = piece.target.Cy - pcy;
-            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            p.setAttribute('d', piece.path);
-            p.setAttribute('stroke', '#111');
-            p.setAttribute('stroke-width', '3');
-            p.setAttribute('fill', 'none');
-            p.setAttribute('stroke-linecap', 'round');
-            p.setAttribute('transform', 'translate(${tx+pcx}, ${ty+pcy}) rotate(${piece.targetAngle}) translate(${-pcx}, ${-pcy})');
-            bigSvg.appendChild(p);
-          }
-
-          function contCheckWin(){
-            contActiveIds.forEach((id, i) => {
-              if (contSnapped.has(id)) document.getElementById('contpip-${i}').classList.add('done');
-            });
-
-            if (contActiveIds.every(id => contSnapped.has(id))){
-              setTimeout(() => showReveal(
-                'Continuity', 'The eye naturally completes broken paths. They fill gaps to perceive a whole shape.'
-                ), 500);
-            }
-          }
-
-      // level 4: closure
-          // proper kanizsa figures: one pac man wedge per vertex of a polygon
-          // each wedge sits exactly at a vertex, mouth open at the interior angle, pointing towards the shape centre.
-          // a faint ghost outline shows where the shape goes (position hint) but not how to rotate
-          // shape pool: triangle (3 wedges, 60 degrees), square (4 wedges, 90 degrees), hexagon (6 wedges, 60 degrees).
-          // two random shapes per game, left (~210, 240) and right (~570, 240)
-
-          const CLOS_SNAP_DIST = 55;
-          const CLOS_SNAP_ANGLE = 24;
-
-          const CLOS_COLORS = {
-            triangle: '5a7fa3',
-            square: '#b5614a',
-            hexagon: '#5e8c6a',
-          };
-
-          // pacman path centered at (40, 40), radius 34.
-          // mouth opens 'gapDeg' degrees, pointing RIGHT at angle 0
-          function closWedgePath(gapDeg){
-            const r = 34;
-            const half = (gapDeg / 2) * Math.PI / 180;
-            const x1 = 40 + r * Math.cos(half);
-            const y1 = 40 - r * Math.sin(half);
-            const x2 = 40 + r * Math.cos(-half);
-            const y2 = 40 - r * Math.sin(-half);
-            return 'M 40 40 L ${x2.toFixed(2)} ${y2.toFixed(2)} A ${r} ${r} 0 1 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z';
-          }
-
-          // build a regular polygon kanizsa shape with fixed canas positions
-          function closRegularShape(shapeId, cx, cy, n, R, gapDeg, startA){
-            const color = CLOS_COLORS[shapeId];
-            const wedges = Array.from({length:n}, (_, i) => {
-              const angleDeg = startA + i * (360/n);
-              const a = angleDeg * Math.PI / 180;
-              return {
-                id: '${shapeId}-w${i}',
-                svgW: 80, svgH: 80,
-                path: closWedgePath(gapDeg),
-                targetCx: cx + R * Math.cos(a),
-                targetCy: cy + R * Math.sin(a),
-                targetAngle: angleDeg + 180, // mouth faces inward toward centre
-                shapeId,
-                color,
-              };
-            });
-
-            const pts = Array.from( {length:n}, (_, i) => {
-              const a = (startA + i * (360/n)) * Math.PI / 180;
-              return '${(cx + R * Math.cos(a)).toFixed(1)}, ${(cy + R * Math.sin(a)).toFixed(1)}';
-            });
-            const revealPath = 'M ' + pts.join('L ') + ' Z';
-
-            return { id: shapeId, cx, cy, revealPath, wedges };
-          }
-
-          function closTriangle(cx, cy) {return closRegularShape('triangle', cx, cy, 3, 60, 60, -90); }
-          function closSquare(cx, cy) {return closRegularShape('square', cx, cy, 4, 95, 90, -45); }
-          function closHexagon(cx, cy) {return closRegularShape('hexagon', cx, cy, 6, 90, 120, -90); }
-              
-          // state
-          let closActiveShapes = [];
-
-          function initClosure(){
-            clearCanvas();
-            closActiveShapes = [];
-
-            document.getElementById('header-tag').textContent = 'Level 4: Closure';
-            document.getElementById('prompt-text').textContent = 'Discover the shapes through negative space.';
-            document.getElementById('hint-toast').textContent = 'Drag each piece to a corner of the dotted shape.';
-
-            const pips = document.getElementById('progress-pips');
-            pips.innerHTML = [0,1].map(i => 'div class="pip" id="clospip-${i}"></div>').join('');
-
-            const canvas = document.getElementById('canvas');
-
-            const bgSvg = document.createElementNS('https://www.w3.org/2000/svg', 'svg');
-            bgSvg.setAttribute('id', 'clos-bg');
-            bgSvg.setAttribute('width', CANVAS_W);
-            bgSvg.setAttribute('height', CANVAS_H);
-            canvas.appendChild(bgSvg);
-
-            // pick 2 shapes of 3 at random
-            const pool = [
-              () => closTriangle(210, 240),
-              () => closSquare(210, 240),
-              () => closHexagon(210, 240),
-              ].sort(() => Math.random() - 0.5);
-
-            const leftShape = pool[0]();
-            const rightFn = pool[1];
-
-            // rebuild right shape at right-side position
-            const rightShape = (() => {
-              if (rightFn().id === 'triangle') return closTriangle(570, 240);
-              if (rightFn().id === 'square') return closSquare(570, 240);
-              return closHexagon(570, 240);
-            })();
-
-            closActiveShapes = [leftShape, rightShape];
-
-            // draw faint ghost outlines
-            closActiveShapes.forEach( shape => {
-              const gp = document.createElmentNS('http://www.w3.org/2000/svg', 'path');
-              gp.setAttribute('d', shape.revealPath);
-              gp.setAttribute('stroke', CLOS_COLORS[shape.id]);
-              gp.setAttribute('stroke-width', '1.5');
-              gp.setAttribute('stroke-disharray', '5.5');
-              gp.setAttribute('fill', 'none');
-              gp.setAttribute('opacity', '0.25');
-              bgSvg.appendChild(gp);
-            });
-
-            // scatter wedges pre-rotated to correct angle
-            const allWedges = closActiveShapes.flatMap (s => s.wedges);
-            const occupied = [];
-            allWedges.sort(() => Math.random() - 0.5).forEach( w => {
-              let px, py, tries = 0;
-              do {
-                px = 30 + Math.random() * (CANVAS_W - 100);
-                py = 30 + Math.random() * (CANVAS_H - 100);
-                tries++;
-
-                if (Math.hypos((px + 40) - w.targetCx, (py + 40) - w.targetCy) < 100) continue;
-              } while (tries < 80 && occupied.some(o => Math.hypot(o.x - px, o.y - py) < 85));
-              occupied.push({x: px, y: py});
-              buildClosPiece(w, px, py, canvas);
-            });
-          }
-
-          function buildClosPiece(piece, px, py, canvas){
-            const wrap = document.createElement('div');
-            wrap.id = 'clos-${piece.id}';
-            wrap.className = 'clos-piece';
-            wrap.style.cssText = 'left:${px}px;top:${py}py;width:${piece.svgW}px;height:${piece.svgH}px;'
-
-            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute('width', piece.svgW);
-            svg.setAttribute('height', piece.svgH);
-            svg.style.transformOrigin = '${piece.svgW/2}px ${piece.svgH/2}px';
-            svg.style.transform = 'rotate(${piece.targetAngle}deg)';
-            sv.style.overflow = 'visible';
-
-            const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            pathEl.setAttribute('d', piece.path);
-            pathEl.setAttribute('fill', piece.color);
-            svg.appendChild(pathEl);
-            wrap.appendChild(svg);
-
-            let dSx, dSy, dOl, dOt;
-            const dragDown = e => {
-              e.preventDefault();
-              const pt = e.touches ? e.touches[0] : e;
-              dSx = pt.clientX; dSy = pt.clientY;
-              dOl = parseInt(wrap.style.left); dOt = parseInt(wrap.style.top);
-              wrap.style.zIndex = 999;
-              document.addEventListener('mousemove', dragMove);
-              document.addEventListener('mouseup', dragUp);
-              document.addEventListener('touchmove', dragMove, {passive: false});
-              document.addEventListener('touchend', dragUp);
-            };
-
-            const dragMove = e => {
-              const pt = e.touches ? e.touches[0] : e;
-              wrap.style.left = (dOl + pt.clientX - dSx) + 'px';
-              wrap.style.top = (dOt + pt.clientY - dSy) + 'px';
-            };
-
-            const dragUp = () => {
-              document.removeEventListener('mousemove', dragMove);
-              document.removeEventListener('mouseup', dragUp);
-              document.removeEventListener('touchmove', dragMove);
-              document.removeEventListener('touchend', dragUp);
-              wrap.style.zIndex = 1;
-              closCheckAll(canvas);
-            };
-
-            wrap.addEventListner('mousedown', dragDown);
-            wrap.addEventListener('touchstart', dragDown, {passive: false});
-
-            canvas.appendChild(wrap);
-          }
-
-          function closCheckAll(canvas){
-            const cr = canvas.getBoundingClientRect();
-
-            closActiveShapes.forEach((shape, si) => {
-              if (shape.wedges.every( w => {
-                const el = document.getElementById('clos-${w.id}');
-                return el && el.classList.contains('snapped');
-              })) return;
-
-              const allClose = shape.wedges.every( w => {
-                const el = document.getElementById('clos-${w.id}');
-                if (!el) return false;
-                const wr = el.getBoundingClientRect();
-                const cx = wr.left - cr.left + wr.width / 2;
-                const cy = wr.top - cr.top + wr.height / 2;
-                return Math.hypot(cx - w.targetCx, cy - w.targetCy) <= CLOS_SNAP_DIST;
-              });
-              if (!allClose) return;
-
-              shape.wedges.forEach( w => {
-                const el = document.getElementById('close-${w.id}');
-                if (!el || el.classList.contains('snapped')) return; 
-                el.style.left = (w.targetCx - w.svgW / 2) + 'px';
-                el.style.top = (w.targetCy - w.svgH / 2) + 'px';
-                el.classList.add('snapped', 'snap-flash');
-                setTimeout(() => el.classList.remove('snap-flash'), 400);
-              });
-
-              const bgSvg = document.getElementById('clos-bg');
-              if (!bSvg.querySelector('[data-reveal="${shape.id}"]')){
-                const revealEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                revealEl.setAttribute('d', shape.revealPath);
-                revealEl.setAttribute('fill', 'none');
-                revealEl.setAttribute('stroke', CLOS_COLORS[shape.id]);
-                revealEl.setAttribute('stroke-width', '3');
-                revealEl.setAttribute('stroke-linejoin', 'round');
-                revealEl.setAttribute('data-reveal', shape.id);
-                revealEl.classList.add('clos-reveal-shape');
-                bgSvg.appendChild(revealEl);
-              }
-
-              const pip = document.getElementById('clospip-${si}');
-              if (pip) pip.classList.add('done');
-            });
-
-            const allDone = closActiveShapes.every( shape =>
-              shape.wedges.every( w => {
-                const el = document.getElementById('clos-${w.id}');
-                return el && el.classList.contains('snapped');
-              })
-            );
-
-            if (allDone) {
-              setTimeout ( () => showReveal(
-                'Closure',
-                'The mind fills in missing information, perceiving complete shapes from incomplete fragments.'), 700);
-            }
-          }
-
-          // Level 5: Figure / Ground
-          // around 20 ground shapes scattered across the full canvas, 2 red figures 
-          // buried somewhere in the pile. player drags ground shapes away to 
-          // excavate the red ones. win: both red figures are the top most shape
-          // at their position (nothing covering them)
-
-          const FG_ACCENT = '#d60000';
-          const FG_GROUNDS = ['#c8bfb0', '#a8b8c8', '#c8c0b8', '#b0b8c8', '#c4bdb5'];
-          const FG_TYPES = ['rect', 'circle', 'triangle'];
-
-          let fgZCounter = 10;
-          let fgFigures = [];
-          let fgAllEls = [];
-
-          function fgMMakeSVG(type, w, h, color){
-            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute('width', w);
-            svg.setAttribute('height', h);
-            svg.style.display = 'block';
-
-            if (type === 'rect'){
-              const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-              r.setAttribute('x',0); r.setAttribute('y', 0);
-              r.setAttribute('width',w); r.setAttribute('height', h);
-              r.setAttribute('rx',8); r.setAttribute('fill', color);
-              svg.appendChild(r);
-            } else if (type === 'circle'){
-              const c = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-              c.setAttribute('cx',w/2); c.setAttribute('cy', h/2);
-              c.setAttribute('rx',w/2); c.setAttribute('ry', h/2);
-              c.setAttribute('fill', color);
-              svg.appendChild(c);
-            } else {
-              const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-              poly.setAttribute('points', '${w/2}, 4 ${w-4}, ${h-4} 4, ${h-4}');
-              poly.setAttribute('fill', color);
-              svg.appendChild(poly);
-            }
-            return svg;
-
-          }
-
-          function fgSpawnShape(canvas, x, y, w, h, type, color, isFigure) {
-            const el = document.createElement('div');
-            el.style.cssText = 'position:absolute; left:${x}px; top:${y}px; width:${w}px; height:${h}px; z-index:${fgZCounter++}; cursor:grab; user-select:none; touch-action:none;';
-            el.appendChild(fgMakeSVG(type, w, h, color));
-            canvas.appendChild(el);
-            fgAllEls.push(el);
-            if (isFigure) fgFigures.push({ el, cx: x + w/2, cy: y + h/2, w, h});
-
-            let dSx, dSy, dOl, dOt;
-            const dragDown = e => {
-              e.preventDefault();
-              const pt = e.touches ? e.touches[0] : e;
-              dSx = pt.clientX; dSy = pt.clientY;
-              dOl = parseInt(el.style.left); dOt = parseInt(el.style.top);
-              el.style.zIndex = ++fgZCounter;
-              el.style.cursor = 'grabbing';
-              document.addEventListener('mousemove', dragMove);
-              document.addEventListener('mouseup', dragUp);
-              document.addEventListener('touchmove', dragMove, {passive: false});
-              document.addEventListener('touchend', dragUp);
-            };
-
-            const dragMove = e => {
-              const pt = e.touches ? e.touches[0] : e;
-              wrap.style.left = (dOl + pt.clientX - dSx) + 'px';
-              wrap.style.top = (dOt + pt.clientY - dSy) + 'px';
-            };
-
-            const dragUp = () => {
-              document.removeEventListener('mousemove', dragMove);
-              document.removeEventListener('mouseup', dragUp);
-              document.removeEventListener('touchmove', dragMove);
-              document.removeEventListener('touchend', dragUp);
-              el.style.cursor = 'grab';
-              fgCheckWin();
-            };
-            el.addEventListener('mousedown', dragDown);
-            el.addEventListener('touchstart', dragDown, {passive: false});
-            return el;
-          }
-
-          function fgRectsOverlap(ax,ay,aw,ah,bx,by,bw,bh){
-            return ax < bx+bw && ax+aw > bx && ay < by+bh && ay+ah > by;
-          }
-
-          function initFigureGround(){
-            clearCanvas();
-            fgZCounter = 10;
-            fgFiguress = [];
-            fgAllEls = [];
-
-            document.getElementById('header-tag').textcontent = 'Level 5: Figure / Ground';
-            document.getElementById('prompt-text').textcontent = 'Something is hiding here. Find it';
-            document.getElementById('hint-toast').textcontent = 'Drag the gray shapes away. The red shapes are hiding underneath.';
-
-            const pips = document.getElementById('progress-pips');
-            pips.innerHTML=  [0,1].map(i => '<div class = "pip" id = "fgpip - ${i}"></div>').join('');
-
-            const canvas = document.getElementById('canvas');
-
-            // place 2 red figure shapes first, at random places
-            const figurePositions = [];
-            for (let f = 0; f < 2; f++){
-              const fw = 90 + Math.foor(Math.random() + 50);
-              const fh = 90 + Math.foor(Math.random() + 50);
-              let fx, fy, tries = 0;
-
-              do {
-                fx = 40 + Math.random() * (CANVAS_W - fw - 80);
-                fy = 40 + Math.random() * (CANVAS_H - fh - 80);
-                tries++;
-              }
-                while (tries < 60 && figurePositions.some( p =>
-                  fgRectsOverlap(fx,fy,fw,fh,p.x,p.y,p.w,p.h)
-                                                         ));
-              figurePositions.push({x: fx, y: fy, w: fw, h: fh});
-              const type = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
-              fgSpawnShape(canvas,fx,fy,fw,fh,type,FG_ACCENT, true};
-          }
-
-          // choose 3-4 decoy cluster centers (avoid figure positions)
-          const decoyCentres = [];
-          const decoyCentreCount = 3 + Math.floor(Math.random() * 2); // 3 or 4
-          for (let d = 0; d < decoyCentreCount; d++){
-            let dcx, dcy, tries = 0;
-            do {
-              dcx = 80 + Math.random() * (CANVAS_W - 160);
-              dcy = 80 + Math.random() * (CANVAS_H - 160);
-              tries++;
-            } while (tries < 60 && (
-              figurePositions.some(p => Math.hypot(dcx - (p.x+p.w/2), dcy - (p.y+p.h/2)) < 160) ||
-                decoyCentres.some(c => Math.hypot(dcx - c.x, dcy - c.y) < 140)
-                                  ));
-            decoyCenres.push({x:dcx, y:dcy});
-          }
-
-          // pile ground shapes, cover each figure and fill each decoy clusters
-          const spawnCluster = (cx, cy, count) => {
-            for (let i = 0; i < count; i++){
-              const w = 65 + Math.floor(Math.random() * 100);
-              const h = 60 + Math.floor(Math.random() * 100);
-              const type = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
-              const color = FG_GROUNDS[Math.floor(Math.random() * FG_GROUNDS.length)];
-              const x = Math.max(10, Math.min(CANVAS_W - w - 10,
-                                              cx - w/2 + (Math.random() - 0.5) * 130));
-              const y = Math.max(10, Math.min(CANVAS_H - h - 10,
-                                              cy - h/2 + (Math.random() - 0.5) * 130));
-              fgSpawnShape(canvas,x,y,w,h,type,color,false);
-            }
-          };
-
-          // for each figure: first spawn 3 large shapes centred directly on it to 
-          // gaurantee full coverage, then add looser surrounding shapes
-          figurePositions.forEach( p => {
-            const fcx = p.x + p.w/2;
-            const fcy = p.y + p.h/2;
-
-            // 3 gaurenteed covers - larger than the figure, centered on it
-            for (let i = 0; i < 3; i++){
-              const w = p.w + 30 + Math.floor(Math.random() * 40);
-              const h = p.h + 30 + Math.floor(Math.random() * 40);
-              const type = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
-              const color = FG_GROUNDS[Math.floor(Math.random() * FG_GROUNDS.length)];
-              const x = Math.max(10, Math.min(CANVAS_W - w - 10,
-                                              fcx - w/2 + (Math.random() - 0.5) * 20));
-              const y = Math.max(10, Math.min(CANVAS_H - h - 10,
-                                              fcy - h/2 + (Math.random() - 0.5) * 20));
-              fgSpawnShape(canvas,x,y,w,h,type,color,false);
-            }
-            // then 3 more looser shapes to build up the pile
-            spawnCluster(fcx,fcy,3);
-          });
-
-          decoyCentres.forEach(c => spawnCluster(c.x,c.y, 4 + Math.floor(Math.random() * 2)));
-          }
-
-          function fgCheckWin() {
-            const solvedFlags = fgFigures.map((fig, fi) => {
-              const figZ = parseInt(fig.el.style.zIndex);
-              // check no ground shape overlaps and sits on top of this figure
-              const covered = fgALLEls.some(el => {
-                if (el === fig.el) return false;
-                const z = parseInt(el.style.zIndex);
-                if (z <= figZ) return false;
-                const ex = parseInt(el.style.left), ey = parseInt(el.style.top);
-                const ew = parseInt(el.style.width), eh = parseInt(el.style.height);
-                const fx = parseInt(el.style.left), fy = parseInt(el.style.top);
-
-                return fgRectsOverlap(ex,ey,ew,eh,fx,fy,fig.w,fig,h);
-
-              });
-
-              if (!covered){
-                const pip = document.getElementById('fgpip-${fi}');
-                if (pip) pip.classList.add('done');
-                fig.el.classList.add('snap-flash');
-                setTimeout(() => fig.el.classList.remove('snap-flash'), 400);
-              }
-              return !covered;
-            });
-
-            if (solvedFlags.every(Boolean)){
-              setTimeout(() => showReveal(
-                'Figure/Ground',
-                'The eye separates a scene into subjects and background. What stands out depends on what surrounds it.'
-                ), 500);
-            }
-          }
-
-
-          // figure 6: symmetry
-          const SYM_AXIS_X = CANVAS_W / 2;
-          const SYM_SNAP_DIST = 42;
-          const SYM_NEUTRAL = '#b8b8b8';
-
-          // each composition: array of shapes on the left half. 
-          // x and y are left half canvas coords
-          // shapes are rectangles, which types are rect, circle, pill
-
-          const SYM_COMPOSITIONS = [
-            // A - stacked column and scattered accents (7 shapes)
-            [
-              {type: 'rect', color: '#d60000', x: 60, y: 60, w: 90, h: 55},
-              {type: 'circle', color: '#5a7fa3', x: 60, y: 140, w: 70, h: 70},
-              {type: 'rect', color: '#5e8c6a', x: 60, y: 235, w: 90, h: 55},
-              {type: 'pill', color: '#b5614a', x: 60, y: 315, w: 120, h: 40},
-              {type: 'rect', color: '#5a7fa3', x: 190, y: 80, w: 65, h: 65},
-              {type: 'circle', color: '#d60000', x: 200, y: 200, w: 55, h: 55},
-              {type: 'pill', color: '#5e8c6a', x: 170, y: 300, w: 100, h: 36},
-              ],
-            // B - cross rhythm (8)
-            [
-              {type: 'rect', color: '#5a7fa3', x: 50, y: 50, w: 80, h: 80},
-              {type: 'pill', color: '#d60000', x: 160, y: 65, w: 130, h: 42},
-              {type: 'circle', color: '#b5614a', x: 55, y: 175, w: 65, h: 65},
-              {type: 'rect', color: '#5e8c6a', x: 155, y: 165, w: 90, h: 55},
-              {type: 'pill', color: '#5a7fa3', x: 50, y: 270, w: 110, h: 40},
-              {type: 'rect', color: '#d60000', x: 190, y: 255, w: 65, h: 65},
-              {type: 'circle', color: '#5e8c6a', x: 90, y: 355, w: 55, h: 55},
-              {type: 'rect', color: '#b5614a', x: 195, y: 360, w: 70, h: 45},
-              ],
-            // C - diagonal cascade (6)
-            [
-              {type: 'circle', color: '#d60000', x: 50, y: 60, w: 90, h: 90},
-              {type: 'rect', color: '#5a7fa3', x: 190, y: 100, w: 80, h: 80},
-              {type: 'pill', color: '#5e8c6a', x: 80, y: 205, w: 130, h: 44},
-              {type: 'rect', color: '#b5614a', x: 220, y: 225, w: 60, h: 60},
-              {type: 'circle', color: '#5a7fa3', x: 60, y: 320, w: 70, h: 70},
-              {type: 'pill', color: '#d60000', x: 165, y: 345, w: 110, h: 38},
-              ],
-            // D - grid like arrangement (8)
-            [
-              {type: 'rect', color: '#5a7fa3', x: 55, y: 55, w: 75, h: 75},
-              {type: 'circle', color: '#d60000', x: 185, y: 60, w: 70, h: 70},
-              {type: 'pill', color: '#5e8c6a', x: 50, y: 175, w: 120, h: 42},
-              {type: 'rect', color: '#b5614a', x: 200, y: 170, w: 65, h: 65},
-              {type: 'circle', color: '#5a7fa3', x: 65, y: 270, w: 60, h: 60},
-              {type: 'rect', color: '#d60000', x: 185, y: 265, w: 75, h: 75},
-              {type: 'pill', color: '#b5614a', x: 55, y: 375, w: 130, h: 40},
-              {type: 'circle', color: '#5e8c6a', x: 210, y: 375, w: 50, h: 50},
-              ],
-            // E - organic cluster (7)
-            [
-              {type: 'pill', color: '#d60000', x: 55, y: 70, w: 160, h: 50},
-              {type: 'rect', color: '#5a7fa3', x: 55, y: 150, w: 70, h: 70},
-              {type: 'circle', color: '#5e8c6a', x: 175, y: 145, w: 65, h: 65},
-              {type: 'rect', color: '#b5614a', x: 55, y: 255, w: 90, h: 55},
-              {type: 'pill', color: '#5a7fa3', x: 165, y: 260, w: 100, h: 40},
-              {type: 'circle', color: '#d60000', x: 90, y: 345, w: 70, h: 70},
-              {type: 'rect', color: '#5e8c6a', x: 210, y: 340, w: 55, h: 55},
-              ],
-            // F - wide and tall (6)
-            [
-              {type: 'rect', color: '#5e8c6a', x: 50, y: 55, w: 130, h: 90},
-              {type: 'circle', color: '#d60000', x: 255, y: 65, w: 75, h: 75},
-              {type: 'pill', color: '#b5614a', x: 60, y: 190, w: 140, h: 44},
-              {type: 'rect', color: '#5a7fa3', x: 230, y: 185, w: 60, h: 60},
-              {type: 'circle', color: '#5e8c6a', x: 70, y: 295, w: 80, h: 80},
-              {type: 'pill', color: '#d60000', x: 175, y: 310, w: 120, h: 42},
-              ],
-            ];
-
-          let symPieces = []; // el, ghost, targetX, targetY, w, h, color, snapped
-          let symSnappedCount = 0;
-          let symTotal = 0;
-
-          function symBorderRadius(type, w, h){
-            if (type === 'circle') return '50%';
-            if (type === 'pill') return Math.min(w,h)/2 + 'px';
-            return '4px';
-          }
-
-          function initSymmetry() {
-            clearCanvas();
-            symPieces = [];
-            symSnappedCount = 0;
-            
-            document.getElementById('header-tag').textContent = 'Level 6: Symmetry';
-            document.getElementById('prompt-text').textContent = 'Mirror the left side.';
-            document.getElementById('hint-toast').textContent = 'Drag each gray shape to its matching position on the right.';
-
-            const comp = SYM_COMPOSITIONS[Math.floor(Math.random() * SYM_COMPOSITIONS.length)];
-            symTotal = comp.length;
-
-            const pips = document.getElementById('progress-pips');
-            pips.innerHTML = comp.map((_, i) => '<div class="pip" id="sympip-${i}"></div>').join('');
-
-            const canvas = document.getElementById('canvas');
-
-            // axis line
-            const axis = document.createElement('div');
-            axis.className = 'sym-axis';
-            axis.style.left = SYM_AXIS_X + 'px';
-
-            // left side fixed shapes
-            comp.forEach(s => {
-              const el = document.createElement('div');
-              el.className = 'sym-fixed';
-              el.style.left = s.x + 'px';
-              el.style.top = s.y + 'px';
-              el.style.width = s.w + 'px';
-              el.style.height = s.h + 'px';
-              el.style.background = s.color;
-              el.style.broderRadius = symBorderRadius(s.type, s.w, s.h);
-              canvas.appendChild(el);
-            });
-
-            // right side: scatter neutral gray pieces and ghost targets
-            // mirror position: x_right = SYM_AXIS_X + (SYM_AXIS_X - s.x - s.w)
-            // so the right edge of the mirrored shape aligns symmetrically
-
-            comp.forEach( (s,i) => {
-              const targetX = SYM_AXIS_X + (SYM_AXIS_X - s.x - s.w);
-              const target = s.y;
-
-              // ghost, dashed outline at mirror position
-              const ghost = document.createElement('div');
-              ghost.className = 'sym-ghost';
-              ghost.style.left = targetX + 'px';
-              ghost.style.top = targetY + 'px';
-              ghost.style.width = s.w + 'px';
-              ghost.style.height = s.h + 'px';
-              ghost.style.background = s.color;
-              ghost.style.broderRadius = symBorderRadius(s.type, s.w, s.h);
-              canvas.appendChild(ghost);
-
-              // scatter positions: random on right half, away from mirror target
-              let scatterX, scatterY, tries = 0;
-              do {
-                scatterX = SYM_AXIS_X + 20 + Math.random() * (CANVAS_W - SYM_AXIS_X - s.w - 30);
-                scatterY = 20 + Math.random() + (CANVAS_H - s.h - 40);
-                tries++;
-              } while (tries < 60 && Math.hypot(scatterX - targetX, scatterY - targetY) < 80);
-
-              const piece = document.createElement('div');
-              piece.className = 'sym-piece';
-              piece.style.left = scatterX + 'px';
-              piece.style.top = scatterY + 'px';
-              piece.style.width = s.w + 'px';
-              piece.style.height = s.h + 'px';
-              piece.style.background = SYM_NEUTRAL;
-              piece.style.broderRadius = symBorderRadius(s.type, s.w, s.h);
-              piece.style.zIndex = 10 + i;
-              canvas.appendChild(piece);
-
-              const entry = {el: piece, ghost, targetX, targetY, w: s.w, h: s.h, color: s.color, snapped: false, index: i};
-
-              symPieces.push(entry);
-
-              makeDraggable(piece, (phase,el ) => symOnMove(phase,el,entry), (el) => symOnUp(el, entry));
-            });
-          }
-
-          function symOnMove(phase, el, entry){
-            if (entry.snapped) return;
-            const cx = parseInt(el.style.left);
-            const cy = parseInt(el.style.top);
-            const dist = Math.hypot(cx - entry.targetX, cy - entry.targetY);
-            if (phase === 'move'){
-              if (dist < SYM_SNAP_DIST * 1.3){
-                entry.ghost.classList.add('visible');
-              } else {
-                entry.ghost.classList.remove('visible');
-              }
-            }
-            if (phase === 'start'){
-              entry.ghost.classList.remove('visible');
-            }
-          }
-
-          function symOnUp(el, entry){
-            if (entry.snapped) return;
-            entry.ghost.classList.remove('visible');
-            const cx = parseInt(el.style.left);
-            const cy = parseInt(e.style.top);
-            const dist = Math.hypot(cx - entry.targetX, cy - entry.targetY);
-
-            ifi (dist <= SYM_SNAP_DIST){
-              // snap into place
-              entry.snapped = true; 
-              el.style.left = entry.targetX + 'px';
-              el.style.top = entry.targetY + 'px';
-              el.style.background = entry.color;
-              el.style.zIndex = 5;
-              el.classList.add('snapped', 'sym-snap-anim');
-              entry.ghost.style.opacity = '0';
-
-              // light up pip
-              const pip = document.getElementById('sympip-${entry.index}');
-              if (pip) pip.classList.add('done');
-
-              symSnappedCount++;
-              if (synSnappedCount === symTotal) {
-                setTimeout(() => symTotal){
-                  setTimeout( () => showReveal(
-                    'Symmetry',
-                    'The eye seeks out balance. Paired elements feel stable and complete, even when the world only shows you half.'
-                    ), 450);
-                }
-              }
-            }
-            </script>
-
+        } while (tries < 80 && occupied.some(o => Math.hypot(o.x - px, o.y - py) < 90));
+        occupied.push({ x: px, y: py });
+
+        let ang;
+        do { ang = Math.round((Math.random() * 280 - 140) / 5) * 5; }
+        while (!piece.redHerring && Math.abs(normAngle(ang - piece.targetAngle)) < 35);
+
+        contPieceAngles[piece.id] = ang;
+        buildContPiece(piece, px, py, ang, canvas);
+      });
+    }
+
+    function buildContPiece(piece, px, py, initAngle, canvas) {
+      const wrap = document.createElement('div');
+      wrap.id = `cont-${piece.id}`;
+      wrap.className = 'cont-piece';
+      wrap.style.cssText = `left:${px}px;top:${py}px;width:${piece.svgW}px;height:${piece.svgH}px;`;
+
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', piece.svgW);
+      svg.setAttribute('height', piece.svgH);
+      svg.style.transformOrigin = `${piece.svgW/2}px ${piece.svgH/2}px`;
+      svg.style.transform = `rotate(${initAngle}deg)`;
+      svg.style.overflow = 'visible';
+
+      const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      pathEl.setAttribute('d', piece.path);
+      pathEl.setAttribute('stroke', '#222');
+      pathEl.setAttribute('stroke-width', '3');
+      pathEl.setAttribute('fill', 'none');
+      pathEl.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(pathEl);
+      wrap.appendChild(svg);
+
+      const rotHandle = document.createElement('div');
+      rotHandle.className = 'rot-handle';
+      rotHandle.style.right = '-7px';
+      rotHandle.style.top   = (piece.svgH/2 - 7) + 'px';
+      wrap.appendChild(rotHandle);
+
+      let dSx, dSy, dOl, dOt;
+      const dragDown = e => {
+        if (e.target === rotHandle) return;
+        e.preventDefault();
+        const pt = e.touches ? e.touches[0] : e;
+        dSx = pt.clientX; dSy = pt.clientY;
+        dOl = parseInt(wrap.style.left); dOt = parseInt(wrap.style.top);
+        wrap.style.zIndex = 999;
+        document.addEventListener('mousemove', dragMove);
+        document.addEventListener('mouseup', dragUp);
+        document.addEventListener('touchmove', dragMove, { passive: false });
+        document.addEventListener('touchend', dragUp);
+      };
+      const dragMove = e => {
+        const pt = e.touches ? e.touches[0] : e;
+        wrap.style.left = (dOl + pt.clientX - dSx) + 'px';
+        wrap.style.top  = (dOt + pt.clientY - dSy) + 'px';
+      };
+      const dragUp = () => {
+        document.removeEventListener('mousemove', dragMove);
+        document.removeEventListener('mouseup', dragUp);
+        document.removeEventListener('touchmove', dragMove);
+        document.removeEventListener('touchend', dragUp);
+        wrap.style.zIndex = 1;
+        contTrySnap(piece, wrap, svg, canvas);
+      };
+      wrap.addEventListener('mousedown', dragDown);
+      wrap.addEventListener('touchstart', dragDown, { passive: false });
+
+      let rBase, rMouse0;
+      const rotDown = e => {
+        e.preventDefault(); e.stopPropagation();
+        const pt = e.touches ? e.touches[0] : e;
+        const r = wrap.getBoundingClientRect();
+        rBase   = contPieceAngles[piece.id];
+        rMouse0 = Math.atan2(pt.clientY - (r.top + r.height/2), pt.clientX - (r.left + r.width/2)) * 180 / Math.PI;
+        document.addEventListener('mousemove', rotMove);
+        document.addEventListener('mouseup', rotUp);
+        document.addEventListener('touchmove', rotMove, { passive: false });
+        document.addEventListener('touchend', rotUp);
+      };
+      const rotMove = e => {
+        const pt = e.touches ? e.touches[0] : e;
+        const r  = wrap.getBoundingClientRect();
+        const deg = Math.atan2(pt.clientY - (r.top + r.height/2), pt.clientX - (r.left + r.width/2)) * 180 / Math.PI;
+        const newAng = rBase + deg - rMouse0;
+        contPieceAngles[piece.id] = newAng;
+        svg.style.transform = `rotate(${newAng}deg)`;
+      };
+      const rotUp = () => {
+        document.removeEventListener('mousemove', rotMove);
+        document.removeEventListener('mouseup', rotUp);
+        document.removeEventListener('touchmove', rotMove);
+        document.removeEventListener('touchend', rotUp);
+        contTrySnap(piece, wrap, svg, canvas);
+      };
+      rotHandle.addEventListener('mousedown', rotDown);
+      rotHandle.addEventListener('touchstart', rotDown, { passive: false });
+
+      canvas.appendChild(wrap);
+    }
+
+    function contTrySnap(piece, wrap, svg, canvas) {
+      if (piece.redHerring || contSnapped.has(piece.id)) return;
+
+      const cr = canvas.getBoundingClientRect();
+      const wr = wrap.getBoundingClientRect();
+      const cx = wr.left - cr.left + wr.width  / 2;
+      const cy = wr.top  - cr.top  + wr.height / 2;
+
+      const distOk  = Math.hypot(cx - piece.targetCx, cy - piece.targetCy) <= SNAP_DIST;
+      const cur     = contPieceAngles[piece.id];
+      const diff    = normAngle(cur - piece.targetAngle);
+      const diff180 = normAngle(cur - piece.targetAngle - 180);
+      const angleOk = Math.abs(diff) <= SNAP_ANGLE || (piece.symmetric && Math.abs(diff180) <= SNAP_ANGLE);
+
+      if (!distOk || !angleOk) return;
+
+      wrap.style.left = (piece.targetCx - piece.svgW/2) + 'px';
+      wrap.style.top  = (piece.targetCy - piece.svgH/2) + 'px';
+      svg.style.transform = `rotate(${piece.targetAngle}deg)`;
+      wrap.classList.add('snapped', 'snap-flash');
+      wrap.style.zIndex = 2;
+      contSnapped.add(piece.id);
+      setTimeout(() => wrap.classList.remove('snap-flash'), 400);
+
+      contDrawSolid(piece);
+      contCheckWin();
+    }
+
+    function normAngle(a) {
+      while (a >  180) a -= 360;
+      while (a < -180) a += 360;
+      return a;
+    }
+
+    function contDrawSolid(piece) {
+      const bgSvg = document.getElementById('cont-bg');
+      if (!bgSvg) return;
+      const pcx = piece.svgW / 2, pcy = piece.svgH / 2;
+      const tx = piece.targetCx - pcx, ty = piece.targetCy - pcy;
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', piece.path);
+      p.setAttribute('stroke', '#111');
+      p.setAttribute('stroke-width', '3');
+      p.setAttribute('fill', 'none');
+      p.setAttribute('stroke-linecap', 'round');
+      p.setAttribute('transform',
+        `translate(${tx+pcx},${ty+pcy}) rotate(${piece.targetAngle}) translate(${-pcx},${-pcy})`);
+      bgSvg.appendChild(p);
+    }
+
+    function contCheckWin() {
+      contActiveIds.forEach((id, i) => {
+        if (contSnapped.has(id)) document.getElementById(`contpip-${i}`).classList.add('done');
+      });
+      if (contActiveIds.every(id => contSnapped.has(id))) {
+        setTimeout(() => showReveal(
+          'Continuity',
+          'The eye naturally completes broken paths — filling gaps to perceive a whole shape.'
+        ), 500);
+      }
+    }
+
+    /* ═══════════════════════════════════════
+       LEVEL 4 – CLOSURE
+       Kanizsa figures: pac-man wedges snapped to polygon vertices.
+    ═══════════════════════════════════════ */
+    const CLOS_SNAP_DIST  = 55;
+    const CLOS_SNAP_ANGLE = 24;
+
+    const CLOS_COLORS = {
+      triangle: '#5a7fa3',
+      square:   '#b5614a',
+      hexagon:  '#5e8c6a',
+    };
+
+    function closWedgePath(gapDeg) {
+      const r    = 34;
+      const half = (gapDeg / 2) * Math.PI / 180;
+      const x1   = 40 + r * Math.cos(half);
+      const y1   = 40 - r * Math.sin(half);
+      const x2   = 40 + r * Math.cos(-half);
+      const y2   = 40 - r * Math.sin(-half);
+      return `M 40 40 L ${x2.toFixed(2)} ${y2.toFixed(2)} A ${r} ${r} 0 1 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
+    }
+
+    function closRegularShape(shapeId, cx, cy, n, R, gapDeg, startA) {
+      const color  = CLOS_COLORS[shapeId];
+      const wedges = Array.from({ length: n }, (_, i) => {
+        const angleDeg = startA + i * (360 / n);
+        const a = angleDeg * Math.PI / 180;
+        return {
+          id: `${shapeId}-w${i}`,
+          svgW: 80, svgH: 80,
+          path: closWedgePath(gapDeg),
+          targetCx:    cx + R * Math.cos(a),
+          targetCy:    cy + R * Math.sin(a),
+          targetAngle: angleDeg + 180,
+          shapeId,
+          color,
+        };
+      });
+
+      const pts = Array.from({ length: n }, (_, i) => {
+        const a = (startA + i * (360 / n)) * Math.PI / 180;
+        return `${(cx + R * Math.cos(a)).toFixed(1)},${(cy + R * Math.sin(a)).toFixed(1)}`;
+      });
+      const revealPath = 'M ' + pts.join(' L ') + ' Z';
+
+      return { id: shapeId, cx, cy, revealPath, wedges };
+    }
+
+    function closTriangle(cx, cy) { return closRegularShape('triangle', cx, cy, 3, 60,  60, -90); }
+    function closSquare(cx, cy)   { return closRegularShape('square',   cx, cy, 4, 95,  90, -45); }
+    function closHexagon(cx, cy)  { return closRegularShape('hexagon',  cx, cy, 6, 90, 120, -90); }
+
+    let closActiveShapes = [];
+
+    function initClosure() {
+      clearCanvas();
+      closActiveShapes = [];
+
+      document.getElementById('header-tag').textContent  = 'Level 4: Closure';
+      document.getElementById('prompt-text').textContent = 'Discover the shapes through negative space.';
+      document.getElementById('hint-toast').textContent  = 'Drag each piece to a corner of the dotted shape.';
+
+      const pips = document.getElementById('progress-pips');
+      pips.innerHTML = [0, 1].map(i => `<div class="pip" id="clospip-${i}"></div>`).join('');
+
+      const canvas = document.getElementById('canvas');
+
+      const bgSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      bgSvg.setAttribute('id', 'clos-bg');
+      bgSvg.setAttribute('width', CANVAS_W);
+      bgSvg.setAttribute('height', CANVAS_H);
+      canvas.appendChild(bgSvg);
+
+      const pool = [
+        () => closTriangle(210, 240),
+        () => closSquare(210, 240),
+        () => closHexagon(210, 240),
+      ].sort(() => Math.random() - 0.5);
+
+      const leftShape  = pool[0]();
+      const rightFnId  = pool[1]().id;
+      const rightShape = rightFnId === 'triangle' ? closTriangle(570, 240)
+                       : rightFnId === 'square'   ? closSquare(570, 240)
+                       :                            closHexagon(570, 240);
+
+      closActiveShapes = [leftShape, rightShape];
+
+      closActiveShapes.forEach(shape => {
+        const gp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        gp.setAttribute('d', shape.revealPath);
+        gp.setAttribute('stroke', CLOS_COLORS[shape.id]);
+        gp.setAttribute('stroke-width', '1.5');
+        gp.setAttribute('stroke-dasharray', '5.5');
+        gp.setAttribute('fill', 'none');
+        gp.setAttribute('opacity', '0.25');
+        bgSvg.appendChild(gp);
+      });
+
+      const allWedges = closActiveShapes.flatMap(s => s.wedges);
+      const occupied  = [];
+      allWedges.sort(() => Math.random() - 0.5).forEach(w => {
+        let px, py, tries = 0;
+        do {
+          px = 30 + Math.random() * (CANVAS_W - 100);
+          py = 30 + Math.random() * (CANVAS_H - 100);
+          tries++;
+          if (Math.hypot((px + 40) - w.targetCx, (py + 40) - w.targetCy) < 100) continue;
+        } while (tries < 80 && occupied.some(o => Math.hypot(o.x - px, o.y - py) < 85));
+        occupied.push({ x: px, y: py });
+        buildClosPiece(w, px, py, canvas);
+      });
+    }
+
+    function buildClosPiece(piece, px, py, canvas) {
+      const wrap = document.createElement('div');
+      wrap.id = `clos-${piece.id}`;
+      wrap.className = 'clos-piece';
+      wrap.style.cssText = `left:${px}px;top:${py}px;width:${piece.svgW}px;height:${piece.svgH}px;`;
+
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', piece.svgW);
+      svg.setAttribute('height', piece.svgH);
+      svg.style.transformOrigin = `${piece.svgW/2}px ${piece.svgH/2}px`;
+      svg.style.transform = `rotate(${piece.targetAngle}deg)`;
+      svg.style.overflow  = 'visible';
+
+      const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      pathEl.setAttribute('d', piece.path);
+      pathEl.setAttribute('fill', piece.color);
+      svg.appendChild(pathEl);
+      wrap.appendChild(svg);
+
+      let dSx, dSy, dOl, dOt;
+      const dragDown = e => {
+        e.preventDefault();
+        const pt = e.touches ? e.touches[0] : e;
+        dSx = pt.clientX; dSy = pt.clientY;
+        dOl = parseInt(wrap.style.left); dOt = parseInt(wrap.style.top);
+        wrap.style.zIndex = 999;
+        document.addEventListener('mousemove', dragMove);
+        document.addEventListener('mouseup', dragUp);
+        document.addEventListener('touchmove', dragMove, { passive: false });
+        document.addEventListener('touchend', dragUp);
+      };
+      const dragMove = e => {
+        const pt = e.touches ? e.touches[0] : e;
+        wrap.style.left = (dOl + pt.clientX - dSx) + 'px';
+        wrap.style.top  = (dOt + pt.clientY - dSy) + 'px';
+      };
+      const dragUp = () => {
+        document.removeEventListener('mousemove', dragMove);
+        document.removeEventListener('mouseup', dragUp);
+        document.removeEventListener('touchmove', dragMove);
+        document.removeEventListener('touchend', dragUp);
+        wrap.style.zIndex = 1;
+        closCheckAll(canvas);
+      };
+      wrap.addEventListener('mousedown', dragDown);
+      wrap.addEventListener('touchstart', dragDown, { passive: false });
+
+      canvas.appendChild(wrap);
+    }
+
+    function closCheckAll(canvas) {
+      const cr = canvas.getBoundingClientRect();
+
+      closActiveShapes.forEach((shape, si) => {
+        if (shape.wedges.every(w => {
+          const el = document.getElementById(`clos-${w.id}`);
+          return el && el.classList.contains('snapped');
+        })) return;
+
+        const allClose = shape.wedges.every(w => {
+          const el = document.getElementById(`clos-${w.id}`);
+          if (!el) return false;
+          const wr = el.getBoundingClientRect();
+          const cx = wr.left - cr.left + wr.width  / 2;
+          const cy = wr.top  - cr.top  + wr.height / 2;
+          return Math.hypot(cx - w.targetCx, cy - w.targetCy) <= CLOS_SNAP_DIST;
+        });
+        if (!allClose) return;
+
+        shape.wedges.forEach(w => {
+          const el = document.getElementById(`clos-${w.id}`);
+          if (!el || el.classList.contains('snapped')) return;
+          el.style.left = (w.targetCx - w.svgW / 2) + 'px';
+          el.style.top  = (w.targetCy - w.svgH / 2) + 'px';
+          el.classList.add('snapped', 'snap-flash');
+          setTimeout(() => el.classList.remove('snap-flash'), 400);
+        });
+
+        const bgSvg = document.getElementById('clos-bg');
+        if (!bgSvg.querySelector(`[data-reveal="${shape.id}"]`)) {
+          const revealEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          revealEl.setAttribute('d', shape.revealPath);
+          revealEl.setAttribute('fill', 'none');
+          revealEl.setAttribute('stroke', CLOS_COLORS[shape.id]);
+          revealEl.setAttribute('stroke-width', '3');
+          revealEl.setAttribute('stroke-linejoin', 'round');
+          revealEl.setAttribute('data-reveal', shape.id);
+          revealEl.classList.add('clos-reveal-shape');
+          bgSvg.appendChild(revealEl);
+        }
+
+        const pip = document.getElementById(`clospip-${si}`);
+        if (pip) pip.classList.add('done');
+      });
+
+      const allDone = closActiveShapes.every(shape =>
+        shape.wedges.every(w => {
+          const el = document.getElementById(`clos-${w.id}`);
+          return el && el.classList.contains('snapped');
+        })
+      );
+      if (allDone) {
+        setTimeout(() => showReveal(
+          'Closure',
+          'The mind fills in missing information, perceiving complete shapes from incomplete fragments.'
+        ), 700);
+      }
+    }
+
+    /* ═══════════════════════════════════════
+       LEVEL 5 – FIGURE / GROUND
+       Dig through ground shapes to expose the two red figures.
+    ═══════════════════════════════════════ */
+    const FG_ACCENT  = '#d60000';
+    const FG_GROUNDS = ['#c8bfb0','#a8b8c8','#c8c0b8','#b0b8c8','#c4bdb5'];
+    const FG_TYPES   = ['rect','circle','triangle'];
+
+    let fgZCounter = 10;
+    let fgFigures  = [];
+    let fgAllEls   = [];
+
+    function fgMakeSVG(type, w, h, color) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', w);
+      svg.setAttribute('height', h);
+      svg.style.display = 'block';
+
+      if (type === 'rect') {
+        const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        r.setAttribute('x', 0); r.setAttribute('y', 0);
+        r.setAttribute('width', w); r.setAttribute('height', h);
+        r.setAttribute('rx', 8); r.setAttribute('fill', color);
+        svg.appendChild(r);
+      } else if (type === 'circle') {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        c.setAttribute('cx', w/2); c.setAttribute('cy', h/2);
+        c.setAttribute('rx', w/2); c.setAttribute('ry', h/2);
+        c.setAttribute('fill', color);
+        svg.appendChild(c);
+      } else {
+        const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        poly.setAttribute('points', `${w/2},4 ${w-4},${h-4} 4,${h-4}`);
+        poly.setAttribute('fill', color);
+        svg.appendChild(poly);
+      }
+      return svg;
+    }
+
+    function fgSpawnShape(canvas, x, y, w, h, type, color, isFigure) {
+      const el = document.createElement('div');
+      el.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;z-index:${fgZCounter++};cursor:grab;user-select:none;touch-action:none;`;
+      el.appendChild(fgMakeSVG(type, w, h, color));
+      canvas.appendChild(el);
+      fgAllEls.push(el);
+      if (isFigure) fgFigures.push({ el, cx: x + w/2, cy: y + h/2, w, h });
+
+      let dSx, dSy, dOl, dOt;
+      const dragDown = e => {
+        e.preventDefault();
+        const pt = e.touches ? e.touches[0] : e;
+        dSx = pt.clientX; dSy = pt.clientY;
+        dOl = parseInt(el.style.left); dOt = parseInt(el.style.top);
+        el.style.zIndex = ++fgZCounter;
+        el.style.cursor = 'grabbing';
+        document.addEventListener('mousemove', dragMove);
+        document.addEventListener('mouseup', dragUp);
+        document.addEventListener('touchmove', dragMove, { passive: false });
+        document.addEventListener('touchend', dragUp);
+      };
+      const dragMove = e => {
+        const pt = e.touches ? e.touches[0] : e;
+        el.style.left = (dOl + pt.clientX - dSx) + 'px';
+        el.style.top  = (dOt + pt.clientY - dSy) + 'px';
+      };
+      const dragUp = () => {
+        document.removeEventListener('mousemove', dragMove);
+        document.removeEventListener('mouseup', dragUp);
+        document.removeEventListener('touchmove', dragMove);
+        document.removeEventListener('touchend', dragUp);
+        el.style.cursor = 'grab';
+        fgCheckWin();
+      };
+      el.addEventListener('mousedown', dragDown);
+      el.addEventListener('touchstart', dragDown, { passive: false });
+      return el;
+    }
+
+    function fgRectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
+      return ax < bx+bw && ax+aw > bx && ay < by+bh && ay+ah > by;
+    }
+
+    function initFigureGround() {
+      clearCanvas();
+      fgZCounter = 10;
+      fgFigures  = [];
+      fgAllEls   = [];
+
+      document.getElementById('header-tag').textContent  = 'Level 5: Figure / Ground';
+      document.getElementById('prompt-text').textContent = 'Something is hiding here. Find it.';
+      document.getElementById('hint-toast').textContent  = 'Drag the gray shapes away. The red shapes are hiding underneath.';
+
+      const pips = document.getElementById('progress-pips');
+      pips.innerHTML = [0, 1].map(i => `<div class="pip" id="fgpip-${i}"></div>`).join('');
+
+      const canvas = document.getElementById('canvas');
+
+      const figurePositions = [];
+      for (let f = 0; f < 2; f++) {
+        const fw = 90 + Math.floor(Math.random() * 50);
+        const fh = 90 + Math.floor(Math.random() * 50);
+        let fx, fy, tries = 0;
+        do {
+          fx = 40 + Math.random() * (CANVAS_W - fw - 80);
+          fy = 40 + Math.random() * (CANVAS_H - fh - 80);
+          tries++;
+        } while (tries < 60 && figurePositions.some(p =>
+          fgRectsOverlap(fx, fy, fw, fh, p.x, p.y, p.w, p.h)
+        ));
+        figurePositions.push({ x: fx, y: fy, w: fw, h: fh });
+        const type = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
+        fgSpawnShape(canvas, fx, fy, fw, fh, type, FG_ACCENT, true);
+      }
+
+      const decoyCentres      = [];
+      const decoyCentreCount  = 3 + Math.floor(Math.random() * 2);
+      for (let d = 0; d < decoyCentreCount; d++) {
+        let dcx, dcy, tries = 0;
+        do {
+          dcx = 80 + Math.random() * (CANVAS_W - 160);
+          dcy = 80 + Math.random() * (CANVAS_H - 160);
+          tries++;
+        } while (tries < 60 && (
+          figurePositions.some(p => Math.hypot(dcx - (p.x+p.w/2), dcy - (p.y+p.h/2)) < 160) ||
+          decoyCentres.some(c => Math.hypot(dcx - c.x, dcy - c.y) < 140)
+        ));
+        decoyCentres.push({ x: dcx, y: dcy });
+      }
+
+      const spawnCluster = (cx, cy, count) => {
+        for (let i = 0; i < count; i++) {
+          const w     = 65 + Math.floor(Math.random() * 100);
+          const h     = 60 + Math.floor(Math.random() * 100);
+          const type  = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
+          const color = FG_GROUNDS[Math.floor(Math.random() * FG_GROUNDS.length)];
+          const x     = Math.max(10, Math.min(CANVAS_W - w - 10, cx - w/2 + (Math.random() - 0.5) * 130));
+          const y     = Math.max(10, Math.min(CANVAS_H - h - 10, cy - h/2 + (Math.random() - 0.5) * 130));
+          fgSpawnShape(canvas, x, y, w, h, type, color, false);
+        }
+      };
+
+      figurePositions.forEach(p => {
+        const fcx = p.x + p.w/2, fcy = p.y + p.h/2;
+        for (let i = 0; i < 3; i++) {
+          const w     = p.w + 30 + Math.floor(Math.random() * 40);
+          const h     = p.h + 30 + Math.floor(Math.random() * 40);
+          const type  = FG_TYPES[Math.floor(Math.random() * FG_TYPES.length)];
+          const color = FG_GROUNDS[Math.floor(Math.random() * FG_GROUNDS.length)];
+          const x     = Math.max(10, Math.min(CANVAS_W - w - 10, fcx - w/2 + (Math.random() - 0.5) * 20));
+          const y     = Math.max(10, Math.min(CANVAS_H - h - 10, fcy - h/2 + (Math.random() - 0.5) * 20));
+          fgSpawnShape(canvas, x, y, w, h, type, color, false);
+        }
+        spawnCluster(fcx, fcy, 3);
+      });
+
+      decoyCentres.forEach(c => spawnCluster(c.x, c.y, 4 + Math.floor(Math.random() * 2)));
+    }
+
+    function fgCheckWin() {
+      const solvedFlags = fgFigures.map((fig, fi) => {
+        const figZ    = parseInt(fig.el.style.zIndex);
+        const covered = fgAllEls.some(el => {
+          if (el === fig.el) return false;
+          const z = parseInt(el.style.zIndex);
+          if (z <= figZ) return false;
+          const ex = parseInt(el.style.left), ey = parseInt(el.style.top);
+          const ew = parseInt(el.style.width), eh = parseInt(el.style.height);
+          const fx = parseInt(fig.el.style.left), fy = parseInt(fig.el.style.top);
+          return fgRectsOverlap(ex, ey, ew, eh, fx, fy, fig.w, fig.h);
+        });
+        if (!covered) {
+          const pip = document.getElementById(`fgpip-${fi}`);
+          if (pip) pip.classList.add('done');
+          fig.el.classList.add('snap-flash');
+          setTimeout(() => fig.el.classList.remove('snap-flash'), 400);
+        }
+        return !covered;
+      });
+
+      if (solvedFlags.every(Boolean)) {
+        setTimeout(() => showReveal(
+          'Figure/Ground',
+          'The eye separates a scene into subjects and background. What stands out depends on what surrounds it.'
+        ), 500);
+      }
+    }
+
+    /* ═══════════════════════════════════════
+       LEVEL 6 – SYMMETRY
+       Mirror the left-side composition to the right.
+    ═══════════════════════════════════════ */
+    const SYM_AXIS_X   = CANVAS_W / 2;
+    const SYM_SNAP_DIST = 42;
+    const SYM_NEUTRAL  = '#b8b8b8';
+
+    const SYM_COMPOSITIONS = [
+      [
+        { type:'rect',   color:'#d60000', x:60,  y:60,  w:90,  h:55 },
+        { type:'circle', color:'#5a7fa3', x:60,  y:140, w:70,  h:70 },
+        { type:'rect',   color:'#5e8c6a', x:60,  y:235, w:90,  h:55 },
+        { type:'pill',   color:'#b5614a', x:60,  y:315, w:120, h:40 },
+        { type:'rect',   color:'#5a7fa3', x:190, y:80,  w:65,  h:65 },
+        { type:'circle', color:'#d60000', x:200, y:200, w:55,  h:55 },
+        { type:'pill',   color:'#5e8c6a', x:170, y:300, w:100, h:36 },
+      ],
+      [
+        { type:'rect',   color:'#5a7fa3', x:50,  y:50,  w:80,  h:80 },
+        { type:'pill',   color:'#d60000', x:160, y:65,  w:130, h:42 },
+        { type:'circle', color:'#b5614a', x:55,  y:175, w:65,  h:65 },
+        { type:'rect',   color:'#5e8c6a', x:155, y:165, w:90,  h:55 },
+        { type:'pill',   color:'#5a7fa3', x:50,  y:270, w:110, h:40 },
+        { type:'rect',   color:'#d60000', x:190, y:255, w:65,  h:65 },
+        { type:'circle', color:'#5e8c6a', x:90,  y:355, w:55,  h:55 },
+        { type:'rect',   color:'#b5614a', x:195, y:360, w:70,  h:45 },
+      ],
+      [
+        { type:'circle', color:'#d60000', x:50,  y:60,  w:90,  h:90 },
+        { type:'rect',   color:'#5a7fa3', x:190, y:100, w:80,  h:80 },
+        { type:'pill',   color:'#5e8c6a', x:80,  y:205, w:130, h:44 },
+        { type:'rect',   color:'#b5614a', x:220, y:225, w:60,  h:60 },
+        { type:'circle', color:'#5a7fa3', x:60,  y:320, w:70,  h:70 },
+        { type:'pill',   color:'#d60000', x:165, y:345, w:110, h:38 },
+      ],
+      [
+        { type:'rect',   color:'#5a7fa3', x:55,  y:55,  w:75,  h:75 },
+        { type:'circle', color:'#d60000', x:185, y:60,  w:70,  h:70 },
+        { type:'pill',   color:'#5e8c6a', x:50,  y:175, w:120, h:42 },
+        { type:'rect',   color:'#b5614a', x:200, y:170, w:65,  h:65 },
+        { type:'circle', color:'#5a7fa3', x:65,  y:270, w:60,  h:60 },
+        { type:'rect',   color:'#d60000', x:185, y:265, w:75,  h:75 },
+        { type:'pill',   color:'#b5614a', x:55,  y:375, w:130, h:40 },
+        { type:'circle', color:'#5e8c6a', x:210, y:375, w:50,  h:50 },
+      ],
+      [
+        { type:'pill',   color:'#d60000', x:55,  y:70,  w:160, h:50 },
+        { type:'rect',   color:'#5a7fa3', x:55,  y:150, w:70,  h:70 },
+        { type:'circle', color:'#5e8c6a', x:175, y:145, w:65,  h:65 },
+        { type:'rect',   color:'#b5614a', x:55,  y:255, w:90,  h:55 },
+        { type:'pill',   color:'#5a7fa3', x:165, y:260, w:100, h:40 },
+        { type:'circle', color:'#d60000', x:90,  y:345, w:70,  h:70 },
+        { type:'rect',   color:'#5e8c6a', x:210, y:340, w:55,  h:55 },
+      ],
+      [
+        { type:'rect',   color:'#5e8c6a', x:50,  y:55,  w:130, h:90 },
+        { type:'circle', color:'#d60000', x:255, y:65,  w:75,  h:75 },
+        { type:'pill',   color:'#b5614a', x:60,  y:190, w:140, h:44 },
+        { type:'rect',   color:'#5a7fa3', x:230, y:185, w:60,  h:60 },
+        { type:'circle', color:'#5e8c6a', x:70,  y:295, w:80,  h:80 },
+        { type:'pill',   color:'#d60000', x:175, y:310, w:120, h:42 },
+      ],
+    ];
+
+    let symPieces       = [];
+    let symSnappedCount = 0;
+    let symTotal        = 0;
+
+    function symBorderRadius(type, w, h) {
+      if (type === 'circle') return '50%';
+      if (type === 'pill')   return Math.min(w, h) / 2 + 'px';
+      return '4px';
+    }
+
+    function initSymmetry() {
+      clearCanvas();
+      symPieces       = [];
+      symSnappedCount = 0;
+
+      document.getElementById('header-tag').textContent  = 'Level 6: Symmetry';
+      document.getElementById('prompt-text').textContent = 'Mirror the left side.';
+      document.getElementById('hint-toast').textContent  = 'Drag each gray shape to its matching position on the right.';
+
+      const comp = SYM_COMPOSITIONS[Math.floor(Math.random() * SYM_COMPOSITIONS.length)];
+      symTotal = comp.length;
+
+      const pips = document.getElementById('progress-pips');
+      pips.innerHTML = comp.map((_, i) => `<div class="pip" id="sympip-${i}"></div>`).join('');
+
+      const canvas = document.getElementById('canvas');
+
+      const axis = document.createElement('div');
+      axis.className = 'sym-axis';
+      axis.style.left = SYM_AXIS_X + 'px';
+      canvas.appendChild(axis);
+
+      comp.forEach(s => {
+        const el = document.createElement('div');
+        el.className = 'sym-fixed';
+        el.style.left            = s.x + 'px';
+        el.style.top             = s.y + 'px';
+        el.style.width           = s.w + 'px';
+        el.style.height          = s.h + 'px';
+        el.style.background      = s.color;
+        el.style.borderRadius    = symBorderRadius(s.type, s.w, s.h);
+        canvas.appendChild(el);
+      });
+
+      comp.forEach((s, i) => {
+        const targetX = SYM_AXIS_X + (SYM_AXIS_X - s.x - s.w);
+        const targetY = s.y;
+
+        const ghost = document.createElement('div');
+        ghost.className   = 'sym-ghost';
+        ghost.style.left  = targetX + 'px';
+        ghost.style.top   = targetY + 'px';
+        ghost.style.width = s.w + 'px';
+        ghost.style.height= s.h + 'px';
+        ghost.style.borderRadius = symBorderRadius(s.type, s.w, s.h);
+        canvas.appendChild(ghost);
+
+        let scatterX, scatterY, tries = 0;
+        do {
+          scatterX = SYM_AXIS_X + 20 + Math.random() * (CANVAS_W - SYM_AXIS_X - s.w - 30);
+          scatterY = 20 + Math.random() * (CANVAS_H - s.h - 40);
+          tries++;
+        } while (tries < 60 && Math.hypot(scatterX - targetX, scatterY - targetY) < 80);
+
+        const piece = document.createElement('div');
+        piece.className         = 'sym-piece';
+        piece.style.left        = scatterX + 'px';
+        piece.style.top         = scatterY + 'px';
+        piece.style.width       = s.w + 'px';
+        piece.style.height      = s.h + 'px';
+        piece.style.background  = SYM_NEUTRAL;
+        piece.style.borderRadius= symBorderRadius(s.type, s.w, s.h);
+        piece.style.zIndex      = 10 + i;
+        canvas.appendChild(piece);
+
+        const entry = { el: piece, ghost, targetX, targetY, w: s.w, h: s.h, color: s.color, snapped: false, index: i };
+        symPieces.push(entry);
+
+        makeDraggable(piece,
+          (phase, el) => symOnMove(phase, el, entry),
+          (el)         => symOnUp(el, entry)
+        );
+      });
+    }
+
+    function symOnMove(phase, el, entry) {
+      if (entry.snapped) return;
+      const cx   = parseInt(el.style.left);
+      const cy   = parseInt(el.style.top);
+      const dist = Math.hypot(cx - entry.targetX, cy - entry.targetY);
+      if (phase === 'move') {
+        entry.ghost.classList.toggle('sym-ghost-visible', dist < SYM_SNAP_DIST * 1.3);
+      }
+      if (phase === 'start') {
+        entry.ghost.classList.remove('sym-ghost-visible');
+      }
+    }
+
+    function symOnUp(el, entry) {
+      if (entry.snapped) return;
+      entry.ghost.classList.remove('sym-ghost-visible');
+      const cx   = parseInt(el.style.left);
+      const cy   = parseInt(el.style.top);
+      const dist = Math.hypot(cx - entry.targetX, cy - entry.targetY);
+
+      if (dist <= SYM_SNAP_DIST) {
+        entry.snapped       = true;
+        el.style.left       = entry.targetX + 'px';
+        el.style.top        = entry.targetY + 'px';
+        el.style.background = entry.color;
+        el.style.zIndex     = 5;
+        el.classList.add('snapped', 'sym-snap-anim');
+        entry.ghost.style.opacity = '0';
+
+        const pip = document.getElementById(`sympip-${entry.index}`);
+        if (pip) pip.classList.add('done');
+
+        symSnappedCount++;
+        if (symSnappedCount === symTotal) {
+          setTimeout(() => showReveal(
+            'Symmetry',
+            'The eye seeks out balance. Paired elements feel stable and complete, even when the world only shows you half.'
+          ), 450);
+        }
+      }
+    }
+    </script>
   </body>
-
-
-      </html>
-                
-
-              
-              
-                
-                
-
-          
-              
-
-            
-          
-          
-            
-
-            
-
-            
-
-
-            
-            
-            
-      
-
-
-
-            
-        
-      
-          
-        
-      
-
-      
-
-      
-
-      
-
-      
-
-
-
-
-
-
-
-      
+</html>
