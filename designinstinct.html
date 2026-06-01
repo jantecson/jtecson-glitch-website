@@ -1960,7 +1960,138 @@
             document.getElementById('prompt-text').textContent = 'Mirror the left side.';
             document.getElementById('hint-toast').textContent = 'Drag each gray shape to its matching position on the right.';
 
+            const comp = SYM_COMPOSITIONS[Math.floor(Math.random() * SYM_COMPOSITIONS.length)];
+            symTotal = comp.length;
 
+            const pips = document.getElementById('progress-pips');
+            pips.innerHTML = comp.map((_, i) => '<div class="pip" id="sympip-${i}"></div>').join('');
+
+            const canvas = document.getElementById('canvas');
+
+            // axis line
+            const axis = document.createElement('div');
+            axis.className = 'sym-axis';
+            axis.style.left = SYM_AXIS_X + 'px';
+
+            // left side fixed shapes
+            comp.forEach(s => {
+              const el = document.createElement('div');
+              el.className = 'sym-fixed';
+              el.style.left = s.x + 'px';
+              el.style.top = s.y + 'px';
+              el.style.width = s.w + 'px';
+              el.style.height = s.h + 'px';
+              el.style.background = s.color;
+              el.style.broderRadius = symBorderRadius(s.type, s.w, s.h);
+              canvas.appendChild(el);
+            });
+
+            // right side: scatter neutral gray pieces and ghost targets
+            // mirror position: x_right = SYM_AXIS_X + (SYM_AXIS_X - s.x - s.w)
+            // so the right edge of the mirrored shape aligns symmetrically
+
+            comp.forEach( (s,i) => {
+              const targetX = SYM_AXIS_X + (SYM_AXIS_X - s.x - s.w);
+              const target = s.y;
+
+              // ghost, dashed outline at mirror position
+              const ghost = document.createElement('div');
+              ghost.className = 'sym-ghost';
+              ghost.style.left = targetX + 'px';
+              ghost.style.top = targetY + 'px';
+              ghost.style.width = s.w + 'px';
+              ghost.style.height = s.h + 'px';
+              ghost.style.background = s.color;
+              ghost.style.broderRadius = symBorderRadius(s.type, s.w, s.h);
+              canvas.appendChild(ghost);
+
+              // scatter positions: random on right half, away from mirror target
+              let scatterX, scatterY, tries = 0;
+              do {
+                scatterX = SYM_AXIS_X + 20 + Math.random() * (CANVAS_W - SYM_AXIS_X - s.w - 30);
+                scatterY = 20 + Math.random() + (CANVAS_H - s.h - 40);
+                tries++;
+              } while (tries < 60 && Math.hypot(scatterX - targetX, scatterY - targetY) < 80);
+
+              const piece = document.createElement('div');
+              piece.className = 'sym-piece';
+              piece.style.left = scatterX + 'px';
+              piece.style.top = scatterY + 'px';
+              piece.style.width = s.w + 'px';
+              piece.style.height = s.h + 'px';
+              piece.style.background = SYM_NEUTRAL;
+              piece.style.broderRadius = symBorderRadius(s.type, s.w, s.h);
+              piece.style.zIndex = 10 + i;
+              canvas.appendChild(piece);
+
+              const entry = {el: piece, ghost, targetX, targetY, w: s.w, h: s.h, color: s.color, snapped: false, index: i};
+
+              symPieces.push(entry);
+
+              makeDraggable(piece, (phase,el ) => symOnMove(phase,el,entry), (el) => symOnUp(el, entry));
+            });
+          }
+
+          function symOnMove(phase, el, entry){
+            if (entry.snapped) return;
+            const cx = parseInt(el.style.left);
+            const cy = parseInt(el.style.top);
+            const dist = Math.hypot(cx - entry.targetX, cy - entry.targetY);
+            if (phase === 'move'){
+              if (dist < SYM_SNAP_DIST * 1.3){
+                entry.ghost.classList.add('visible');
+              } else {
+                entry.ghost.classList.remove('visible');
+              }
+            }
+            if (phase === 'start'){
+              entry.ghost.classList.remove('visible');
+            }
+          }
+
+          function symOnUp(el, entry){
+            if (entry.snapped) return;
+            entry.ghost.classList.remove('visible');
+            const cx = parseInt(el.style.left);
+            const cy = parseInt(e.style.top);
+            const dist = Math.hypot(cx - entry.targetX, cy - entry.targetY);
+
+            ifi (dist <= SYM_SNAP_DIST){
+              // snap into place
+              entry.snapped = true; 
+              el.style.left = entry.targetX + 'px';
+              el.style.top = entry.targetY + 'px';
+              el.style.background = entry.color;
+              el.style.zIndex = 5;
+              el.classList.add('snapped', 'sym-snap-anim');
+              entry.ghost.style.opacity = '0';
+
+              // light up pip
+              const pip = document.getElementById('sympip-${entry.index}');
+              if (pip) pip.classList.add('done');
+
+              symSnappedCount++;
+              if (synSnappedCount === symTotal) {
+                setTimeout(() => symTotal){
+                  setTimeout( () => showReveal(
+                    'Symmetry',
+                    'The eye seeks out balance. Paired elements feel stable and complete, even when the world only shows you half.'
+                    ), 450);
+                }
+              }
+            }
+            </script>
+
+  </body>
+
+
+      </html>
+                
+
+              
+              
+                
+                
 
           
               
