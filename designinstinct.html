@@ -1835,7 +1835,45 @@
           decoyCentres.forEach(c => spawnCluster(c.x,c.y, 4 + Math.floor(Math.random() * 2)));
           }
 
+          function fgCheckWin() {
+            const solvedFlags = fgFigures.map((fig, fi) => {
+              const figZ = parseInt(fig.el.style.zIndex);
+              // check no ground shape overlaps and sits on top of this figure
+              const covered = fgALLEls.some(el => {
+                if (el === fig.el) return false;
+                const z = parseInt(el.style.zIndex);
+                if (z <= figZ) return false;
+                const ex = parseInt(el.style.left), ey = parseInt(el.style.top);
+                const ew = parseInt(el.style.width), eh = parseInt(el.style.height);
+                const fx = parseInt(el.style.left), fy = parseInt(el.style.top);
+
+                return fgRectsOverlap(ex,ey,ew,eh,fx,fy,fig.w,fig,h);
+
+              });
+
+              if (!covered){
+                const pip = document.getElementById('fgpip-${fi}');
+                if (pip) pip.classList.add('done');
+                fig.el.classList.add('snap-flash');
+                setTimeout(() => fig.el.classList.remove('snap-flash'), 400);
+              }
+              return !covered;
+            });
+
+            if (solvedFlags.every(Boolean)){
+              setTimeout(() => showReveal(
+                'Figure/Ground',
+                'The eye separates a scene into subjects and background. What stands out depends on what surrounds it.'
+                ), 500);
+            }
+          }
+
+
+          // figure 6: symmetry
           
+                         
+
+
 
           
               
