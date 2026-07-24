@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Janelle Tecson — Genesys Works Alumni Portal</title>
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #111111;
+      --white: #fafafa;
+      --mid:   #555555;
+      --light: #e8e8e8;
+      --accent: #111111;
+      --serif: 'DM Serif Display', serif;
+      --sans:  'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--light);
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 100;
+    }
+
+    nav .logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--black);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    nav ul a:hover { opacity: 0.5; }
+
+    /* ── Side TOC ── */
+    .toc {
+      position: fixed;
+      left: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      z-index: 50;
+    }
+
+    .toc a {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      text-decoration: none;
+      color: var(--mid);
+      transition: color 0.2s;
+    }
+
+    .toc a:hover, .toc a.active { color: var(--black); }
+
+    @media (max-width: 900px) { .toc { display: none; } }
+
+    /* ── Layout ── */
+    .page-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 5rem 0 3rem;
+      border-bottom: 1px solid var(--light);
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--mid);
+      max-width: 560px;
+      margin-bottom: 2rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem 2rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--light);
+    }
+
+    .meta-item label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      margin-bottom: 0.3rem;
+    }
+
+    .meta-item span {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    /* ── Images ── */
+
+    /* Full-width image — never crops, shows the whole image */
+    .img-full {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+      background: #f4f4f2;
+    }
+
+    /* Pair of images side-by-side */
+    .img-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .img-pair img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+      background: #f4f4f2;
+    }
+
+    @media (max-width: 600px) {
+      .img-pair { grid-template-columns: 1fr; }
+      nav { padding: 1rem 1.2rem; }
+      .page-wrap { padding: 0 1.2rem 4rem; }
+    }
+
+    /* ── Sections ── */
+    section {
+      margin-bottom: 4.5rem;
+      scroll-margin-top: 5rem;
+    }
+
+    section h2 {
+      font-family: var(--serif);
+      font-size: 1.85rem;
+      margin-bottom: 1.2rem;
+    }
+
+    section h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 2rem 0 0.7rem;
+      color: var(--black);
+    }
+
+    section p {
+      font-size: 0.97rem;
+      color: #222;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Pillars / cards ── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0;
+    }
+
+    .pillar-card {
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      padding: 1.4rem 1.2rem;
+    }
+
+    .pillar-card .num {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      color: var(--black);
+    }
+
+    .pillar-card .label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .pillar-card p { font-size: 0.85rem; color: var(--mid); margin: 0; }
+
+    /* ── Research table ── */
+    .research-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+    }
+
+    .research-table th {
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      padding: 0.6rem 1rem;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .research-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--light);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    .research-table tr:last-child td { border-bottom: none; }
+
+    /* ── Findings ── */
+    .findings {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .finding-item {
+      border-left: 2px solid var(--black);
+      padding: 1rem 1.2rem 1rem 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .finding-item .finding-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .finding-item ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .finding-item ul li {
+      font-size: 0.88rem;
+      color: #333;
+      padding: 0.2rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .finding-item ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--mid);
+    }
+
+    /* ── Quotes ── */
+    .quote-block {
+      border-top: 2px solid var(--black);
+      border-bottom: 1px solid var(--light);
+      padding: 1.5rem 0;
+      margin: 2rem 0;
+    }
+
+    .quote-block blockquote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--black);
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-block cite {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      font-style: normal;
+    }
+
+    /* ── Reflection callout ── */
+    .callout {
+      background: var(--black);
+      color: var(--white);
+      border-radius: 6px;
+      padding: 2rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .callout h3 { color: var(--white); margin-top: 0; }
+    .callout p  { color: #ccc; font-size: 0.9rem; }
+
+    /* ── Divider ── */
+    hr.section-rule {
+      border: none;
+      border-top: 1px solid var(--light);
+      margin: 3rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a class="logo" href="index.html">Janelle Tecson</a>
+    <ul>
+      <li><a href="index.html#gallery">Work</a></li>
+      <li><a href="https://medium.com/@jantecson30" target="_blank">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="assets/images/DDP_ JTecson_Resume.pdf" target="_blank">Resume</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Side TOC ── -->
+  <aside class="toc" aria-label="Page sections">
+    <a href="#overview">Overview</a>
+    <a href="#research">Research</a>
+    <a href="#findings">Findings</a>
+    <a href="#ideation">Ideation</a>
+    <a href="#design">Design</a>
+    <a href="#ahead">Looking Ahead</a>
+    <a href="#reflection">Reflection</a>
+  </aside>
+
+  <!-- ── Content ── -->
+  <main class="page-wrap">
+
+    <!-- Hero -->
+    <div class="hero">
+      <p class="hero-eyebrow">Capital One Design Pro Bono · Genesys Works</p>
+      <h1>Genesys Works Alumni Portal</h1>
+      <p class="hero-sub">A relational journey map, prioritized Jobs-to-Be-Done roadmap, and lightweight design system for Genesys Works' in-development Alumni Portal — turning scattered alumni engagement into a clear, buildable product direction.</p>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <label>Role</label>
+          <span>DDP Associate, UI/UX Designer</span>
+        </div>
+        <div class="meta-item">
+          <label>Team</label>
+          <span>GW Pro Bono<br>Capital One Design Pro Bono, Cycle 3</span>
+        </div>
+        <div class="meta-item">
+          <label>Timeline</label>
+          <span>~2 Months, Fall/Winter 2025</span>
+        </div>
+        <div class="meta-item">
+          <label>Domain</label>
+          <span>Nonprofit<br>Workforce &amp; Career Development</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cover image — tall -->
+    <!-- Drive source: IMG_0175.PNG -->
+    <img
+      class="img-full"
+      src="assets/images/genesys-images/gw-home-dashboard.png"
+      alt="Genesys Works Alumni Portal — personalized home dashboard styleframe"
+      style="margin-bottom: 4.5rem;"
+    />
+
+    <!-- Overview -->
+    <section id="overview">
+      <h2>Overview</h2>
+
+      <h3>The Problem</h3>
+      <p>Genesys Works' strategic goal is a 20% increase in alumni engagement by 2028, but the current alumni experience is fragmented across 4+ communication channels, contact data is difficult for staff to maintain, and alumni's needs shift dramatically the further they get from the program — moving from Young Professional, to New, Emerging, and eventually Established Alumni. A one-size-fits-all portal wasn't going to move the needle.</p>
+
+      <h3>Our Solution</h3>
+      <p>I helped run discovery interviews with GW staff, site leads, and alumni across every archetype, synthesized the findings into a Jobs-to-Be-Done framework, and translated that into a prioritized feature set, sitemap, and lightweight design system GW's team could hand off to development. We focused on three key pillars:</p>
+
+      <div class="pillars">
+        <div class="pillar-card">
+          <div class="num">01</div>
+          <div class="label">Personalized by Career Stage</div>
+          <p>Content, incentives, and features that adapt to where an alumni actually is — not the same experience for everyone.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="num">02</div>
+          <div class="label">Consolidated Communication</div>
+          <p>One portal in place of 4+ scattered channels, so alumni and staff aren't chasing information across platforms.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="num">03</div>
+          <div class="label">A Prioritized Roadmap</div>
+          <p>A Jobs-to-Be-Done framework with MVP vs. Nice-to-Have calls, so GW has a clear, buildable path forward.</p>
+        </div>
+      </div>
+
+      <p>By doing the above, we gave GW's team a validated, prioritized roadmap instead of a blank slate — moving them from open-ended ideas to a clear MVP path.</p>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Research -->
+    <section id="research">
+      <h2>Research</h2>
+
+      <h3>Internal Stakeholder Synthesis</h3>
+      <p>Before talking to alumni, we aligned with GW staff on what they most wanted to learn. Their top questions going into discovery were about alumni needs, the biggest barriers to building community and ongoing support, and what success would look like a year after launch — tied back to GW's goal of a 20% increase in alumni engagement by 2028.</p>
+
+      <h3>Alumni &amp; Site Lead Discovery</h3>
+      <p>Using that alignment, we built an interview guide and ran discovery sessions with GW staff, site leads, and alumni representing New, Emerging, and Established archetypes, driven by two core hypotheses:</p>
+
+      <!-- Drive source: IMG_0146.PNG / IMG_0147.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-interview-scripts.png"
+        alt="Genesys Works alumni and site lead interview scripts"
+        style="margin: 1.5rem 0;"
+      />
+
+      <table class="research-table">
+        <thead>
+          <tr>
+            <th>Research Objective</th>
+            <th>Hypothesis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Understand which of alumni's shifting priorities and barriers were the highest-leverage problems for the portal to solve.</td>
+            <td>Alumni whose engagement needs change as they move from Young Professional to Established Alumni will respond best to a portal that adapts its content and incentives by career stage, rather than presenting the same experience to everyone.</td>
+          </tr>
+          <tr>
+            <td>Identify which existing communication channels and pain points were driving GW's low survey and engagement response rates.</td>
+            <td>Consolidating GW's fragmented, multi-channel communication into a single personalized portal will increase alumni engagement and response rates.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Interviewing alumni and site leads directly — rather than relying on staff assumptions alone — was critical for validating which pain points were real versus perceived, and for grounding our Jobs-to-Be-Done framework in what alumni actually said they needed.</p>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Findings -->
+    <section id="findings">
+      <h2>Findings &amp; Pain Points</h2>
+
+      <!-- Drive source: IMG_0151.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-research-insights.png"
+        alt="Research insights on alumni and staff sentiments"
+        style="margin-bottom: 1.5rem;"
+      />
+
+      <p>Based on our interviews, I helped synthesize the following key takeaways:</p>
+
+      <div class="findings">
+        <div class="finding-item">
+          <div class="finding-title">Alumni Priorities Shift the Further They Move From the Program</div>
+          <ul>
+            <li>Young Professionals are focused on landing an internship and building a resume/LinkedIn portfolio.</li>
+            <li>New Alumni are nervous about starting college and looking for support and connection.</li>
+            <li>Emerging Alumni want career-progression content and ways to network with industry peers.</li>
+            <li>Established Alumni want to give back — mentoring, speaking on panels, or connecting with new alumni.</li>
+          </ul>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-title">Communication Is Too Fragmented to Drive Real Engagement</div>
+          <ul>
+            <li>Contact and communication happen across 4+ channels; GW's Bay Area survey response rate was only ~12% (national rate ~25%).</li>
+            <li>Staff reported that contact data, kept in Salesforce, is "super hard to maintain."</li>
+            <li>Reengagement is low overall — roughly 700 alumni in the Bay Area, but only ~50 are actively engaged with GW.</li>
+          </ul>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-title">Personalization &amp; Industry Relevance Drive Value</div>
+          <ul>
+            <li>Alumni want events, content, and networking tailored to their industry (e.g., tech, data analytics) rather than generic outreach.</li>
+            <li>A vetted, curated job pipeline and access to career certifications (e.g., CompTIA) were repeatedly cited as the most valuable potential features.</li>
+          </ul>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-title">The Corporate Internship Pipeline Has Real Capacity Constraints</div>
+          <ul>
+            <li>Alumni internship seats are hard to secure because high-school seats are prioritized; most alumni seats actually come from a high schooler excelling in their original internship and being asked to stay on.</li>
+            <li>There's no staff capacity dedicated specifically to alumni programming.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Ideation -->
+    <section id="ideation">
+      <h2>Ideation</h2>
+
+      <h3>Concepting &amp; Affinity Mapping</h3>
+      <p>Once research was synthesized, we ran a "Hopes &amp; Fears" workshop and affinity-mapped the raw input into themes — a "one-stop shop" for resources, a LinkedIn-style networking layer tailored to GW, and ways to personalize outreach by career stage. This is where our four Jobs to Be Done first started to take shape.</p>
+
+      <!-- Drive source: IMG_0141.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-affinity-mapping.png"
+        alt="Hopes and Fears affinity mapping board from the concepting workshop"
+        style="margin: 1.5rem 0;"
+      />
+
+      <!-- Drive source: IMG_0150.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-jobs-to-be-done.png"
+        alt="The four Jobs to Be Done identified for the alumni portal"
+        style="margin: 1.5rem 0;"
+      />
+
+      <p>We organized these themes into four Jobs to Be Done: Launch My Next Career Step, Find My People &amp; Stay Relevant, Get the Right Information Instantly, and Give Back to Genesys Works.</p>
+
+      <h3>Prioritization &amp; Alumni Sentiment</h3>
+      <p>Alumni sentiment set the stage for feature ideation — direct quotes from our interviews shaped which features we prioritized within each Job to Be Done.</p>
+
+      <div class="quote-block">
+        <blockquote>"It's good to see how everyone is doing, what opportunities they've taken, and what they've achieved..."</blockquote>
+        <cite>— Alumni Participant</cite>
+      </div>
+      <div class="quote-block">
+        <blockquote>"Genesys Works being able to support me in finding internships or jobs after I graduate from college would be very helpful."</blockquote>
+        <cite>— Alumni Participant</cite>
+      </div>
+      <div class="quote-block">
+        <blockquote>"The biggest benefit is the networking events with people who align with your path and the opportunity to connect with them."</blockquote>
+        <cite>— Alumni Participant</cite>
+      </div>
+
+      <p>For each Job to Be Done, we mapped proposed features against alumni archetype, a proposed success metric, and an MVP / Nice-to-Have prioritization:</p>
+
+      <!-- Drive source: IMG_0152.PNG + IMG_0153.PNG -->
+      <div class="img-pair">
+        <img
+          src="assets/images/genesys-images/gw-priority-launch-career.png"
+          alt="Prioritization matrix for the Launch My Next Career Step job to be done"
+        />
+        <img
+          src="assets/images/genesys-images/gw-priority-find-people.png"
+          alt="Prioritization matrix for the Find My People and Stay Relevant job to be done"
+        />
+      </div>
+
+      <!-- Drive source: IMG_0154.PNG + IMG_0155.PNG -->
+      <div class="img-pair">
+        <img
+          src="assets/images/genesys-images/gw-priority-get-info.png"
+          alt="Prioritization matrix for the Get the Right Information Instantly job to be done"
+        />
+        <img
+          src="assets/images/genesys-images/gw-priority-give-back.png"
+          alt="Prioritization matrix for the Give Back to Genesys Works job to be done"
+        />
+      </div>
+
+      <div class="findings">
+        <div class="finding-item">
+          <div class="finding-title">Launch My Next Career Step</div>
+          <ul>
+            <li>A vetted job pipeline, direct access to professional development/certifications, and an "application boost" mechanism using a GW connection.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Find My People &amp; Stay Relevant</div>
+          <ul>
+            <li>Personalized networking by industry/cohort/location, a "success showcase" for alumni to share wins, and a formal mentor program.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Get the Right Information, Instantly</div>
+          <ul>
+            <li>A one-stop partner directory, an integrated event calendar, a staff/site directory, and — as a stretch — an AI-powered chatbot.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Give Back to Genesys Works</div>
+          <ul>
+            <li>A call-to-donate feature, a volunteering hub (mock interviews, resume reviews), and a partner touchpoint for alumni interested in becoming corporate partners.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Design System &amp; Sitemap</h3>
+      <p>Given our timeline, we built a lightweight "design-system lite" foundation rather than a full component library — a 4px baseline grid, a core typography scale, a stylesheet of buttons/pills/tabs/navigation, and a component mapping showing how those pieces come together on real pages.</p>
+
+      <!-- Drive source: IMG_0171.PNG + IMG_0172.PNG -->
+      <div class="img-pair">
+        <img
+          src="assets/images/genesys-images/gw-typography.png"
+          alt="Alumni Portal typography scale"
+        />
+        <img
+          src="assets/images/genesys-images/gw-stylesheet.png"
+          alt="Alumni Portal stylesheet — buttons, pills, tabs, and navigation"
+        />
+      </div>
+
+      <!-- Drive source: IMG_0169.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-component-mapping.png"
+        alt="Component mapping showing the 4px baseline grid applied to a real page"
+        style="margin: 1.5rem 0;"
+      />
+
+      <!-- Drive source: IMG_0168.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-sitemap.png"
+        alt="Alumni Portal sitemap and information architecture"
+        style="margin: 1.5rem 0;"
+      />
+
+      <p>This gave us a shared foundation to design consistent screens from, and gave GW a clear, tested information architecture: Home, Alumni (Connections &amp; Community, Directory), Jobs (Job Board, Opportunities), Learning &amp; Development (Courses/Certifications), plus Tasks, Events, and Contact.</p>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Design -->
+    <section id="design">
+      <h2>Key Screens</h2>
+
+      <p>Using the design system and sitemap, we designed key styleframes for the portal's most important flows. We landed on this direction for three reasons:</p>
+
+      <div class="findings">
+        <div class="finding-item">
+          <div class="finding-title">Personalized, Yet Easy to Browse</div>
+          <ul>
+            <li>A "for you" home dashboard balanced with a straightforward way to browse everything — jobs, events, connections — from scratch.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Consistent Across Sites</div>
+          <ul>
+            <li>Reused patterns across national and local site pages so GW's many regional sites can stay visually consistent with less custom design work.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Easy Scannability</div>
+          <ul>
+            <li>Recommended and matched content surfaces at the top; full listings and filters live below for deeper browsing.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Home Dashboard</h3>
+      <!-- Drive source: IMG_0175.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-home-dashboard.png"
+        alt="Personalized home dashboard with recommended jobs, events, news, and tasks"
+        style="margin: 1.5rem 0;"
+      />
+      <p>The personalized home dashboard surfaces recommended jobs and events based on the alumni's profile and skills, recent GW news, upcoming events, and a running task list, so an alumni can find what's relevant to them without digging.</p>
+
+      <h3>Job Board &amp; Career Resources</h3>
+      <!-- Drive source: IMG_0177.PNG + IMG_0180.PNG -->
+      <div class="img-pair">
+        <img
+          src="assets/images/genesys-images/gw-job-board.png"
+          alt="Job board with matched opportunities and connection details"
+        />
+        <img
+          src="assets/images/genesys-images/gw-job-board-detail.png"
+          alt="Job board detail view with saved jobs and matching skills"
+        />
+      </div>
+      <p>The job board matches alumni to open corporate-partner roles based on their skills, and shows which of their GW connections work at that company — directly addressing the "application boost" and "find my people" jobs to be done.</p>
+
+      <h3>Connections &amp; Community</h3>
+      <!-- Drive source: IMG_0170.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-connections.png"
+        alt="Connections directory filtered by peers, mentors, and industry"
+        style="margin: 1.5rem 0;"
+      />
+      <p>The connections directory lets alumni filter by peers, mentors, or industry, and view GW's staff/site directory — solving the "who do I even contact" pain point that both staff and alumni raised.</p>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Looking Ahead -->
+    <section id="ahead">
+      <h2>Looking Ahead</h2>
+
+      <!-- Drive source: IMG_0174.PNG -->
+      <img
+        class="img-full"
+        src="assets/images/genesys-images/gw-strategy-frameworks.png"
+        alt="Design strategy frameworks — Concept Card and Effort/Impact matrix"
+        style="margin-bottom: 1.5rem;"
+      />
+
+      <p>Given the two-month timeline of a pro bono engagement, we were only able to interview a limited set of alumni and site leads across a handful of GW's sites, and we handed off recommendations and styleframes rather than a shipped, usability-tested product. With more time and access, I'd want to interview alumni across every GW region and every archetype — Young Professional through Established Alumni — and run a real round of usability testing on the actual screens with alumni, to see how the MVP versus Nice-to-Have prioritization holds up once people are actually using it.</p>
+
+      <h3>Next Steps for GW</h3>
+      <div class="findings">
+        <div class="finding-item">
+          <div class="finding-title">Align Tech Stack &amp; Template Strategy</div>
+          <ul>
+            <li>Decide where to use out-of-the-box templates versus fully custom layouts, and align the underlying tech stack across both the Alumni Portal and the newly proposed Partner Portal so the two share as much as possible (partner chat, partner connect, Slack communities, tasks &amp; workflows).</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Move From Styleframes to Wireframes</div>
+          <ul>
+            <li>Use these recommendations as the foundation for full wireframing and information-architecture validation before development starts, so GW avoids building out poorly-considered layouts.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Sequence Features on a Phased Roadmap</div>
+          <ul>
+            <li>Prioritize on a Must-Have / Nice-to-Have / Next Release / Year 2+ basis, the same way Partner Portal features like onboarding, position management, and the SOW lifecycle were scoped, so GW's team isn't trying to build everything in one release.</li>
+          </ul>
+        </div>
+        <div class="finding-item">
+          <div class="finding-title">Keep Evaluating New Ideas Systematically</div>
+          <ul>
+            <li>Use the Concept Card and Effort/Impact (LOE/LOI) frameworks handed off to evaluate any new feature ideas that come up after launch — sorting them into Do Now, Explore More Deeply, Backlog, or Deprioritize based on organizational effort versus impact.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- Reflection -->
+    <section id="reflection">
+      <h2>Reflection</h2>
+
+      <div class="callout">
+        <h3>First Big Corporate Project</h3>
+        <p>This was genuinely one of the most eye-opening projects I've worked on early in my career. Being trusted to help drive research synthesis and design direction on a project tied to a nonprofit's real strategic goals felt like a big responsibility, and I leaned heavily on my design peers and product peers, as well as our client stakeholders at GW, to make sure we were designing toward what actually mattered to alumni and staff, not just what looked good. The biggest lesson I took away was how much a good prioritization framework — Jobs to Be Done, MVP vs. Nice-to-Have — can turn a huge, open-ended problem into something an organization can actually act on, a lesson I've carried into every project since.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOC active state on scroll -->
+  <script>
+    const tocLinks = document.querySelectorAll('.toc a');
+    const sections = document.querySelectorAll('section[id]');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
